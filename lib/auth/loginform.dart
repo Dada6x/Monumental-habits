@@ -2,75 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/auth/forgetPassword.dart';
 import 'package:monumental_habits/util/helper.dart';
+import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
+import 'package:monumental_habits/widgets/textfield.dart';
 
-Widget LoginColumn(double width) {
-  bool ispassword = true;
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-        child: TextFormField(
-          decoration: const InputDecoration(
-            fillColor: Color(lightorange),
-            filled: true,
-            prefixIcon: Icon(Icons.person, color: Color(orange)),
-            labelText: "Email",
-            labelStyle: klasik,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(orange)),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 8),
-        child: TextFormField(
-          obscureText: ispassword,
-          decoration: InputDecoration(
-            suffixIcon: IconButton(
-              color: const Color(orange),
-              onPressed: () {
-                ispassword = !ispassword;
-              },
-              icon: ispassword
-                  ? const Icon(Icons.visibility_off)
-                  : const Icon(Icons.visibility),
-            ),
-            fillColor: const Color(lightorange),
-            filled: true,
-            prefixIcon: const Icon(Icons.key, color: Color(orange)),
-            labelText: "Password",
-            labelStyle: klasik,
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(orange)),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+// ignore: must_be_immutable
+class LoginForm extends StatelessWidget {
+  // email controller
+  // password controller
+  // password security fun
+  bool isPassword = true;
+  LoginForm({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        //! Email
+        Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
+            child: TextField(
+              decoration: customTextFieldDecoration(
+                  hint: "Email", prefixIcon: const Icon(Icons.person)),
+            )),
+        //! Password
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.screenWidth * 0.05, vertical: 8),
+            //@ THE SHOW AND UNSHOW DOSENT WORK cant setstate or refuse to login if empty
+            child: projectPasswordTextfield(isPassword)),
         //! login Button
-        child: Button("Login", () {}),
-      ),
-      //! forgot password
-      TextButton(
-          onPressed: () {
-            Get.to(const Forgetpassword());
-          },
-          child: const Text("Forgot Password ?", style: manrope)),
-    ],
-  );
+        Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
+          child: Button("Login", () {
+            //login function
+          }),
+        ),
+        //! forgot password
+        TextButton(
+            onPressed: () {
+              Get.to(const forgetPassword());
+            },
+            child: const Text("Forgot Password ?", style: manrope)),
+      ],
+    );
+  }
 }
 //! inputDecoration of the textFiles

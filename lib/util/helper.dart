@@ -5,7 +5,7 @@ const orange = 0xFFFDA758;
 const creamybackground = 0xFFFEF2E8;
 const background = 0xFFFFF3E9;
 const darkPurple = 0xFF573353;
-const lightorange = 0xFFFFF6ED;
+const lightOrange = 0xFFFFF6ED;
 
 //? Define the images and visuals like this in a folder
 const habits = "assets/images/Habits.svg";

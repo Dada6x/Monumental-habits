@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:monumental_habits/auth/SIgnupForm.dart';
 import 'package:monumental_habits/auth/loginform.dart';
 import 'package:monumental_habits/util/helper.dart';
@@ -45,12 +46,7 @@ class _AuthState extends State<Auth> {
                     EdgeInsets.only(top: height * 0.05, right: width * 0.05),
                 child: Align(
                   alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: const Icon(Icons.question_answer),
-                    onPressed: () {
-                      //! show blur container with som info
-                    },
-                  ),
+                  child: SvgPicture.asset("assets/images/question.svg")
                 ),
               ),
               const Center(
@@ -66,10 +62,10 @@ class _AuthState extends State<Auth> {
                 right: 0,
                 height: isExpanded ? height * 0.94 : height * 0.39,
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: isExpanded ? const Color(background) : Colors.white,
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(23)),
+                        const BorderRadius.vertical(top: Radius.circular(23)),
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -85,7 +81,7 @@ class _AuthState extends State<Auth> {
                             style: klasik,
                           ),
                         ),
-                        isExpanded ? const Signup() : LoginColumn(width),
+                        isExpanded ?  SignupForm() : LoginForm(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

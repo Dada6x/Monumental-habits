@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:icons_flutter/icons_flutter.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
@@ -32,7 +31,10 @@ Widget GoogleButton() {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        //! GO TO GOOGLE HEHEHE
+        //jk login or signup via google
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -53,11 +55,11 @@ Widget GoogleButton() {
       ));
 }
 
-Widget FaceBookButton() {
+Widget faceBookButton() {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
         fixedSize: Size(SizeConfig.screenWidth, 41),
-        backgroundColor: const Color(0xFF209BE3),
+        backgroundColor: const Color.fromARGB(252, 36, 112, 235),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -66,10 +68,16 @@ Widget FaceBookButton() {
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(AntDesign.facebook_square),
+          Icon(
+            Icons.facebook,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 4,
+          ),
           Text(
-            "Continue with Google",
-            style: manrope,
+            "Continue with facebook",
+            style: TextStyle(color: Colors.white),
           ),
         ],
       ));

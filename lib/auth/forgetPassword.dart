@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/auth/Auth.dart';
+import 'package:monumental_habits/auth/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
+import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 
 class Forgetpassword extends StatelessWidget {
@@ -49,7 +52,45 @@ class Forgetpassword extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(),
                     ),
-                    Button("Send link", () {})
+                    Button("Send link", () {
+                      Get.to(VerificationPage());
+                      /* Get.dialog(Dialog(
+                        child: SizedBox(
+                          width: SizeConfig.screenWidth,
+                          height: SizeConfig.screenHeight * 0.3,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "Enter The 6 Digit Code \n \t \t \t Sent Via Email :",
+                                  style: klasik,
+                                ),
+                                VerificationCode(
+                                    underlineColor: Color(darkPurple),
+                                    underlineUnfocusedColor: Color(orange),
+                                    fullBorder: true,
+                                    length: 6,
+                                    onCompleted: (String value) {},
+                                    onEditing: (value) {}),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize:
+                                        Size(SizeConfig.screenWidth * 0.6, 42),
+                                    backgroundColor: const Color(orange),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Enter",
+                                    style: manrope,
+                                  ),
+                                )
+                              ]),
+                        ),
+                      ));*/
+                    })
                   ],
                 ),
               ),

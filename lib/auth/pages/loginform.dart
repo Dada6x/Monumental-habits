@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/auth/forgetPassword.dart';
+import 'package:monumental_habits/auth/pages/forgetPassword.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';

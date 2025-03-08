@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:monumental_habits/auth/pages/personalInfo.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 
@@ -11,7 +14,7 @@ class SignupForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(12),
       child: Column(
         children: [
           SvgPicture.asset(signupImg),
@@ -19,6 +22,9 @@ class SignupForm extends StatelessWidget {
             "Create your account",
             style: TextStyle(
                 fontFamily: "klasik", fontSize: 24, color: Color(darkPurple)),
+          ),
+          const SizedBox(
+            height: 20,
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
@@ -43,7 +49,7 @@ class SignupForm extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -61,7 +67,9 @@ class SignupForm extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Button("Create Account", () {}),
+            child: Button("Create Account", () {
+              Get.off(const PersonalInfo());
+            }),
           ),
           //! divider
           const Padding(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monumental_habits/util/helper.dart';
 
-
-
 //! THIS DOSENT WORK بس تمشاية حال
 
 Widget projectPasswordTextfield(bool ispassword) {
@@ -19,6 +17,36 @@ Widget projectPasswordTextfield(bool ispassword) {
             : const Icon(Icons.visibility),
       ),
       fillColor: const Color(lightOrange),
+      filled: true,
+      prefixIcon: const Icon(Icons.key, color: Color(orange)),
+      labelText: "Password",
+      labelStyle: klasik,
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.transparent),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: Color(orange)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+    ),
+  );
+}
+
+Widget projectPasswordTextfieldWhite(bool ispassword) {
+  return TextFormField(
+    obscureText: ispassword,
+    decoration: InputDecoration(
+      suffixIcon: IconButton(
+        color: const Color(orange),
+        onPressed: () {
+          ispassword = !ispassword;
+        },
+        icon: ispassword
+            ? const Icon(Icons.visibility_off)
+            : const Icon(Icons.visibility),
+      ),
+      fillColor: Colors.white,
       filled: true,
       prefixIcon: const Icon(Icons.key, color: Color(orange)),
       labelText: "Password",

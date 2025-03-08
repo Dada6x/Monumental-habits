@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:monumental_habits/auth/pages/Auth.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';

@@ -8,7 +8,7 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
 class VerificationPage extends StatefulWidget {
-  VerificationPage({super.key});
+  const VerificationPage({super.key});
 
   @override
   State<VerificationPage> createState() => _VerificationPageState();
@@ -17,8 +17,14 @@ class VerificationPage extends StatefulWidget {
 class _VerificationPageState extends State<VerificationPage> {
   bool verified = false;
   String buttonText = "Resend Code";
-  bool reSendPressed = false;
+  int reSendPressed = 0;
   int time = 5;
+  @override
+  void dispose() {
+    super.dispose();
+    time = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,20 +97,24 @@ class _VerificationPageState extends State<VerificationPage> {
                       ),
                       MaterialButton(
                         onPressed: () {
-                          reSendPressed = true;
-                          Timer.periodic(const Duration(seconds: 1), (timer) {
-                            if (time > 0) {
-                              time--;
-                              buttonText = "Resend Again After $time Seconds.";
-                              setState(() {});
-                            }
-                            if (time == 0) {
-                              reSendPressed = false;
-                              buttonText = "Resend Code";
-                              timer.cancel();
-                              time = 5;
-                            }
-                          });
+                          reSendPressed++;
+                          if (reSendPressed == 1) {
+                            Timer.periodic(const Duration(seconds: 1), (timer) {
+                              if (time > 0) {
+                                time--;
+                                buttonText =
+                                    "Resend Again After $time Seconds.";
+                                setState(() {});
+                              }
+                              if (time == 0) {
+                                reSendPressed = 0;
+                                buttonText = "Resend Code";
+                                timer.cancel();
+                                time = 5;
+                              }
+                              print(time);
+                            });
+                          }
                         },
                         child: Text(
                           buttonText,
@@ -146,7 +156,6 @@ class NewPassword extends StatelessWidget {
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
                 ),
-                fillColor: const Color(lightorange),
                 filled: true,
                 prefixIcon: const Icon(Icons.key, color: Color(orange)),
                 labelText: "New Password",
@@ -177,7 +186,6 @@ class NewPassword extends StatelessWidget {
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
                 ),
-                fillColor: const Color(lightorange),
                 filled: true,
                 prefixIcon: const Icon(Icons.key, color: Color(orange)),
                 labelText: "Confirm New Password",

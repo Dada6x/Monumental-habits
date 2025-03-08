@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class InfoPopupExample extends StatelessWidget {
+  const InfoPopupExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:monumental_habits/auth/pages/Auth.dart';
 import 'package:monumental_habits/introductionScreens.dart';
 
 import 'package:monumental_habits/util/sizedconfig.dart';
+import 'package:monumental_habits/widgets/blureelement.dart';
 
 void main() {
   runApp(const MyApp());

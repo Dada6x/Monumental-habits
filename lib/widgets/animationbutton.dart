@@ -15,8 +15,7 @@ class _animatedGoogleButtonState extends State<animatedGoogleButton>
     duration: const Duration(seconds: 5),
   )..repeat(reverse: true);
   late final Animation<Offset> _animation =
-      Tween(begin: Offset.zero, end: const Offset(0, 0.57))
-          .animate(_controller);
+      Tween(begin: Offset.zero, end: const Offset(0, 0.30)).animate(_controller);
 
   @override
   void dispose() {

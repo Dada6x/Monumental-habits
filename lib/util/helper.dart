@@ -1,12 +1,11 @@
-//! Define the used color
 import 'package:flutter/material.dart';
 
+//! Define the used color
 const orange = 0xFFFDA758;
 const creamybackground = 0xFFFEF2E8;
 const background = 0xFFFFF3E9;
 const darkPurple = 0xFF573353;
-const lightorange = 0xFFFFF6ED;
-
+const lightOrange = 0xFFFFF6ED;
 //? Define the images and visuals like this in a folder
 const habits = "assets/images/Habits.svg";
 const intro1 = "assets/images/intro1.svg";
@@ -17,9 +16,6 @@ const signupImg = "assets/images/CreateYourAccount.svg";
 //! define an textStyle with the color and the size fixed
 // make reusable widgets
 //!
-// font grey color 0xFFAA929D
-// font for somethings is the same orange
-
 const TextStyle klasik = TextStyle(
   fontFamily: "Klasik",
   fontSize: 17,

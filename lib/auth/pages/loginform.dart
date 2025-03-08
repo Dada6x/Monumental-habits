@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/forgetPassword.dart';
+import 'package:monumental_habits/auth/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
@@ -43,7 +44,8 @@ class LoginForm extends StatelessWidget {
         //! forgot password
         TextButton(
             onPressed: () {
-              Get.to(const forgetPassword());
+              //bruddha ur a retard
+              Get.to(forgetPassword());
             },
             child: const Text("Forgot Password ?", style: manrope)),
       ],

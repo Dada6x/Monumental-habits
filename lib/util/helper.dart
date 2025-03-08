@@ -21,7 +21,11 @@ const TextStyle klasik = TextStyle(
   fontSize: 17,
   color: Color(darkPurple),
 );
-
+const TextStyle header = TextStyle(
+  fontFamily: "Klasik",
+  fontSize: 25,
+  color: Color(darkPurple),
+);
 const TextStyle manrope = TextStyle(
   fontFamily: "Manrope",
   fontSize: 14,

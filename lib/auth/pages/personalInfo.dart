@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/Auth.dart';
+import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
+import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/textfield.dart';
 
@@ -36,7 +38,6 @@ class PersonalInfo extends StatelessWidget {
                       fontSize: 24,
                       color: Color(darkPurple)),
                 ),
-
                 Stack(children: [
                   //! need some work for updating the image
                   const CircleAvatar(
@@ -48,7 +49,9 @@ class PersonalInfo extends StatelessWidget {
                       right: -10,
                       height: 49,
                       child: RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.dialog(const imagepickerdialog());
+                        },
                         elevation: 2,
                         fillColor: Colors.white,
                         padding: const EdgeInsets.all(15.0),
@@ -81,12 +84,87 @@ class PersonalInfo extends StatelessWidget {
                 projectPasswordTextfieldWhite(ispassword),
 
                 Button("next", () {
-                  Get.to(const Auth());
+            Get.to(const HomePage());
                 }),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class imagepickerdialog extends StatelessWidget {
+  const imagepickerdialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: SizedBox(
+          width: SizeConfig.screenWidth * 0.8,
+          height: SizeConfig.screenHeight * 0.22,
+          child: Column(
+            children: [
+              const Padding(
+                padding:
+                    EdgeInsets.only(top: 10.0, left: 10, right: 10, bottom: 25),
+                child: Center(
+                  child: Text(
+                    " Choose ",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          //! go to gallery
+                        },
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.image,
+                              size: 32,
+                              color: Color(orange),
+                            ),
+                            Text(
+                              "Gallery",
+                              style: manrope,
+                            ),
+                          ],
+                        )), //go to the full map
+                    TextButton(
+                        onPressed: () {
+                          //! go to Camera
+                        },
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.camera,
+                              color: Color(orange),
+                              size: 32,
+                            ),
+                            Text(
+                              "Camera",
+                              style: manrope,
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

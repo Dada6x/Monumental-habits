@@ -3,14 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/auth/pages/Auth.dart';
-import 'package:monumental_habits/auth/verificationPage.dart';
+import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/textfield.dart';
 
 class forgetPassword extends StatelessWidget {
   const forgetPassword({super.key});
-
 //! textfield controller
   @override
   Widget build(BuildContext context) {

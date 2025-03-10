@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class InfoPopupExample extends StatelessWidget {
-  const InfoPopupExample({super.key});
+class BlurElement extends StatelessWidget {
+  const BlurElement({super.key});
 
   @override
   Widget build(BuildContext context) {

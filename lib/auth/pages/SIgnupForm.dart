@@ -7,6 +7,10 @@ import 'package:monumental_habits/widgets/Buttons.dart';
 
 // ignore: must_be_immutable
 class SignupForm extends StatelessWidget {
+//! name controller
+//! password controller
+//! confirm password controller and func
+
   bool check = true;
   SignupForm({super.key});
 
@@ -50,7 +54,7 @@ class SignupForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(1),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
                   value: check,

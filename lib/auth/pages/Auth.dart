@@ -24,7 +24,6 @@ class _AuthState extends State<Auth> {
         //! idk what dose constraints is anyway wallahi
         double height = constraints.maxHeight;
         double width = constraints.maxWidth;
-
         return Scaffold(
           body: Stack(
             children: [

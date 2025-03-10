@@ -6,7 +6,7 @@ import 'package:monumental_habits/auth/pages/Auth.dart';
 import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfield.dart';
+import 'package:monumental_habits/widgets/textfields.dart';
 
 class forgetPassword extends StatelessWidget {
   const forgetPassword({super.key});
@@ -30,13 +30,11 @@ class forgetPassword extends StatelessWidget {
             ),
             const Text(
               "Forgot your password ?",
-              style: TextStyle(
-                  fontFamily: "klasik", fontSize: 24, color: Color(darkPurple)),
+              style: header
             ),
-            Center(child: SvgPicture.asset("assets/images/ForgotPassword.svg")),
+            Center(child: SvgPicture.asset(forgotPassword)),
             Padding(
               padding: const EdgeInsets.all(20),
-              //! put the contianer in helper nigga
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
@@ -55,8 +53,11 @@ class forgetPassword extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextField(
-                            decoration: customTextFieldDecoration(
-                                hint: "", prefixIcon: null)),
+                          decoration: customTextFieldDecoration(
+                              hint: "",
+                              prefixIcon: const Icon(Icons.mail),
+                              isWhite: false),
+                        ),
                       ),
                       Button("Send link", () {
                         Get.to(const VerificationPage());

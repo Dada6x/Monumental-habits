@@ -5,13 +5,14 @@ import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfield.dart';
+import 'package:monumental_habits/widgets/textfields.dart';
 
 // ignore: must_be_immutable
 class LoginForm extends StatelessWidget {
-  //! email controller
-  //! password controller
-  //! password **** see/unSee function
+  //!-------------------controllers--------------------------
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  //!-------------------controllers--------------------------
   bool isPassword = true;
   LoginForm({super.key});
   @override
@@ -24,15 +25,16 @@ class LoginForm extends StatelessWidget {
             padding:
                 EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
             child: TextField(
+              controller: emailController,
               decoration: customTextFieldDecoration(
-                  hint: "Email", prefixIcon: const Icon(Icons.person)),
+                  hint: "Email", prefixIcon: const Icon(Icons.person),isWhite: false),
             )),
         //! Password
         Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.screenWidth * 0.05, vertical: 8),
-            //@ THE SHOW AND UNSHOW DOSENT WORK cant setstate or refuse to login if empty
-            child: projectPasswordTextfield(isPassword)),
+          padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.screenWidth * 0.05, vertical: 8),
+          child: PasswordTextField(controller: passwordController,hint: "password",)
+        ),
         //! login Button
         Padding(
           padding:
@@ -44,7 +46,6 @@ class LoginForm extends StatelessWidget {
         //! forgot password
         TextButton(
             onPressed: () {
-              //bruddha ur a retard
               Get.to(const forgetPassword());
             },
             child: const Text("Forgot Password ?", style: manrope)),
@@ -52,4 +53,6 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
+
 //! inputDecoration of the textFiles
+

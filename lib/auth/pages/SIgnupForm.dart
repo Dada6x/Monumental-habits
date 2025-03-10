@@ -4,14 +4,12 @@ import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/personalInfo.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
+import 'package:monumental_habits/widgets/textfields.dart';
 
-// ignore: must_be_immutable
 class SignupForm extends StatelessWidget {
-//! name controller
-//! password controller
-//! confirm password controller and func
+  final emailController = TextEditingController();
+  final RxBool isChecked = false.obs; // Define checkbox state here
 
-  bool check = true;
   SignupForm({super.key});
 
   @override
@@ -23,58 +21,56 @@ class SignupForm extends StatelessWidget {
           SvgPicture.asset(signupImg),
           const Text(
             "Create your account",
-            style: TextStyle(
-                fontFamily: "klasik", fontSize: 24, color: Color(darkPurple)),
+            style: header,
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+          const SizedBox(height: 20),
+
+          //! Email Input
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: TextField(
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                focusColor: Colors.white,
-                filled: true,
-                prefixIcon: Icon(Icons.mail),
-                prefixIconColor: Color(orange),
-                labelText: "Email",
-                labelStyle: klasik,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(orange)),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
+              decoration: customTextFieldDecoration(
+                  hint: "Email",
+                  prefixIcon: const Icon(Icons.mail),
+                  isWhite: true),
             ),
           ),
+          //! Checkbox 
           Padding(
             padding: const EdgeInsets.all(1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Checkbox(
-                  value: check,
-                  onChanged: (vla) {},
-                  activeColor: const Color(orange),
-                ),
+                Obx(() => Checkbox(
+                      value: isChecked.value,
+                      onChanged: (value) => isChecked.value = value!,
+                      activeColor: const Color(orange),
+                    )),
                 const Text(
                   "Email me about special pricing and more",
                   style: manrope,
-                )
+                ),
               ],
             ),
           ),
+
+          //! Create Account Button
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Button("Create Account", () {
-              Get.off(const PersonalInfo());
+              Get.off(PersonalInfo(), arguments: {
+                //? notes
+                //! how to pass the arguments dammmn
+                // "email": emailController.text,
+                // "isChecked": isChecked.value, // Pass checkbox value
+                //! and this how to recive them in the personalInfo class
+                // final String email = Get.arguments["email"];
+                // final bool isChecked = Get.arguments["isChecked"];
+              });
             }),
           ),
-          //! divider
+
+          //! Divider
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 6, vertical: 10),
             child: Row(
@@ -96,6 +92,8 @@ class SignupForm extends StatelessWidget {
               ],
             ),
           ),
+
+          //! Social Media Buttons
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: GoogleButton(),

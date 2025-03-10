@@ -12,3 +12,13 @@ map still yet
 community oh gosh 
 
 settings damn 
+
+
+
+Get.off(PersonalInfo(), arguments: {
+                //! how to pass the arguments dammmn
+                // "email": emailController.text,
+                // "isChecked": isChecked.value, // Pass checkbox value
+                //! and this how to recive them in the personalInfo class
+                // final String email = Get.arguments["email"];
+                // final bool isChecked = Get.arguments["isChecked"];

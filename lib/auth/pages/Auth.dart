@@ -50,12 +50,12 @@ class _AuthState extends State<Auth> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     //! this is lorem info shit can be easily remove if no like :D
-                    GestureDetector(
-                        onTap: () {
+                    IconButton(
+                        onPressed: () {
                           showInfoPopup(context,
                               "Hello, this is an info message!Hello, this is an info message!Hello, this is an info message!Hello, this is an info message!Hello, this is an info message!");
                         },
-                        child: SvgPicture.asset("assets/images/question.svg"))
+                        icon: SvgPicture.asset("assets/images/question.svg"))
                   ],
                 ),
               ),

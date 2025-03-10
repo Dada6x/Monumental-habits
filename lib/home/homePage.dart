@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         Positioned.fill(
           child: SvgPicture.asset(
             height: MediaQuery.of(context).size.height,
-            'assets/images/testbackground11.svg',
+            backGround2,
             fit: BoxFit.cover,
           ),
         ),
@@ -54,14 +54,20 @@ class HomePage extends StatelessWidget {
               shape: const CircleBorder(),
               onPressed: () {
                 navController.changePage(0);
-                Get.dialog(Center(
-                  child: Container(
-                    width: 500,
-                    height: 200,
-                    color: Colors.white,
-                    child: Text("make new habbit niggga"),
+                Get.dialog(
+                  const Center(
+                    child: SizedBox(
+                      width: 500,
+                      height: 200,
+                      child: Material(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text("Make new habit"),
+                        ),
+                      ),
+                    ),
                   ),
-                ));
+                );
               },
               backgroundColor: const Color(orange),
               child: const Icon(Icons.add, size: 30, color: Color(darkPurple)),
@@ -73,64 +79,49 @@ class HomePage extends StatelessWidget {
             child: Obx(() => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    //TODO make function instead of repeating this shit
-                    //! dashboard
-                    IconButton(
-                        onPressed: () => navController.changePage(0),
-                        icon: SvgPicture.asset(
-                          navController.currentIndex.value == 0
-                              ? "assets/images/dashboardcolored.svg"
-                              : "assets/images/dashboardUncolored.svg",
-                          width:
-                              navController.currentIndex.value == 0 ? 32 : 21,
-                          height:
-                              navController.currentIndex.value == 0 ? 32 : 21,
-                        )),
-                    //! maps
+                    buildNavIcon(
+                        navController,
+                        0,
+                        "assets/images/dashboardcolored.svg",
+                        "assets/images/dashboardUncolored.svg"),
                     Padding(
                       padding: const EdgeInsets.only(right: 30),
-                      child: IconButton(
-                          onPressed: () => navController.changePage(1),
-                          icon: SvgPicture.asset(
-                            navController.currentIndex.value == 1
-                                ? "assets/images/mapsColored.svg"
-                                : "assets/images/mapsUncolored.svg",
-                            width:
-                                navController.currentIndex.value == 1 ? 35 : 24,
-                            height:
-                                navController.currentIndex.value == 1 ? 35 : 24,
-                          )),
+                      child: buildNavIcon(
+                          navController,
+                          1,
+                          "assets/images/mapsColored.svg",
+                          "assets/images/mapsUncolored.svg"),
                     ),
-
-                    //! community
-                    IconButton(
-                        onPressed: () => navController.changePage(2),
-                        icon: SvgPicture.asset(
-                          navController.currentIndex.value == 2
-                              ? "assets/images/ColoredCommunity.svg"
-                              : "assets/images/Community.svg",
-                          width:
-                              navController.currentIndex.value == 2 ? 35 : 24,
-                          height:
-                              navController.currentIndex.value == 2 ? 35 : 24,
-                        )),
-                    //! Settings
-                    IconButton(
-                        onPressed: () => navController.changePage(3),
-                        icon: SvgPicture.asset(
-                          navController.currentIndex.value == 3
-                              ? "assets/images/SettingsColored.svg"
-                              : "assets/images/SettingsUncolored.svg",
-                          width:
-                              navController.currentIndex.value == 3 ? 35 : 24,
-                          height:
-                              navController.currentIndex.value == 3 ? 35 : 24,
-                        )),
+                    buildNavIcon(
+                        navController,
+                        2,
+                        "assets/images/ColoredCommunity.svg",
+                        "assets/images/Community.svg"),
+                    buildNavIcon(
+                        navController,
+                        3,
+                        "assets/images/SettingsColored.svg",
+                        "assets/images/SettingsUncolored.svg"),
                   ],
                 )),
           ),
         ),
       ],
+    );
+  }
+
+  /// **Reusable function to build Bottom Navigation Icons**
+  Widget buildNavIcon(NavigationController navController, int pageIndex,
+      String selectedPath, String unselectedPath) {
+    return IconButton(
+      onPressed: () => navController.changePage(pageIndex),
+      icon: SvgPicture.asset(
+        navController.currentIndex.value == pageIndex
+            ? selectedPath
+            : unselectedPath,
+        width: navController.currentIndex.value == pageIndex ? 35 : 24,
+        height: navController.currentIndex.value == pageIndex ? 35 : 24,
+      ),
     );
   }
 }

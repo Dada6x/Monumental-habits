@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/auth/pages/Auth.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfield.dart';
+import 'package:monumental_habits/widgets/textfields.dart';
 
 class PersonalInfo extends StatelessWidget {
-  const PersonalInfo({super.key});
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  PersonalInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    bool ispassword = true;
     return Scaffold(
       backgroundColor: const Color(background),
       body: Stack(
@@ -22,7 +23,7 @@ class PersonalInfo extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: SvgPicture.asset(
-              "assets/images/BackgroundClouds.svg",
+              backGround,
               fit: BoxFit.cover,
             ),
           ),
@@ -33,10 +34,7 @@ class PersonalInfo extends StatelessWidget {
               children: [
                 const Text(
                   "Set Your personal Info ",
-                  style: TextStyle(
-                      fontFamily: "klasik",
-                      fontSize: 24,
-                      color: Color(darkPurple)),
+                  style: header,
                 ),
                 Stack(children: [
                   //! need some work for updating the image
@@ -60,31 +58,27 @@ class PersonalInfo extends StatelessWidget {
                             color: Color(orange)),
                       )),
                 ]),
-                const TextField(
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    focusColor: Colors.white,
-                    filled: true,
-                    prefixIcon: Icon(Icons.person),
-                    prefixIconColor: Color(orange),
-                    labelText: "Name",
-                    labelStyle: klasik,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(orange)),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
+                //! name
+                TextField(
+                  decoration: customTextFieldDecoration(
+                      hint: "Name",
+                      prefixIcon: const Icon(Icons.person),
+                      isWhite: true),
                 ),
-                projectPasswordTextfieldWhite(ispassword),
-                // confirm password
-                projectPasswordTextfieldWhite(ispassword),
-
+                //! password
+                PasswordTextField(
+                  controller: passwordController,
+                  hint: "Password",
+                  isWhite: true,
+                ),
+                //! confirm Password
+                PasswordTextField(
+                  controller: confirmPasswordController,
+                  hint: "Confirm Password",
+                  isWhite: true,
+                ),
                 Button("next", () {
-            Get.to(const HomePage());
+                  Get.to(const HomePage());
                 }),
               ],
             ),
@@ -105,64 +99,48 @@ class imagepickerdialog extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: SizedBox(
           width: SizeConfig.screenWidth * 0.8,
-          height: SizeConfig.screenHeight * 0.22,
-          child: Column(
-            children: [
-              const Padding(
-                padding:
-                    EdgeInsets.only(top: 10.0, left: 10, right: 10, bottom: 25),
-                child: Center(
-                  child: Text(
-                    " Choose ",
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          height: SizeConfig.screenHeight * 0.19,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
-                        onPressed: () {
-                          //! go to gallery
-                        },
-                        child: const Column(
-                          children: [
-                            Icon(
-                              Icons.image,
-                              size: 32,
-                              color: Color(orange),
-                            ),
-                            Text(
-                              "Gallery",
-                              style: manrope,
-                            ),
-                          ],
-                        )), //go to the full map
-                    TextButton(
-                        onPressed: () {
-                          //! go to Camera
-                        },
-                        child: const Column(
-                          children: [
-                            Icon(
-                              Icons.camera,
-                              color: Color(orange),
-                              size: 32,
-                            ),
-                            Text(
-                              "Camera",
-                              style: manrope,
-                            ),
-                          ],
-                        ))
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.image,
+                        size: 40,
+                        color: Color(orange),
+                      ),
+                    ),
+                    const Text(
+                      "Gallery",
+                      style: manrope,
+                    )
                   ],
-                ),
-              )
-            ],
+                ), //go to the full map
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.camera,
+                        size: 40,
+                        color: Color(orange),
+                      ),
+                    ),
+                    const Text(
+                      "Camera",
+                      style: manrope,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

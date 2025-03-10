@@ -13,6 +13,13 @@ const intro2 = "assets/images/intro2.svg";
 const intro3 = "assets/images/intro3.svg";
 const intro4 = "assets/images/intro4.svg";
 const signupImg = "assets/images/CreateYourAccount.svg";
+const splashScreen = "assets/images/splachScreen.png";
+const questionIcon = "assets/images/question.svg";
+const backGround = "assets/images/BackgroundClouds.svg";
+const forgotPassword = "assets/images/ForgotPassword.svg";
+const mailImage = "assets/images/mailImage.svg";
+const keysIcons = "assets/images/Keys.svg";
+const backGround2 = "assets/images/BackGround2.svg";
 //! define an textStyle with the color and the size fixed
 // make reusable widgets
 //!

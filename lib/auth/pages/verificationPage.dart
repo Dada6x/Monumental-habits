@@ -7,7 +7,7 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfield.dart';
+import 'package:monumental_habits/widgets/textfields.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
@@ -50,8 +50,7 @@ class _VerificationPageState extends State<VerificationPage> {
               SvgPicture.asset(
                 width: SizeConfig.screenWidth,
                 height: SizeConfig.screenHeight,
-                //TODO change bacground here also
-                "assets/images/BackgroundCloudss.svg",
+                "assets/images/BackgroundClouds.svg",
                 fit: BoxFit.cover,
               ),
               verified
@@ -67,7 +66,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             children: [BackButton()],
                           ),
                           Column(children: [
-                            SvgPicture.asset("assets/images/mailImage.svg"),
+                            SvgPicture.asset(mailImage),
                             const Text(
                               "Enter The 6 Digit Code ",
                               style: header,
@@ -88,8 +87,9 @@ class _VerificationPageState extends State<VerificationPage> {
                                   autofocus: true,
                                   underlineColor: const Color(darkPurple),
                                   //!in verification page when the code is right no need for the user to press enter instead teh underlienfocusedcolor will be set green and i set an value to that
-                                  underlineUnfocusedColor:
-                                      verified ? Colors.green : Color(orange),
+                                  underlineUnfocusedColor: verified
+                                      ? Colors.green
+                                      : const Color(orange),
                                   fullBorder: true,
                                   length: 6,
                                   onCompleted: (String value) {},
@@ -144,6 +144,8 @@ class _VerificationPageState extends State<VerificationPage> {
 // ignore: must_be_immutable
 class NewPassword extends StatelessWidget {
 //! old password controller
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 //! new password controller and func
   NewPassword({super.key});
   bool ispassword = true;
@@ -168,7 +170,7 @@ class NewPassword extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  "assets/images/Keys.svg",
+                  keysIcons,
                   width: 200,
                   height: 200,
                 ),
@@ -176,16 +178,24 @@ class NewPassword extends StatelessWidget {
                   "Enter New Password : ",
                   style: header,
                 ),
+                //! password
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-                  child: projectPasswordTextfieldWhite(ispassword),
-                ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 20),
+                    child: PasswordTextField(
+                      controller: passwordController,
+                      hint: " Password",
+                      isWhite: true,
+                    )),
+                //! confirm password
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-                  child: projectPasswordTextfieldWhite(ispassword),
-                ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 20),
+                    child: PasswordTextField(
+                      controller: confirmPasswordController,
+                      hint: " Confirm Password",
+                      isWhite: true,
+                    )),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),

@@ -27,7 +27,7 @@ class LoginForm extends StatelessWidget {
             child: TextField(
               controller: emailController,
               decoration: customTextFieldDecoration(
-                  hint: "Email", prefixIcon: const Icon(Icons.person),isWhite: false),
+                  hint: "Email", prefixIcon: const Icon(Icons.person_outline_rounded),isWhite: false),
             )),
         //! Password
         Padding(
@@ -40,7 +40,7 @@ class LoginForm extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
           child: Button("Login", () {
-            Get.to(const HomePage());
+            Get.to( const HomePage());
           }),
         ),
         //! forgot password

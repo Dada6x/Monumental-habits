@@ -78,7 +78,7 @@ class PersonalInfo extends StatelessWidget {
                   isWhite: true,
                 ),
                 Button("next", () {
-                  Get.to(const HomePage());
+                  Get.to( const HomePage());
                 }),
               ],
             ),

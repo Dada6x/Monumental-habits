@@ -24,7 +24,6 @@ class SignupForm extends StatelessWidget {
             style: header,
           ),
           const SizedBox(height: 20),
-
           //! Email Input
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -53,7 +52,6 @@ class SignupForm extends StatelessWidget {
               ],
             ),
           ),
-
           //! Create Account Button
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -92,7 +90,6 @@ class SignupForm extends StatelessWidget {
               ],
             ),
           ),
-
           //! Social Media Buttons
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),

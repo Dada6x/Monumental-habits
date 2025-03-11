@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
 import 'package:monumental_habits/util/helper.dart';
+import 'package:monumental_habits/util/sizedconfig.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,24 +22,26 @@ class HomePage extends StatelessWidget {
           ),
         ),
         Scaffold(
+          drawer: Drawer(
+            width: SizeConfig.screenWidth * 0.3,
+          ),
           backgroundColor: Colors.transparent,
           extendBody: true,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {},
-            ),
-            title: const Text(
-              "HomePage",
-              style: manrope,
-            ),
+            title: Obx(() => Text(
+                  title(navController.currentIndex.value),
+                  style: manrope,
+                )),
             centerTitle: true,
             actions: const [
               Padding(
                 padding: EdgeInsets.only(right: 20),
-                child: CircleAvatar(),
+                child: CircleAvatar(
+                    backgroundImage: AssetImage(
+                    "assets/images/person.png",
+                )),
               )
             ],
           ),
@@ -48,31 +51,33 @@ class HomePage extends StatelessWidget {
               )),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: FloatingActionButton(
-              shape: const CircleBorder(),
-              onPressed: () {
-                navController.changePage(0);
-                Get.dialog(
-                  const Center(
-                    child: SizedBox(
-                      width: 500,
-                      height: 200,
-                      child: Material(
-                        color: Colors.white,
-                        child: Center(
-                          child: Text("Make new habit"),
-                        ),
-                      ),
+          floatingActionButton: Obx(() {
+            return navController.currentIndex.value != 3
+                ? Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: FloatingActionButton(
+                      shape: const CircleBorder(),
+                      onPressed: () {
+                        if (navController.currentIndex.value == 0) {
+                          newHabbit();
+                          //! the floating action button should be changed to tick used to save habit
+                        } else if (navController.currentIndex.value == 1) {
+                          newMap();
+                        } else if (navController.currentIndex.value == 2) {
+                          newMessage();
+                        } else if (navController.currentIndex.value == 3) {
+                          // Optionally handle index 3 here if needed
+                        }
+                      },
+                      backgroundColor: const Color(orange),
+                      child: const Icon(Icons.add,
+                          size: 30, color: Color(darkPurple)),
                     ),
-                  ),
-                );
-              },
-              backgroundColor: const Color(orange),
-              child: const Icon(Icons.add, size: 30, color: Color(darkPurple)),
-            ),
-          ),
+                  )
+                : SizedBox(); // When index is 3, show nothing (or SizedBox)
+          }),
+          // When index is 3, show nothing (or SizedBox)
+
           bottomNavigationBar: BottomAppBar(
             color: Colors.white,
             shape: const CircularNotchedRectangle(),
@@ -110,7 +115,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /// **Reusable function to build Bottom Navigation Icons**
+  //! Bottom navigation bar Icons
   Widget buildNavIcon(NavigationController navController, int pageIndex,
       String selectedPath, String unselectedPath) {
     return IconButton(
@@ -124,4 +129,70 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+//! function from the BAG GODDAMNNNN IT
+// it works at least hehe
+String title(int PageIndex) {
+  if (PageIndex == 0) {
+    return "HomePage";
+  } else if (PageIndex == 1)
+    return "Maps";
+  else if (PageIndex == 2)
+    return "Community";
+  else if (PageIndex == 3) return "Settings";
+  return "";
+}
+
+Future newHabbit() {
+  return Get.dialog(
+    const Center(
+      child: SizedBox(
+        width: 300,
+        height: 200,
+        child: Material(
+          color: Color(orange),
+          child: Center(
+            child: Text("Make new habit"),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+//! when making Maps inshallah
+Future newMap() {
+  return Get.dialog(
+    const Center(
+      child: SizedBox(
+        width: 300,
+        height: 200,
+        child: Material(
+          color: Colors.green,
+          child: Center(
+            child: Text("Make new Map"),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+//! when making chatting inshallah
+Future newMessage() {
+  return Get.dialog(
+    const Center(
+      child: SizedBox(
+        width: 300,
+        height: 200,
+        child: Material(
+          color: Colors.amber,
+          child: Center(
+            child: Text("Make new MESSAGE NIGGA"),
+          ),
+        ),
+      ),
+    ),
+  );
 }

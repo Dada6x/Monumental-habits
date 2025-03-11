@@ -47,7 +47,7 @@ class PasswordTextField extends StatelessWidget {
             ),
             fillColor: isWhite ? Colors.white : const Color(lightOrange),
             filled: true,
-            prefixIcon: const Icon(Icons.key, color: Color(orange)),
+            prefixIcon: const Icon(Icons.lock_open_rounded, color: Color(orange)),
             labelText: hint,
             labelStyle: klasik,
             enabledBorder: const OutlineInputBorder(

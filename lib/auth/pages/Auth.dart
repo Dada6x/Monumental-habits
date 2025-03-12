@@ -74,8 +74,9 @@ class _AuthState extends State<Auth> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: isExpanded ? const Color(background) : Colors.white,
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(23)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(23),
+                    ),
                   ),
                   child: SingleChildScrollView(
                     child: Column(

@@ -13,7 +13,7 @@ InputDecoration customTextFieldDecoration(
     prefixIcon: prefixIcon,
     prefixIconColor: const Color(orange),
     labelText: hint,
-    labelStyle: klasik,
+    labelStyle: klasikHint,
     enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(color: Colors.transparent),
       borderRadius: BorderRadius.all(Radius.circular(10)),

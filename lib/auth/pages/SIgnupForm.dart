@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/personalInfo.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfields.dart';
+import 'package:monumental_habits/widgets/text_fields.dart';
 
 class SignupForm extends StatelessWidget {
   final emailController = TextEditingController();
@@ -21,7 +21,7 @@ class SignupForm extends StatelessWidget {
           SvgPicture.asset(signupImg),
           const Text(
             "Create your account",
-            style: header,
+            style: klasikHeader,
           ),
           const SizedBox(height: 20),
           //! Email Input
@@ -34,7 +34,7 @@ class SignupForm extends StatelessWidget {
                   isWhite: true),
             ),
           ),
-          //! Checkbox 
+          //! Checkbox
           Padding(
             padding: const EdgeInsets.all(1),
             child: Row(
@@ -43,7 +43,7 @@ class SignupForm extends StatelessWidget {
                 Obx(() => Checkbox(
                       value: isChecked.value,
                       onChanged: (value) => isChecked.value = value!,
-                      activeColor: const Color(orange),
+                      activeColor: const Color(darkOrange),
                     )),
                 const Text(
                   "Email me about special pricing and more",

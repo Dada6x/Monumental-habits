@@ -6,7 +6,7 @@ import 'package:monumental_habits/auth/pages/Auth.dart';
 import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfields.dart';
+import 'package:monumental_habits/widgets/text_fields.dart';
 
 class forgetPassword extends StatelessWidget {
   const forgetPassword({super.key});
@@ -28,10 +28,7 @@ class forgetPassword extends StatelessWidget {
                 children: [BackButton()],
               ),
             ),
-            const Text(
-              "Forgot your password ?",
-              style: header
-            ),
+            const Text("Forgot your password ?", style: klasikHeader),
             Center(child: SvgPicture.asset(forgotPassword)),
             Padding(
               padding: const EdgeInsets.all(20),

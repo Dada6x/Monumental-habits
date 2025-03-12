@@ -2,46 +2,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
+import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final NavigationController navController = Get.put(NavigationController());
+  final HabitController habitController = Get.put(HabitController());
+  final PageController _pageController =
+      PageController(); // Controls background images
+
+  final List<String> backgroundImages = [
+    'assets/images/BackGround2.svg', // HomePage
+    'assets/images/bacground22.svg', // Community
+    'assets/images/DarkModeMoon.svg', // Maps
+    'assets/images/BackGround2.svg', // HomePage
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final NavigationController navController = Get.put(NavigationController());
-
     return Stack(
       children: [
+        // Background PageView
         Positioned.fill(
-          child: SvgPicture.asset(
-            height: MediaQuery.of(context).size.height,
-            backGround2,
-            fit: BoxFit.cover,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: backgroundImages.length,
+            physics:
+                const NeverScrollableScrollPhysics(), // Disable manual swipe
+            itemBuilder: (context, index) {
+              return SvgPicture.asset(
+                backgroundImages[index],
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              );
+            },
           ),
         ),
+
+        // Main Content
         Scaffold(
-          drawer: Drawer(
-            width: SizeConfig.screenWidth * 0.3,
-          ),
+          drawer: Drawer(width: SizeConfig.screenWidth * 0.3),
           backgroundColor: Colors.transparent,
           extendBody: true,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: Obx(() => Text(
-                  title(navController.currentIndex.value),
-                  style: manrope,
-                )),
+            title: Obx(() =>
+                Text(title(navController.currentIndex.value), style: manrope)),
             centerTitle: true,
             actions: const [
               Padding(
                 padding: EdgeInsets.only(right: 20),
-                child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                    "assets/images/person.png",
-                )),
+                child: CircleAvatar(),
               )
             ],
           ),
@@ -51,33 +67,49 @@ class HomePage extends StatelessWidget {
               )),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Obx(() {
-            return navController.currentIndex.value != 3
-                ? Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: FloatingActionButton(
-                      shape: const CircleBorder(),
-                      onPressed: () {
-                        if (navController.currentIndex.value == 0) {
-                          newHabbit();
-                          //! the floating action button should be changed to tick used to save habit
-                        } else if (navController.currentIndex.value == 1) {
-                          newMap();
-                        } else if (navController.currentIndex.value == 2) {
-                          newMessage();
-                        } else if (navController.currentIndex.value == 3) {
-                          // Optionally handle index 3 here if needed
-                        }
-                      },
-                      backgroundColor: const Color(orange),
-                      child: const Icon(Icons.add,
-                          size: 30, color: Color(darkPurple)),
-                    ),
-                  )
-                : SizedBox(); // When index is 3, show nothing (or SizedBox)
-          }),
-          // When index is 3, show nothing (or SizedBox)
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Obx(() => navController.currentIndex.value != 3
+                ? FloatingActionButton(
+                    shape: const CircleBorder(),
+                    onPressed: () {
+                      if (navController.currentIndex.value == 0) {
+                        navController.changePage(4);
+                        //! the floating action button should be changed to tick used to save habit
+                        //$ new map
+                      } else if (navController.currentIndex.value == 1) {
+                        newMap();
+                        //$ new message
+                      } else if (navController.currentIndex.value == 2) {
+                        newMessage();
+                        //$ Save the new habit
+                      } else if (navController.currentIndex.value == 4) {
+                        habitController.saveHabit();
+                        navController.changePage(0);
+                        habitController.reset();
+                        // make the controller empty of the textfield
 
+                        // flush the info in the 4
+                      }
+                    },
+                    backgroundColor: const Color(orange),
+                    child: navController.currentIndex.value == 4
+                        ? SvgPicture.asset(
+                            "assets/images/true.svg",
+                            width: 20,
+                            height: 20,
+                          )
+                        : SvgPicture.asset(
+                            "assets/images/plus.svg",
+                            width: 23,
+                            height: 23,
+                          ),
+                  )
+                : const SizedBox(
+                    height: 0,
+                    width: 0,
+                  )),
+          ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.white,
             shape: const CircularNotchedRectangle(),
@@ -119,7 +151,14 @@ class HomePage extends StatelessWidget {
   Widget buildNavIcon(NavigationController navController, int pageIndex,
       String selectedPath, String unselectedPath) {
     return IconButton(
-      onPressed: () => navController.changePage(pageIndex),
+      onPressed: () {
+        navController.changePage(pageIndex);
+        _pageController.animateToPage(
+          pageIndex,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      },
       icon: SvgPicture.asset(
         navController.currentIndex.value == pageIndex
             ? selectedPath
@@ -131,37 +170,16 @@ class HomePage extends StatelessWidget {
   }
 }
 
-//! function from the BAG GODDAMNNNN IT
-// it works at least hehe
+//! Function to get page title
 String title(int PageIndex) {
-  if (PageIndex == 0) {
-    return "HomePage";
-  } else if (PageIndex == 1)
-    return "Maps";
-  else if (PageIndex == 2)
-    return "Community";
-  else if (PageIndex == 3) return "Settings";
+  if (PageIndex == 0) return "HomePage";
+  if (PageIndex == 1) return "Maps";
+  if (PageIndex == 2) return "Community";
+  if (PageIndex == 3) return "Settings";
+  if (PageIndex == 4) return "New Habit";
   return "";
 }
 
-Future newHabbit() {
-  return Get.dialog(
-    const Center(
-      child: SizedBox(
-        width: 300,
-        height: 200,
-        child: Material(
-          color: Color(orange),
-          child: Center(
-            child: Text("Make new habit"),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-//! when making Maps inshallah
 Future newMap() {
   return Get.dialog(
     const Center(

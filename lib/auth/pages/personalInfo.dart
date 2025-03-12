@@ -5,7 +5,7 @@ import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfields.dart';
+import 'package:monumental_habits/widgets/text_fields.dart';
 
 class PersonalInfo extends StatelessWidget {
   final nameController = TextEditingController();
@@ -34,7 +34,7 @@ class PersonalInfo extends StatelessWidget {
               children: [
                 const Text(
                   "Set Your personal Info ",
-                  style: header,
+                  style: klasikHeader,
                 ),
                 Stack(children: [
                   //! need some work for updating the image
@@ -78,7 +78,7 @@ class PersonalInfo extends StatelessWidget {
                   isWhite: true,
                 ),
                 Button("next", () {
-                  Get.to( const HomePage());
+                  Get.to(HomePage());
                 }),
               ],
             ),

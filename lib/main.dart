@@ -4,6 +4,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/introduction_splashscreen/introductionScreens.dart';
 
+
 import 'package:monumental_habits/util/helper.dart';
 
 import 'package:monumental_habits/util/sizedconfig.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       home: Builder(
         builder: (context) {
           SizeConfig.init(context); // Initialize screen size
-          return  const HomePage();
+          return   HomePage();
         },
       ),
     );

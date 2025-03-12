@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:monumental_habits/pages/dashboard/table.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class Dashboard extends StatelessWidget {
@@ -93,8 +94,9 @@ class Dashboard extends StatelessWidget {
               ),
             ),
           ),
-        ), 
+        ),
         //! the DASHBOARD / TABLE OF THE WEEKS
+        const HabitTable()
       ],
     );
   }
@@ -102,7 +104,7 @@ class Dashboard extends StatelessWidget {
   String getRandomQuote() {
     final List<String> quotes = [
       "We first make our habits, and then our habits make us. - John Dryden",
-       "Success is the sum of small efforts, repeated day in and day out. - Robert Collier",
+      "Success is the sum of small efforts, repeated day in and day out. - Robert Collier",
       "The secret of getting ahead is getting started. - Mark Twain",
       "Motivation is what gets you started. Habit is what keeps you going. - Jim Ryun",
       "Your future is created by what you do today, not tomorrow. - Robert Kiyosaki",

@@ -7,7 +7,7 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/textfields.dart';
+import 'package:monumental_habits/widgets/text_fields.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
@@ -69,18 +69,18 @@ class _VerificationPageState extends State<VerificationPage> {
                             SvgPicture.asset(mailImage),
                             const Text(
                               "Enter The 6 Digit Code ",
-                              style: header,
+                              style: klasikHeader,
                             ),
                             const Text(
                               "Sent Via EmailS :",
-                              style: header,
+                              style: klasikHeader,
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8.0, vertical: 20),
                               child: VerificationCode(
                                   fillColor: const Color(orange),
-                                  textStyle: header,
+                                  textStyle: klasikHeader,
                                   underlineWidth: 3,
                                   cursorColor: const Color(orange),
                                   digitsOnly: true,
@@ -176,7 +176,7 @@ class NewPassword extends StatelessWidget {
                 ),
                 const Text(
                   "Enter New Password : ",
-                  style: header,
+                  style: klasikHeader,
                 ),
                 //! password
                 Padding(

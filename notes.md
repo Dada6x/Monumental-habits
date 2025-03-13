@@ -253,3 +253,19 @@ store
 userSelectedDays
 HabitsName 
 HabitsTimeReminder
+
+
+Light Mode
+background 0xFFFFF3E9 creamy			
+buttons 0xFFFDA758 orange(light)
+clouds 0xFFFFDFC1
+fonts 0xFF573353 darkpurple
+textfields 0xFFAA98A8 lavander  
+
+DARKMODE 
+
+background 0xFF151437
+buttons 0xFFE3DEEF
+clouds 0xFFB5A8D5 
+fonts 0xFFFFFFFF or darkpurple or 
+textfields 0xFFAA98A8 lavander  

@@ -11,22 +11,20 @@ class HomePage extends StatelessWidget {
 
   final NavigationController navController = Get.put(NavigationController());
   final HabitController habitController = Get.put(HabitController());
-  final PageController _pageController =
-      PageController(); // Controls background images
-
+  final PageController _pageController = PageController();
   final List<String> backgroundImages = [
-    'assets/images/BackGround2.svg', // HomePage
-    'assets/images/bacground22.svg', // Community
-    'assets/images/DarkModeMoon.svg', // Maps
-    'assets/images/BackGround2.svg', // HomePage
+    'assets/images/BackGround2.svg', // HomePage  backGround
+    'assets/images/bacground22.svg', // Community backGround
+    'assets/images/DarkMode.svg', // Maps backGround
+    'assets/images/DarkModeMoon.svg', // HomePage backGround
   ];
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Background PageView
         Positioned.fill(
+          bottom: SizeConfig.screenHeight * 0.05,
           child: PageView.builder(
             controller: _pageController,
             itemCount: backgroundImages.length,
@@ -42,7 +40,6 @@ class HomePage extends StatelessWidget {
             },
           ),
         ),
-
         // Main Content
         Scaffold(
           drawer: Drawer(width: SizeConfig.screenWidth * 0.3),

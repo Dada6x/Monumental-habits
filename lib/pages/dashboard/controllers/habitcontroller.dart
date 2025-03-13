@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class HabitController extends GetxController {
   var habitName = 'Null'.obs;
@@ -25,6 +24,26 @@ class HabitController extends GetxController {
     habitName.value = '';
     chosenTime.value = "01:00 Am";
     notificationsEnabled.value = false;
+    selectedDays.value = RxList<bool>(List.generate(7, (_) => false));
+  }
+
+  void delete() {
+    texTFiledController.clear();
+    habitName.value = '';
+    chosenTime.value = "01:00 Am";
+    notificationsEnabled.value = false;
+    selectedDays.value = RxList<bool>(List.generate(7, (_) => false));
+  }
+
+  void edit() {
+    //! take the habit name and put it here
+    texTFiledController.clear();
+    habitName.value = '';
+    //! take the habit chosenTime and put it here
+    chosenTime.value = "01:00 Am";
+    //! take the habit notificationChoice and put it here
+    notificationsEnabled.value = false;
+    //! take the habit selectedDays and put it here
     selectedDays.value = RxList<bool>(List.generate(7, (_) => false));
   }
 }

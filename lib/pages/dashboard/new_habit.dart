@@ -145,6 +145,8 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
     "SAT",
   ];
 
+  HabitFrequencyRadioButtons({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(

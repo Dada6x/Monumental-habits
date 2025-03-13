@@ -14,6 +14,8 @@ class Reminder extends StatelessWidget {
   final FixedExtentScrollController _minuteController =
       FixedExtentScrollController();
 
+  Reminder({super.key});
+
   void _saveReminder() {
     String formattedTime =
         "${selectedHour.value.toString().padLeft(2, '0')}:${selectedMinute.value.toString().padLeft(2, '0')} ${selectedPeriod.value}";

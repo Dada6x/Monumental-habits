@@ -88,6 +88,12 @@ TextStyle manropeOrangeAndPurple(BuildContext context) {
   );
 }
 
+const TextStyle manropeGrey = TextStyle(
+    fontFamily: "manrope",
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey);
+
 const TextStyle manrope2 = TextStyle(
   color: Colors.white,
   fontFamily: "Manrope",

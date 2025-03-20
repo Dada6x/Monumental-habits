@@ -42,7 +42,7 @@ class HabitTable extends StatelessWidget {
                     color: Colors.transparent,
                     width: 300,
                     height: 300,
-                    child: const Text("Please add Habits Niagga")),
+                    child: const Text("Please add Habits Niagga ⚠")),
               ),
             );
           }

@@ -17,7 +17,7 @@ Widget Button(String text, Function fun) {
       ),
     ),
     onPressed: () {
-      () => fun;
+       fun();
     },
     child: Text(
       text,

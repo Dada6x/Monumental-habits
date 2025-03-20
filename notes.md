@@ -246,35 +246,27 @@ if (time != null) {
 chosenTime.value = time;}
 }
 
-
 i should think of a way architecure for the data
-create habit controller 
+create habit controller
 store
 userSelectedDays
-HabitsName 
+HabitsName
 HabitsTimeReminder
 
-
 Light Mode
-background 0xFFFFF3E9 creamy			
+background 0xFFFFF3E9 creamy
 buttons 0xFFFDA758 orange(light)
 clouds 0xFFFFDFC1
 fonts 0xFF573353 darkpurple
-textfields 0xFFAA98A8 lavander  
+textfields 0xFFAA98A8 lavander
 
-DARKMODE 
+DARKMODE
 
 background 0xFF151437
 buttons 0xFFE3DEEF
-clouds 0xFFB5A8D5 
-fonts 0xFFFFFFFF or darkpurple or 
-textfields 0xFFAA98A8 lavander  
-
-
-
-
-
-
+clouds 0xFFB5A8D5
+fonts 0xFFFFFFFF or darkpurple or
+textfields 0xFFAA98A8 lavander
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -284,20 +276,20 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
 class HabitTable extends StatelessWidget {
-  final HabitController habitController = Get.find<HabitController>();
+final HabitController habitController = Get.find<HabitController>();
 
-  // Define the four colors to cycle through
-  final List<Color> randomRowColors = const [
-    Color(darkOrange), // Orange
-    Color(0xFFF65B4E), // Red
-    Color(0xFF29319F), // Indigo
-    Color(0xFF973456), // Pink
-  ];
+// Define the four colors to cycle through
+final List<Color> randomRowColors = const [
+Color(darkOrange), // Orange
+Color(0xFFF65B4E), // Red
+Color(0xFF29319F), // Indigo
+Color(0xFF973456), // Pink
+];
 
-  @override
-  Widget build(BuildContext context) {
-    DateTime today = DateTime.now();
-    List<String> weekDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+@override
+Widget build(BuildContext context) {
+DateTime today = DateTime.now();
+List<String> weekDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
     List<String> formattedWeekDays = List.generate(7, (index) {
       DateTime day = today
@@ -429,5 +421,15 @@ class HabitTable extends StatelessWidget {
         ),
       ),
     );
-  }
+
 }
+}
+
+# HOW THE HABIT SHIT WORKS
+
+dashboard ⟶ displaying the habit table
+habit info ⟶ displaying the habit details,calender , analytics
+habit table ⟶ displaying the habit name and days of repeat
+new Habit ⟶ entering new habit to
+reminder ⟶ adding reminder
+habit controller

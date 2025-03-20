@@ -16,7 +16,7 @@ class HabitCalendar extends StatefulWidget {
 
 class _HabitCalendarState extends State<HabitCalendar> {
   DateTime _selectedMonth = DateTime.now();
-  Map<int, int> habitStatus = {}; // Stores the habit data for the month
+  Map<int, int> habitStatus = {};
 
   @override
   void initState() {

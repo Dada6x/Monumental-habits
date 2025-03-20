@@ -14,7 +14,7 @@ class NavigationController extends GetxController {
     const Dashboard(), //0
     const Maps(), //1
     const Community(), //2
-    Settings(), //3
+    const Settings(), //3
     NewHabit(), //4
   ];
 

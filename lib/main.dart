@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/Theme/themes.dart';
-import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/introduction_splashscreen/introductionScreens.dart';
+import 'package:monumental_habits/notifications/notifications_service.dart';
 
 import 'package:monumental_habits/util/sizedconfig.dart';
 
@@ -10,6 +10,9 @@ void main() {
   // status bar color in the app dammmnscc
   // SystemChrome.setSystemUIOverlayStyle(
   //     const SystemUiOverlayStyle(statusBarColor: Color(orange)));
+  WidgetsFlutterBinding.ensureInitialized();
+//! init Notifications
+  NotificationsService().initNotification();
 
   runApp(const MyApp());
 }

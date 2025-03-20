@@ -91,7 +91,7 @@ class Dashboard extends StatelessWidget {
               ),
             ),
           ),
-          //! the DASHBOARD / TABLE OF THE WEEKS
+          //!  Habit Table
           Padding(
             padding: const EdgeInsets.all(10),
             child: SizedBox(
@@ -99,7 +99,7 @@ class Dashboard extends StatelessWidget {
               height: SizeConfig.screenHeight * 0.54,
               child: HabitTable(),
             ),
-          )
+          ),
         ],
       ),
     );

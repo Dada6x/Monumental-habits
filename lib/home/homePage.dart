@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
+import 'package:monumental_habits/notifications/notifications_service.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
@@ -89,6 +90,13 @@ class HomePage extends StatelessWidget {
                     navController.darkTheme.value = isDarkMode.value;
                   },
                 ),
+                IconButton(
+                  onPressed: () async {
+                    await NotificationsService().showNotification(
+                        title: "Notification", body: "Check this out !!!");
+                  },
+                  icon: const Icon(Icons.notifications),
+                )
               ],
             ),
           ),

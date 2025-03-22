@@ -16,10 +16,10 @@ void main() {
 
   runApp(const MyApp());
 }
-
+//ward is black piece of shit who suck cock and eat shit
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+//Ward checking shit 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

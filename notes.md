@@ -433,3 +433,226 @@ habit table ⟶ displaying the habit name and days of repeat
 new Habit ⟶ entering new habit to
 reminder ⟶ adding reminder
 habit controller
+
+THE CALANDER THAT DOSENT SHOW THE UNSELECTED DAYS
+but theres proplem so i need to see the abdo's response
+if it 1,2,3,4,5,8,7,9,, ..... then this code is not suitable
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
+import 'package:monumental_habits/util/helper.dart';
+import 'package:monumental_habits/util/sizedconfig.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+class HabitCalendar extends StatefulWidget {
+final Map<String, bool> selectedDays; // Accept the selectedDays map
+
+HabitCalendar({
+super.key,
+required this.selectedDays, // Required parameter for selectedDays
+});
+
+@override
+\_HabitCalendarState createState() => \_HabitCalendarState();
+}
+
+class \_HabitCalendarState extends State<HabitCalendar> {
+DateTime \_selectedMonth = DateTime.now();
+
+@override
+void initState() {
+super.initState();
+}
+
+void \_changeMonth(int offset) {
+setState(() {
+\_selectedMonth =
+DateTime(\_selectedMonth.year, \_selectedMonth.month + offset, 1);
+});
+}
+
+@override
+Widget build(BuildContext context) {
+return Padding(
+padding: const EdgeInsets.all(1.0),
+child: Column(
+children: [
+//! Month Selector
+Row(
+mainAxisAlignment: MainAxisAlignment.spaceBetween,
+children: [
+IconButton(
+icon: Icon(
+size: 18,
+Icons.arrow_back_ios_new_outlined,
+color: Theme.of(context).colorScheme.scrim),
+onPressed: () => _changeMonth(-1)),
+Text(
+DateFormat.yMMMM().format(_selectedMonth),
+style: TextStyle(
+fontSize: 20,
+fontWeight: FontWeight.bold,
+color: Theme.of(context).colorScheme.scrim),
+),
+IconButton(
+icon: Icon(
+size: 18,
+Icons.arrow_forward_ios_outlined,
+color: Theme.of(context).colorScheme.scrim),
+onPressed: () => _changeMonth(1)),
+],
+),
+const SizedBox(height: 8),
+//! Calendar UI
+Expanded(
+child: TableCalendar(
+firstDay: DateTime(2000, 1, 1),
+lastDay: DateTime(2100, 12, 31),
+focusedDay: \_selectedMonth,
+calendarFormat: CalendarFormat.month,
+headerVisible: false,
+calendarBuilders: CalendarBuilders(
+//! TODAY ##################
+todayBuilder: (context, day, focusedDay) {
+String dayOfWeek = DateFormat('E').format(day).toLowerCase();
+bool isActive = widget.selectedDays[dayOfWeek] ?? false;
+int currentDay = DateTime.now().day;
+if (!isActive) {
+return Padding(
+padding: const EdgeInsets.all(1.5),
+child: Container(
+width: 42,
+decoration: BoxDecoration(
+borderRadius: BorderRadius.circular(9),
+color: Theme.of(context).colorScheme.secondaryContainer,
+),
+child: Column(
+children: [
+Text(
+"$currentDay",
+style: TextStyle(
+fontWeight: FontWeight.bold,
+color: Get.isDarkMode
+? altPurple
+: const Color(orange)),
+),
+const SizedBox(height: 9),
+],
+),
+),
+);
+}
+return Padding(
+padding: const EdgeInsets.all(1.5),
+child: Container(
+width: 42,
+decoration: BoxDecoration(
+borderRadius: BorderRadius.circular(9),
+color: Theme.of(context).colorScheme.secondaryContainer,
+),
+child: Column(
+children: [
+Text(
+"$currentDay",
+style: TextStyle(
+fontWeight: FontWeight.bold,
+color: Get.isDarkMode
+? altPurple
+: const Color(orange)),
+),
+const SizedBox(height: 9),
+Container(
+width: 33,
+height: 33,
+decoration: BoxDecoration(
+color: Get.isDarkMode
+? altPurple
+: const Color(darkOrange),
+borderRadius: BorderRadius.circular(6),
+),
+),
+],
+),
+),
+);
+
+                //! THE REST OF DAYS   ##################
+              }, defaultBuilder: (context, date, _) {
+                int day = date.day;
+                String dayOfWeek = DateFormat('E').format(date).toLowerCase();
+                bool isActive = widget.selectedDays[dayOfWeek] ?? false;
+                if (!isActive) {
+                  return Padding(
+                    padding: const EdgeInsets.all(1.5),
+                    child: Container(
+                      width: 42,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9),
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer),
+                      child: Column(
+                        children: [
+                          Text(
+                            "$day",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.scrim,
+                            ),
+                          ),
+                          const SizedBox(height: 9),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.all(1.5),
+                  child: Container(
+                    width: 42,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9),
+                        color:
+                            Theme.of(context).colorScheme.secondaryContainer),
+                    child: Column(
+                      children: [
+                        Text(
+                          "$day",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.scrim,
+                          ),
+                        ),
+                        const SizedBox(height: 9),
+                        Container(
+                          width: 33,
+                          height: 33,
+                          decoration: BoxDecoration(
+                            color: Get.isDarkMode
+                                ? altPurple
+                                : const Color(darkOrange),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+              daysOfWeekVisible: true,
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                  weekdayStyle: manropeGrey, weekendStyle: manropeGrey),
+              rowHeight: SizeConfig.screenHeight * 0.088,
+              daysOfWeekHeight: 30,
+              calendarStyle: const CalendarStyle(
+                  cellPadding: EdgeInsets.all(2), isTodayHighlighted: true),
+              availableGestures: AvailableGestures.none,
+            ),
+          ),
+        ],
+      ),
+    );
+
+}
+}

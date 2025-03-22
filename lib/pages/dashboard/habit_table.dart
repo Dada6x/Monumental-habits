@@ -42,12 +42,11 @@ class HabitTable extends StatelessWidget {
                     color: Colors.transparent,
                     width: 300,
                     height: 300,
-                    child: const Text("Please add Habits Nigga ⚠")),
+                    child: const Text("Please add Habits  ⚠")),
               ),
             );
           }
           return Card(
-            // color: Theme.of(context).colorScheme.tertiary,
             color: Get.isDarkMode ? Colors.transparent : Colors.white,
             child: DataTable(
               headingRowHeight: 60,
@@ -82,7 +81,6 @@ class HabitTable extends StatelessWidget {
                     return DataColumn(
                       label: Container(
                         decoration: BoxDecoration(
-                          // color: Theme.of(context).colorScheme.tertiary,
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -109,7 +107,6 @@ class HabitTable extends StatelessWidget {
               ],
               rows: habitController.habits.map(
                 (habit) {
-                  // Get the row index
                   int rowIndex = habitController.habits.indexOf(habit);
                   return DataRow(
                     onSelectChanged: (value) {

@@ -6,12 +6,10 @@ class HabitController extends GetxController {
   RxList<Habit> habits = <Habit>[].obs;
   final TextEditingController textFieldController = TextEditingController();
 
-  // Temporary variables for habit creation
   var habitName = ''.obs;
   var chosenTime = "10:00 AM".obs;
   var notificationsEnabled = false.obs;
 
-  // Using a map for selected days instead of a list
   RxMap<String, bool> selectedDays = RxMap({
     'sun': false,
     'mon': false,
@@ -30,26 +28,26 @@ class HabitController extends GetxController {
         notificationsEnabled: notificationsEnabled.value,
         selectedDays: Map<String, bool>.from(selectedDays),
       ));
-      reset(); // Clear input fields after adding
+      reset();
     }
   }
 
-  void edit({
-    required String name,
-    required String time,
-    required bool notifications,
-    required Map<String, bool> days,
-  }) {
-    textFieldController.text = name;
-    habitName.value = name;
-    chosenTime.value = time;
-    notificationsEnabled.value = notifications;
-    selectedDays.value = Map<String, bool>.from(days);
-  }
+  // void edit({
+  //   required String name,
+  //   required String time,
+  //   required bool notifications,
+  //   required Map<String, bool> days,
+  // }) {
+  //   textFieldController.text = name;
+  //   habitName.value = name;
+  //   chosenTime.value = time;
+  //   notificationsEnabled.value = notifications;
+  //   selectedDays.value = Map<String, bool>.from(days);
+  // }
 
- void deleteHabit(Habit habit) {
-  habits.remove(habit); // Removes the habit from the list
-}
+  void deleteHabit(Habit habit) {
+    habits.remove(habit); // Removes the habit from the list
+  }
 
   void reset() {
     textFieldController.clear();
@@ -66,9 +64,6 @@ class HabitController extends GetxController {
       'sat': false,
     };
   }
+
+  void saveUpdatedHabit(habit) {}
 }
-
-
-
-
-

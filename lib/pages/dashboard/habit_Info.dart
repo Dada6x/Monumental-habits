@@ -33,7 +33,9 @@ class HabitInfoPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // should go to new habit with the
+            },
             icon: Icon(
               Icons.edit_outlined,
               color: Theme.of(context).colorScheme.scrim,
@@ -78,7 +80,9 @@ class HabitInfoPage extends StatelessWidget {
                                 style: klasikFun(context),
                                 overflow: TextOverflow.ellipsis),
                             SizedBox(height: SizeConfig.screenHeight * 0.005),
-                            infoRow(Icons.notifications_outlined,
+                            infoRow(
+                                Icons.notifications_outlined,
+                                //function to print everyday if the user selected it all
                                 "Repeat: ${getSelectedDays(habit.selectedDays)}"),
                             infoRow(Icons.restart_alt_outlined,
                                 "Reminder: ${habit.chosenTime}"),
@@ -134,7 +138,6 @@ class HabitInfoPage extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 //! Delete Button
                 Padding(
                   padding: EdgeInsets.symmetric(

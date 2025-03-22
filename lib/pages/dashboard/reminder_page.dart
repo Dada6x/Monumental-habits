@@ -22,6 +22,7 @@ class Reminder extends StatelessWidget {
 
     Get.back(result: formattedTime);
     print(formattedTime);
+    //! SEND IT TO THE NOTIFICATIONS
   }
 
   @override
@@ -45,22 +46,22 @@ class Reminder extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () => Get.back(),
-          child: const Text(
+          child: Text(
             "Cancel",
-            // style: manropeOrangeAndPurple(context),
+            style: manropeOrangeAndPurple(context),
           ),
         ),
         const Spacer(),
-        const Text(
+        Text(
           "Add Reminder",
-          // style: manropeFun(context),
+          style: manropeFun(context),
         ),
         const Spacer(),
         TextButton(
           onPressed: _saveReminder,
-          child: const Text(
+          child: Text(
             "Save",
-            // style: manropeOrangeAndPurple(context),
+            style: manropeOrangeAndPurple(context),
           ),
         ),
       ],

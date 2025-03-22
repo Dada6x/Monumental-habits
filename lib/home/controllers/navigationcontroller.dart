@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:monumental_habits/pages/community/community.dart';
 import 'package:monumental_habits/pages/dashboard/dashboard_page.dart';
+
 import 'package:monumental_habits/pages/dashboard/new_habit_page.dart';
 import 'package:monumental_habits/pages/maps/maps.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';

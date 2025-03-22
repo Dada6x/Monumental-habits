@@ -48,6 +48,11 @@ const TextStyle klasikHeader = TextStyle(
   fontSize: 25,
   color: Color(darkPurple),
 );
+const clockStyle = TextStyle(
+  fontFamily: "Klasik",
+  fontSize: 40,
+);
+
 //$ ------------------manrope------------------
 
 TextStyle manropeFun(BuildContext context) {

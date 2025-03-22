@@ -17,9 +17,17 @@ class NavigationController extends GetxController {
     const Community(), //2
     const Settings(), //3
     NewHabit(), //4
+    // EditHabit() //5
   ];
 
   void changePage(int index) {
     currentIndex.value = index;
   }
+
+  // void editHabti(Habit, int index) {
+  //   EditHabit(
+  //     habitAAA: Habit,
+  //   );
+  //   currentIndex.value = 5;
+  // }
 }

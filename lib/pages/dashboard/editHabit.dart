@@ -1,91 +1,142 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
-class NewHabit extends StatelessWidget {
+class EditHabit extends StatefulWidget {
+  final habitAAA; // habit passed for editing
   final HabitController habitController = Get.put(HabitController());
 
-  NewHabit({super.key});
+  EditHabit({super.key, this.habitAAA});
+
+  @override
+  _EditHabitState createState() => _EditHabitState();
+}
+
+class _EditHabitState extends State<EditHabit> {
+  @override
+  void initState() {
+    super.initState();
+    // Using WidgetsBinding to delay setting the state until after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.habitController.habitName.value = widget.habitAAA.name;
+      widget.habitController.chosenTime.value = widget.habitAAA.chosenTime;
+      widget.habitController.notificationsEnabled.value =
+          widget.habitAAA.notificationsEnabled;
+      widget.habitController.selectedDays.value =
+          Map<String, bool>.from(widget.habitAAA.selectedDays);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          //! Habit Name
-          TextField(
-            controller: habitController.textFieldController,
-            decoration: InputDecoration(
-              fillColor: Theme.of(context).colorScheme.tertiary,
-              filled: true,
-              prefixIconColor: Get.isDarkMode
-                  ? const Color(orange)
-                  : const Color(darkPurple),
-              labelText: "Enter new Habit ",
-              labelStyle: klasikHint,
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        surfaceTintColor: Colors.transparent,
+        forceMaterialTransparency: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text("Edit Habit", style: manropeFun(context)),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            //! Habit Name
+            TextField(
+              controller: TextEditingController(text: widget.habitAAA.name),
+              decoration: InputDecoration(
+                fillColor: Theme.of(context).colorScheme.tertiary,
+                filled: true,
+                prefixIconColor: Get.isDarkMode
+                    ? const Color(orange)
+                    : const Color(darkPurple),
+                labelStyle: klasikHint,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Get.isDarkMode ? altPurple : const Color(orange)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Get.isDarkMode ? altPurple : const Color(orange)),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              onChanged: (value) =>
+                  widget.habitController.habitName.value = value,
+            ),
+            //! Habit Frequency
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                decoration: customContainer(context),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Habit Frequency",
+                            style: manropeFun(context),
+                          ),
+                          const Spacer(),
+                          Text(
+                            "Custom",
+                            style: manropeOrangeAndPurple(context),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: HabitFreq(),
+                    ),
+                    const SizedBox(height: 10)
+                  ],
+                ),
               ),
             ),
-            onChanged: (value) => habitController.habitName.value = value,
-          ),
-          //! habit frequency
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Container(
-              decoration: customContainer(context),
-              child: Column(
-                children: [
-                  Padding(
+            //! Habit EditReminder
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: GestureDetector(
+                onTap: () async {
+                  final time = await Get.bottomSheet(
+                    EditReminder(),
+                    isScrollControlled: true,
+                  );
+                  if (time != null) {
+                    widget.habitController.chosenTime.value = time;
+                  }
+                },
+                child: Container(
+                  height: 60,
+                  decoration: customContainer(context),
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Text(
-                          textAlign: TextAlign.left,
-                          "Habit Frequency",
-                          style: manropeFun(context),
-                        ),
+                        Text("EditReminder", style: manropeFun(context)),
                         const Spacer(),
-                        Text(
-                          "Custom",
-                          style: manropeOrangeAndPurple(context),
-                        )
+                        Obx(() => Text(
+                              widget.habitController.chosenTime.value,
+                              style: manropeOrangeAndPurple(context),
+                            ))
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: HabitFrequencyRadioButtons(),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  )
-                ],
+                ),
               ),
             ),
-          ),
-          //!  Habit reminder
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: GestureDetector(
-              onTap: () async {
-                final time = await Get.bottomSheet(
-                  Reminder(),
-                  isScrollControlled: true,
-                );
-                if (time != null) {
-                  habitController.chosenTime.value = time;
-                }
-              },
+            //! Notifications Toggle
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
                 height: 60,
                 decoration: customContainer(context),
@@ -93,60 +144,47 @@ class NewHabit extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Text(
-                        "Reminder",
-                        style: manropeFun(context),
-                      ),
+                      Text("Notifications", style: manropeFun(context)),
                       const Spacer(),
-                      Obx(() => Text(
-                            habitController.chosenTime.value.toString(),
-                            style: manropeOrangeAndPurple(context),
-                          ))
+                      Obx(() => Switch(
+                          activeColor: const Color(darkOrange),
+                          inactiveThumbColor: const Color(darkPurple),
+                          inactiveTrackColor: const Color(lavander),
+                          trackOutlineColor:
+                              const WidgetStatePropertyAll(Colors.transparent),
+                          value:
+                              widget.habitController.notificationsEnabled.value,
+                          onChanged: (notificationsValue) {
+                            widget.habitController.notificationsEnabled.value =
+                                notificationsValue;
+                          }))
                     ],
                   ),
                 ),
               ),
             ),
-          ),
-          //! notifications toggle
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Container(
-              height: 60,
-              decoration: customContainer(context),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text(
-                      "Notifications",
-                      style: manropeFun(context),
-                    ),
-                    const Spacer(),
-                    Obx(() => Switch(
-                        activeColor: const Color(darkOrange),
-                        inactiveThumbColor: const Color(darkPurple),
-                        inactiveTrackColor: const Color(lavander),
-                        trackOutlineColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        value: habitController.notificationsEnabled.value,
-                        onChanged: (notificationsValue) {
-                          habitController.notificationsEnabled.value =
-                              notificationsValue;
-                        }))
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+
+            TextButton(
+              onPressed: () {
+                Get.find<HabitController>().habitUpDate(
+                    name: widget.habitAAA.name,
+                    time: widget.habitController.chosenTime.value,
+                    notifications:
+                        widget.habitController.notificationsEnabled.value,
+                    // ignore: invalid_use_of_protected_member
+                    days: widget.habitController.selectedDays.value);
+                Get.off(() => HomePage());
+              },
+              child: const Text("Save Habit"),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-//! habit frequency Widget
-class HabitFrequencyRadioButtons extends StatelessWidget {
+class HabitFreq extends StatelessWidget {
   final HabitController habitFrequencyController = Get.find<HabitController>();
   static const List<String> weekDays = [
     "SUN",
@@ -158,7 +196,7 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
     "SAT",
   ];
 
-  HabitFrequencyRadioButtons({super.key});
+  HabitFreq({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -218,9 +256,8 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
     );
   }
 }
-//!  Habit reminder Widget
 
-class Reminder extends StatelessWidget {
+class EditReminder extends StatelessWidget {
   // Reactive state variables
   final RxInt selectedHour = 1.obs;
   final RxInt selectedMinute = 0.obs;
@@ -231,7 +268,7 @@ class Reminder extends StatelessWidget {
   final FixedExtentScrollController _minuteController =
       FixedExtentScrollController();
 
-  Reminder({super.key});
+  EditReminder({super.key});
 
   void _saveReminder() {
     String formattedTime =
@@ -270,7 +307,7 @@ class Reminder extends StatelessWidget {
         ),
         const Spacer(),
         Text(
-          "Add Reminder",
+          "Add EditReminder",
           style: manropeFun(context),
         ),
         const Spacer(),
@@ -377,6 +414,7 @@ class Reminder extends StatelessWidget {
     );
   }
 }
+
 class _TimeUnitText extends StatelessWidget {
   final int value;
   final bool isMinute;

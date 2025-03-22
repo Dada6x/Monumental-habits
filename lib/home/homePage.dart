@@ -123,6 +123,7 @@ class HomePage extends StatelessWidget {
                 index: navController.currentIndex.value,
                 children: navController.pages,
               )),
+          //! FAB
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Padding(
@@ -140,8 +141,8 @@ class HomePage extends StatelessWidget {
                         shape: const CircleBorder(),
                         onPressed: () {
                           if (navController.currentIndex.value == 0) {
+                            //! add new Habits
                             navController.changePage(4);
-                            //! the floating action button should be changed to tick used to save habit
                             //$ new map
                           } else if (navController.currentIndex.value == 1) {
                             newMap();
@@ -181,6 +182,7 @@ class HomePage extends StatelessWidget {
                     width: 0,
                   )),
           ),
+          //! bottom Nav Bar
           bottomNavigationBar: BottomAppBar(
             color: Theme.of(context).colorScheme.tertiary,
             shape: const CircularNotchedRectangle(),
@@ -248,6 +250,7 @@ String title(int PageIndex) {
   if (PageIndex == 2) return "Community";
   if (PageIndex == 3) return "Settings";
   if (PageIndex == 4) return "New Habit";
+  if (PageIndex == 5) return "Edit Habit";
   return "";
 }
 
@@ -303,7 +306,7 @@ Widget customAction(
       ),
     );
   }
-  if (index == 4) {
+  if (index == 4 || index == 5) {
     return const SizedBox();
   }
   return const CircleAvatar();

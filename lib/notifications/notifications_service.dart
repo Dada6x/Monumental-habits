@@ -123,4 +123,36 @@ class NotificationsService {
 
     debugPrint("Notification set for  $hour:$minute ✅✅");
   }
+
+
+
+//  // Schedule notification using UUID-based hash code
+//   Future<void> scheduledNotifications({
+//     required int id, // Using habit.id.hashCode
+//     required int hour,
+//     required int minute,
+//     required String title,
+//     required String body,
+//   }) async {
+//     var scheduledTime = Time(hour, minute, 0);
+
+//     await notificationsPlugin.zonedSchedule(
+//       id, // Unique notification ID
+//       title,
+//       body,
+//       scheduledTime,
+//       NotificationDetails(...),
+//       androidAllowWhileIdle: true,
+//       matchDateTimeComponents: DateTimeComponents.time,
+//     );
+//   }
+
+//   // Cancel notification
+//   Future<void> cancelNotification(int id) async {
+//     await notificationsPlugin.cancel(id);
+//   }
+
+
+
+
 }

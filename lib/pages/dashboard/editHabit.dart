@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
@@ -163,7 +161,6 @@ class _EditHabitState extends State<EditHabit> {
                 ),
               ),
             ),
-
             TextButton(
               onPressed: () {
                 Get.find<HabitController>().habitUpDate(
@@ -173,7 +170,7 @@ class _EditHabitState extends State<EditHabit> {
                         widget.habitController.notificationsEnabled.value,
                     // ignore: invalid_use_of_protected_member
                     days: widget.habitController.selectedDays.value);
-                Get.off(() => HomePage());
+                Get.back();
               },
               child: const Text("Save Habit"),
             )
@@ -205,12 +202,9 @@ class HabitFreq extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(7, (index) {
           String day = weekDays[index].toLowerCase();
-          bool isSelected = habitFrequencyController.selectedDays[day] ??
-              false; // Use the map to get the status for the day
-
+          bool isSelected = habitFrequencyController.selectedDays[day] ?? false;
           return GestureDetector(
             onTap: () {
-              // Toggle the selection for the selected day
               habitFrequencyController.selectedDays[day] =
                   !(habitFrequencyController.selectedDays[day] ?? false);
             },

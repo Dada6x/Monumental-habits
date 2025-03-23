@@ -37,6 +37,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
       _selectedMonth =
           DateTime(_selectedMonth.year, _selectedMonth.month + offset, 1);
       _generateHabitData();
+      //
     });
   }
 
@@ -84,7 +85,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
               calendarFormat: CalendarFormat.month,
               headerVisible: false,
               calendarBuilders: CalendarBuilders(
-                //! TODAY
+                //! TODAY ##########################
                 todayBuilder: (context, day, focusedDay) {
                   int currentDay = DateTime.now().day;
                   return Padding(
@@ -123,6 +124,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
                     ),
                   );
                 },
+                //! defaultBuilder ##########################
                 defaultBuilder: (context, date, _) {
                   int day = date.day;
                   if (habitStatus.containsKey(day)) {

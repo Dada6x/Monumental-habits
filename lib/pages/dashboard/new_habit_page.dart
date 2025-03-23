@@ -236,9 +236,7 @@ class Reminder extends StatelessWidget {
   void _saveReminder() {
     String formattedTime =
         "${selectedHour.value.toString().padLeft(2, '0')}:${selectedMinute.value.toString().padLeft(2, '0')} ${selectedPeriod.value}";
-
     Get.back(result: formattedTime);
-    print(formattedTime);
     //! SEND IT TO THE NOTIFICATIONS
   }
 
@@ -377,6 +375,7 @@ class Reminder extends StatelessWidget {
     );
   }
 }
+
 class _TimeUnitText extends StatelessWidget {
   final int value;
   final bool isMinute;

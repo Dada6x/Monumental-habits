@@ -273,3 +273,102 @@ borderRadius: BorderRadius.circular(6),
 }
 }
 ![alt text](image.png)
+
+
+
+
+sche noti 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
+
+class NotificationsService {
+  static final NotificationsService _instance =
+      NotificationsService._internal();
+
+  factory NotificationsService() => _instance;
+
+  NotificationsService._internal();
+
+  final FlutterLocalNotificationsPlugin notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  bool _isInitialized = false;
+  bool get isInitialized => _isInitialized;
+
+  //! Initialize Notifications
+  Future<void> initNotification() async {
+    if (_isInitialized) return;
+
+    //@ Init timezone handling
+    tz.initializeTimeZones();
+    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+
+    const AndroidInitializationSettings initSettingsAndroid =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
+
+    const InitializationSettings initSettings =
+        InitializationSettings(android: initSettingsAndroid);
+
+    await notificationsPlugin.initialize(initSettings);
+    _isInitialized = true;
+  }
+
+  //! Notification Details
+  NotificationDetails notificationDetails() {
+    return const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'daily_channel_id',
+        'Daily Notifications',
+        channelDescription: 'Daily Notification Channel',
+        importance: Importance.max,
+        priority: Priority.high,
+        playSound: true,
+      ),
+    );
+  }
+
+  //! Show Immediate Notification
+  Future<void> showNotification(
+      {int id = 0, String? title, String? body}) async {
+    await notificationsPlugin.show(id, title, body, notificationDetails());
+  }
+
+  //! Schedule Notification
+  Future<void> scheduledNotifications({
+    int id = 1,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+  }) async {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+
+    // If the scheduled time is in the past, schedule it for the next day
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    await notificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      scheduledDate,
+      notificationDetails(),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.dateAndTime,
+    );
+
+    print("Scheduled notification set for $scheduledDate");
+  }
+
+  //! Cancel All Notifications
+  Future<void> cancelAllNotifications() async {
+    await notificationsPlugin.cancelAll();
+  }
+}
+

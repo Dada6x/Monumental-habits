@@ -31,18 +31,18 @@ dependencies:
   fancy_bottom_navigation_plus: ^1.0.3
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^19.0.0
+  flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17
+  flutter_timezone: ^4.1.0
   flutter_verification_code: ^1.1.7
   font_awesome_flutter: ^10.8.0
   get: ^4.7.2
   icons_flutter: ^0.0.4
   intl: ^0.18.0
   smooth_page_indicator: ^1.2.1
-  table_calendar: any 
-  # flutter_local_notifications: ^18.0.1
-  # timezone: ^0.10.0
-  flutter_screenutil: ^5.9.3
-  flutter_local_notifications: ^19.0.0
+  table_calendar: any
+  timezone: ^0.10.0
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:

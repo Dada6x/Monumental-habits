@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:monumental_habits/notifications/notifications_service.dart';
 import 'package:monumental_habits/pages/dashboard/model/habit_model.dart';
 
 class HabitController extends GetxController {
@@ -27,14 +28,16 @@ class HabitController extends GetxController {
         notificationsEnabled: notificationsEnabled.value,
         selectedDays: Map<String, bool>.from(selectedDays),
       ));
+      NotificationsService().scheduleNotificationFromString(chosenTime.value);
       reset();
     }
   }
 
 //! deleting habits
   void deleteHabit(Habit habit) {
-    habits.remove(habit); // Removes the habit from the list
+    habits.remove(habit); 
   }
+
 
 //! resetting the fields
   void reset() {
@@ -53,8 +56,8 @@ class HabitController extends GetxController {
     };
   }
 
-//! edit
-  void habitUpDate({
+//! edit Habits 
+  void editHabit({
     required String name,
     required String time,
     required bool notifications,

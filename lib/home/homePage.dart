@@ -96,7 +96,20 @@ class HomePage extends StatelessWidget {
                         title: "habit name here ", body: "Check this out !!!");
                   },
                   icon: const Icon(Icons.notifications),
-                )
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await NotificationsService().scheduledNotifications(
+                      id: 3, 
+                      hour: DateTime.now().hour,
+                      minute: DateTime.now().minute + 1,
+                      title: "Evening Check-in",
+                      body: "How was your day? 🌙",
+                    );
+                    debugPrint("Multiple scheduled notifications set ✅");
+                  },
+                  icon: const Icon(Icons.timer),
+                ),
               ],
             ),
           ),

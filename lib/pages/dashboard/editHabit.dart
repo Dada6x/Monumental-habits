@@ -163,7 +163,7 @@ class _EditHabitState extends State<EditHabit> {
             ),
             TextButton(
               onPressed: () {
-                Get.find<HabitController>().habitUpDate(
+                Get.find<HabitController>().editHabit(
                     name: widget.habitAAA.name,
                     time: widget.habitController.chosenTime.value,
                     notifications:

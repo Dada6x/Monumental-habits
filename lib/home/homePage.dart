@@ -90,6 +90,7 @@ class HomePage extends StatelessWidget {
                     navController.darkTheme.value = isDarkMode.value;
                   },
                 ),
+                //! instant Notification
                 IconButton(
                   onPressed: () async {
                     await NotificationsService().showNotification(
@@ -97,10 +98,11 @@ class HomePage extends StatelessWidget {
                   },
                   icon: const Icon(Icons.notifications),
                 ),
+                //!  Notification
                 IconButton(
                   onPressed: () async {
                     await NotificationsService().scheduledNotifications(
-                      id: 3, 
+                      id: 3,
                       hour: DateTime.now().hour,
                       minute: DateTime.now().minute + 1,
                       title: "Evening Check-in",

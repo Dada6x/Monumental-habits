@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:intl/intl.dart';
@@ -104,24 +105,22 @@ class NotificationsService {
     await notificationsPlugin.cancelAll();
   }
 
-  void scheduleNotificationFromString(String timeString) {
-    // Convert "08:10 AM" to DateTime
+  void habitScheduleNotification(
+      {required String timeString, required String HabitName}) {
     DateTime dateTime = DateFormat("hh:mm a").parse(timeString);
 
-    // Extract hour & minute in 24-hour format
     int hour = int.parse(DateFormat("HH").format(dateTime));
     int minute = int.parse(DateFormat("mm").format(dateTime));
 
-    // Schedule notification
     NotificationsService().scheduledNotifications(
-      id: 99, // Unique ID
+      id: 99,
       //! Not unique yet
       hour: hour,
       minute: minute,
-      title: "Reminder ⏰",
-      body: "Your scheduled notification at $timeString!",
+      title: HabitName,
+      body: "Your scheduled  to Do $HabitName  at $timeString!",
     );
 
-    print("Notification set for  $hour:$minute ✅✅");
+    debugPrint("Notification set for  $hour:$minute ✅✅");
   }
 }

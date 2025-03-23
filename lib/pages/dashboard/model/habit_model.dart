@@ -12,7 +12,7 @@ class Habit {
   });
 }
 /*
-I/flutter (18789): niggas 
+I/flutter (18789): name 
 I/flutter (18789): 11:10 AM
 I/flutter (18789): true
 I/flutter (18789): {sun: true, mon: true, tue: true, wed: true, thu: true, fri: true, sat: true}

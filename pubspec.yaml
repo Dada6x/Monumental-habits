@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
   fancy_bottom_navigation_plus: ^1.0.3
   flutter:
     sdk: flutter
@@ -38,6 +39,7 @@ dependencies:
   icons_flutter: ^0.0.4
   intl: ^0.18.0
   lottie: ^3.2.0
+  shared_preferences: ^2.5.2
   smooth_page_indicator: ^1.2.1
 
 dev_dependencies:

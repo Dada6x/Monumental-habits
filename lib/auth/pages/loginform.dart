@@ -22,8 +22,8 @@ class LoginForm extends StatelessWidget {
       children: [
         //! Email
         Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.sizeOf(context).width * 0.05),
             child: TextField(
               controller: emailController,
               decoration: customTextFieldDecoration(
@@ -34,23 +34,24 @@ class LoginForm extends StatelessWidget {
         //! Password
         Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.screenWidth * 0.05, vertical: 8),
+                horizontal: MediaQuery.sizeOf(context).width * 0.05,
+                vertical: 8),
             child: PasswordTextField(
               controller: passwordController,
               hint: "password",
             )),
         //! login Button
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.05),
-          child: Button("Login", () {
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.sizeOf(context).width * 0.05),
+          child: Button(context, "Login", () {
             Get.to(HomePage());
           }),
         ),
         //! forgot password
         TextButton(
             onPressed: () {
-              Get.to(const forgetPassword());
+              Get.to(forgetPassword());
             },
             child: Text("Forgot Password ?", style: manropeFun(context))),
       ],

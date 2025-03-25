@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
-import 'package:monumental_habits/pages/dashboard/new_habit_page.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 
@@ -209,7 +207,7 @@ class HabitInfoPage extends StatelessWidget {
                 ),
               ),
 
-              Button("Delete This Habit?", () {
+              Button(context, "Delete This Habit?", () {
                 _deleteHabit(context);
               }),
 

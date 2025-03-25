@@ -1,8 +1,12 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:get/get.dart';
+import 'package:monumental_habits/auth/pages/Auth.dart';
+import 'package:monumental_habits/auth/pages/personalInfo.dart';
 
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
@@ -21,10 +25,53 @@ class _VerificationPageState extends State<VerificationPage> {
   String buttonText = "Resend Code";
   int reSendPressed = 0;
   int time = 5;
+  final String operation = Get.arguments["op"];
+  final String email = Get.arguments["email"];
+  int? code;
+  Color? statusColor;
   @override
   void dispose() {
     super.dispose();
     time = 0;
+    verified = false;
+  }
+
+  Future<void> checkVerifyRegister() async {
+    final request = await Dio().post(options: Options(
+      validateStatus: (status) {
+        if (status == 401 || status == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    ), "http://10.0.2.2:8000/api/verificationCode/check",
+        data: {"email": email, "code": code, "registration": true});
+    print("refisteration");
+
+    var response = request.data;
+    if (response["status"]) {
+      verified = true;
+    }
+  }
+
+  Future<void> checkVerifyForgot() async {
+    final request = await Dio().post(options: Options(
+      validateStatus: (status) {
+        if (status == 401 || status == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    ), "http://10.0.2.2:8000/api/verificationCode/check",
+        data: {"email": email, "code": code, "registration": false});
+    print("refisteration");
+
+    var response = request.data;
+    if (response["status"]) {
+      verified = true;
+    }
   }
 
   @override
@@ -32,18 +79,6 @@ class _VerificationPageState extends State<VerificationPage> {
     return Scaffold(
         backgroundColor: const Color(background),
         resizeToAvoidBottomInset: true,
-        // appBar: AppBar(
-        //   leading: IconButton(
-        //       color: const Color.fromRGBO(87, 51, 83, 0.1),
-        //       onPressed: () {
-        //         Get.back();
-        //       },
-        //       icon: const Icon(
-        //         Icons.arrow_back,
-        //         color: Color(darkPurple),
-        //         size: 30,
-        //       )),
-        // ),
         body: SingleChildScrollView(
           child: Stack(
             children: [
@@ -54,7 +89,10 @@ class _VerificationPageState extends State<VerificationPage> {
                 fit: BoxFit.cover,
               ),
               verified
-                  ? NewPassword()
+                  ? NewPassword(
+                      email: email,
+                      code: code!,
+                    )
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -78,27 +116,64 @@ class _VerificationPageState extends State<VerificationPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8.0, vertical: 20),
-                              child: VerificationCode(
-                                  fillColor: const Color(orange),
-                                  textStyle: klasikHeader,
-                                  underlineWidth: 3,
-                                  cursorColor: const Color(orange),
-                                  digitsOnly: true,
-                                  autofocus: true,
-                                  underlineColor: const Color(darkPurple),
-                                  //!in verification page when the code is right no need for the user to press enter instead teh underlienfocusedcolor will be set green and i set an value to that
-                                  underlineUnfocusedColor: verified
-                                      ? Colors.green
-                                      : const Color(orange),
-                                  fullBorder: true,
-                                  length: 6,
-                                  onCompleted: (String value) {},
-                                  onEditing: (value) {}),
+                              child: GetBuilder<verifyController>(
+                                init: verifyController(),
+                                builder: (controller) {
+                                  return VerificationCode(
+                                    fillColor: const Color(orange),
+                                    textStyle: klasikHeader,
+                                    underlineWidth: 3,
+                                    cursorColor: const Color(orange),
+                                    digitsOnly: true,
+                                    autofocus: true,
+                                    underlineColor:
+                                        statusColor ?? const Color(darkPurple),
+
+                                    //!in verification page when the code is right no need for the user to press enter instead teh underlienfocusedcolor will be set green and i set an value to that
+                                    underlineUnfocusedColor:
+                                        statusColor ?? const Color(darkPurple),
+                                    fullBorder: true,
+                                    length: 6,
+                                    onCompleted: (value) async {
+                                      print("verified status $verified");
+                                      code = int.parse(value);
+                                      operation == "reg"
+                                          ? await checkVerifyRegister()
+                                          : await checkVerifyForgot();
+
+                                      if (verified) {
+                                        statusColor = Colors.green;
+                                        controller.changecolor();
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 500),
+                                            () {
+                                          if (operation == "reg") {
+                                            Get.to(PersonalInfo(), arguments: {
+                                              "code": code,
+                                              "email": email
+                                            });
+                                          }
+                                          if (operation == "forgot") {
+                                            setState(() {});
+                                          }
+                                        });
+                                      }
+                                      if (!verified) {
+                                        statusColor = Colors.red;
+                                        controller.changecolor();
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 500));
+                                      }
+                                    },
+                                    onEditing: (bool value) {},
+                                  );
+                                },
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8.0, vertical: 10),
-                              child: Button("Enter", () {
+                              child: Button(context, "Enter", () {
                                 setState(() {
                                   verified = true;
                                 });
@@ -143,12 +218,34 @@ class _VerificationPageState extends State<VerificationPage> {
 
 // ignore: must_be_immutable
 class NewPassword extends StatelessWidget {
+  final String email;
+  final int code;
+  bool status = false;
+  RegExp symbolRegex = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
+  RegExp uppercaseRegex = RegExp(r'[A-Z]');
+  RegExp numberRegex = RegExp(r'\d');
 //! old password controller
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 //! new password controller and func
-  NewPassword({super.key});
+  NewPassword({super.key, required this.email, required this.code});
   bool ispassword = true;
+  Future<void> forgotPass() async {
+    final request =
+        await Dio().post("http://10.0.2.2:8000/api/password/forget", data: {
+      "email": email,
+      "code": code,
+      "password": passwordController.text,
+      "password_confirmation": confirmPasswordController.text
+    });
+    int? r = request.statusCode;
+    print("codeeeeeeeeeeeeee: {$r}");
+    var response = request.data;
+    if (response["status"]) {
+      status = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -199,7 +296,18 @@ class NewPassword extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
-                  child: Button("Enter", () {}),
+                  child: Button(context, "Enter", () async {
+                    await forgotPass();
+                    if (status) {
+                      if (passwordController.text ==
+                              confirmPasswordController.text &&
+                          numberRegex.hasMatch(passwordController.text) &&
+                          uppercaseRegex.hasMatch(passwordController.text) &&
+                          symbolRegex.hasMatch(passwordController.text)) {
+                        Get.off(const Auth());
+                      }
+                    }
+                  }),
                 ),
               ],
             ),
@@ -207,5 +315,11 @@ class NewPassword extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class verifyController extends GetxController {
+  void changecolor() {
+    update();
   }
 }

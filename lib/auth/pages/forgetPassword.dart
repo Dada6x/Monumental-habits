@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,7 +10,19 @@ import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
 
 class forgetPassword extends StatelessWidget {
-  const forgetPassword({super.key});
+  Future<void> sendVerifyForgot() async {
+    final request = await Dio().post(
+        "http://10.0.2.2:8000/api/verificationCode/send",
+        data: {"email": emailController.text, "registration": 0});
+    var response = request.data;
+    if (response["status"]) {
+      status = true;
+    }
+  }
+
+  bool status = false;
+  final emailController = TextEditingController();
+  forgetPassword({super.key});
 //! textfield controller
   @override
   Widget build(BuildContext context) {
@@ -50,14 +63,22 @@ class forgetPassword extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextField(
+                          controller: emailController,
                           decoration: customTextFieldDecoration(
                               hint: "",
                               prefixIcon: const Icon(Icons.mail),
                               isWhite: false),
                         ),
                       ),
-                      Button("Send link", () {
-                        Get.to(const VerificationPage());
+                      Button(context, "Send link", () async {
+                        await sendVerifyForgot();
+                        print(status);
+                        if (status) {
+                          Get.to(const VerificationPage(), arguments: {
+                            "email": emailController.text,
+                            "op": "forgot",
+                          });
+                        }
                       })
                     ],
                   ),

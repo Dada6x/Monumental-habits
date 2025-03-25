@@ -45,20 +45,20 @@ class Reminder extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () => Get.back(),
-          child: Text(
+          child: const Text(
             "Cancel",
             // style: manropeOrangeAndPurple(context),
           ),
         ),
         const Spacer(),
-        Text(
+        const Text(
           "Add Reminder",
           // style: manropeFun(context),
         ),
         const Spacer(),
         TextButton(
           onPressed: _saveReminder,
-          child: Text(
+          child: const Text(
             "Save",
             // style: manropeOrangeAndPurple(context),
           ),
@@ -80,8 +80,8 @@ class Reminder extends StatelessWidget {
               itemCount: 12,
               builder: (index) => _TimeUnitText(value: index + 1),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
+            const Padding(
+              padding: EdgeInsets.only(top: 15),
               child: Text(":", style: clockStyle),
             ),
             _buildWheelSelector(

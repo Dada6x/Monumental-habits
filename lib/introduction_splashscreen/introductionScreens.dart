@@ -136,9 +136,9 @@ class camp extends StatelessWidget {
                 left: 10,
                 right: 10,
               ),
-              child: Button("Get Started", () {
+              child: Button(context,"Get Started", () {
                 Get.to(const Auth());
-              }))
+              },))
         ],
       ),
     );

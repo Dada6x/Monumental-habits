@@ -79,7 +79,7 @@ class PersonalInfo extends StatelessWidget {
                   hint: "Confirm Password",
                   isWhite: true,
                 ),
-                Button("next", () {
+                Button(context,"next", () {
                   Get.to(HomePage());
                 }),
               ],

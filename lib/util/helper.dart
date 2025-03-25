@@ -39,9 +39,16 @@ const TextStyle klasikOrange = TextStyle(
 );
 const TextStyle klasikHint = TextStyle(
   fontFamily: "Klasik",
-  fontSize: 17,
+  fontSize: 18,
   color: Color(lavander),
 );
+TextStyle headerStyle(BuildContext context) {
+  return TextStyle(
+      color: Theme.of(context).colorScheme.primary,
+      fontSize: MediaQuery.of(context).size.width * 0.06,
+      fontFamily: "klasik",
+      fontWeight: FontWeight.w700);
+}
 
 const TextStyle klasikHeader = TextStyle(
   fontFamily: "Klasik",
@@ -74,10 +81,10 @@ const TextStyle manrope = TextStyle(
   color: Color(darkPurple),
 );
 const TextStyle manropeLavander = TextStyle(
-  fontFamily: "Manrope",
-  fontSize: 14,
-  color: Color(lavander),
-);
+    fontFamily: "Manrope",
+    fontSize: 14,
+    color: Color.fromARGB(255, 129, 119, 128),
+    fontWeight: FontWeight.w700);
 
 TextStyle manropeOrangeAndPurple(BuildContext context) {
   return TextStyle(

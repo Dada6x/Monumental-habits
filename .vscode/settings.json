@@ -2,5 +2,6 @@
     "cSpell.words": [
         "screenwidth"
     ],
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cmake.sourceDirectory": "C:/Users/Ward/Desktop/Monumental-habits/linux"
 }

@@ -122,7 +122,7 @@ class SignupForm extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: googleButton(context),
           ),
-          faceBookButton(),
+          faceBookButton(context),
         ],
       ),
     );

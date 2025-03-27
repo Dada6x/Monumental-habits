@@ -1,13 +1,39 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
 
 class PersonalInfo extends StatelessWidget {
+  var token;
+  final email = Get.arguments["email"];
+  final code = Get.arguments["code"];
+  Future<void> register() async {
+    var data = dio.FormData.fromMap({
+      "name": nameController.text,
+      "password": passwordController.text,
+      "password_confirmation": confirmPasswordController.text,
+      "email": email,
+      "code": code,
+      "timezone": "Asia/Damscus",
+      "fcm_token": "sometoken",
+      "photo": await dio.MultipartFile.fromFile(
+          Get.find<SignUpController>().returnedImage!.path,
+          filename: "User_photo"),
+    });
+    final request =
+        await Dio().post("http://10.0.2.2:8000/api/register", data: data);
+    if (request.data["status"]) {
+      token = request.data["token"];
+    }
+  }
+
   //!-------------------controllers--------------------------
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -17,6 +43,7 @@ class PersonalInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(SignUpController());
     return Scaffold(
       backgroundColor: const Color(background),
       body: Stack(
@@ -40,9 +67,14 @@ class PersonalInfo extends StatelessWidget {
                 ),
                 Stack(children: [
                   //! need some work for updating the image
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 80,
-                    backgroundColor: Color(0xFFFFD2AF),
+                    backgroundColor: const Color(0xFFFFD2AF),
+                    foregroundImage:
+                        Get.find<SignUpController>().returnedImage == null
+                            ? null
+                            : FileImage(
+                                Get.find<SignUpController>().returnedImage!),
                   ),
                   Positioned(
                       bottom: 1,
@@ -79,7 +111,7 @@ class PersonalInfo extends StatelessWidget {
                   hint: "Confirm Password",
                   isWhite: true,
                 ),
-                Button(context,"next", () {
+                Button(context, "next", () {
                   Get.to(HomePage());
                 }),
               ],
@@ -100,8 +132,8 @@ class imagepickerdialog extends StatelessWidget {
       child: Material(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: SizedBox(
-          width: SizeConfig.screenWidth * 0.8,
-          height: SizeConfig.screenHeight * 0.19,
+          width: MediaQuery.sizeOf(context).width * 0.8,
+          height: MediaQuery.sizeOf(context).height * 0.19,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
@@ -112,7 +144,7 @@ class imagepickerdialog extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // Get.find<SignUpController>().pickImageFromGallery();
+                        Get.find<SignUpController>().pickImageFromGallery();
                       },
                       icon: const Icon(
                         Icons.image,
@@ -131,7 +163,7 @@ class imagepickerdialog extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        //Get.find<SignUpController>().pickImageFromCamera();
+                        Get.find<SignUpController>().pickImageFromCamera();
                       },
                       icon: const Icon(
                         Icons.camera,
@@ -155,7 +187,7 @@ class imagepickerdialog extends StatelessWidget {
 }
 
 class SignUpController extends GetxController {
-  /* XFile? pickedImage;
+  XFile? pickedImage;
   File? returnedImage;
   Future pickImageFromCamera() async {
     pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -171,5 +203,5 @@ class SignUpController extends GetxController {
       returnedImage = File(pickedImage!.path);
     }
     update();
-  }*/
+  }
 }

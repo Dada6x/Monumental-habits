@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 
 Widget Button(BuildContext context, String text, Function fun) {
   return ElevatedButton(
@@ -59,10 +58,10 @@ Widget googleButton(BuildContext context) {
       ));
 }
 
-Widget faceBookButton() {
+Widget faceBookButton(BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(SizeConfig.screenWidth, 41),
+        fixedSize: Size(MediaQuery.sizeOf(context).width, 41),
         backgroundColor: const Color.fromARGB(252, 36, 112, 235),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

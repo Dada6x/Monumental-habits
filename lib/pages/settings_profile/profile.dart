@@ -4,6 +4,7 @@ import 'package:monumental_habits/pages/settings_profile/customization.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';
 import 'package:monumental_habits/pages/settings_profile/support/profile_details.dart';
 import 'package:monumental_habits/util/helper.dart';
+import 'package:monumental_habits/widgets/customappBar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -13,34 +14,21 @@ class ProfilePage extends StatelessWidget {
     Color mainColor = Theme.of(context).colorScheme.scrim;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Profile".tr,
-          style: manropeFun(context),
-        ),
-        scrolledUnderElevation: 0.0,
-        surfaceTintColor: Colors.transparent,
-        forceMaterialTransparency: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
+      appBar: customappBar([
+        IconButton(
             style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(
               Theme.of(context).colorScheme.secondaryContainer,
             )),
             onPressed: () {},
             icon: Icon(
-              Icons.edit_outlined,
+              Icons.logout_sharp,
               color: Get.isDarkMode ? Colors.white : const Color(darkPurple),
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          )
-        ],
-      ),
+            )),
+        const SizedBox(
+          width: 20,
+        )
+      ], "Profile".tr, context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -228,7 +216,7 @@ class ProfilePage extends StatelessWidget {
 }
 
 class progressWheel extends StatefulWidget {
-  progressWheel(
+  const progressWheel(
       {super.key,
       required this.numOfAllHabits,
       required this.numOfDoneHabits,

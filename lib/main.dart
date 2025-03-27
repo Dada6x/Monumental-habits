@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:monumental_habits/Middleware/auth_middleware.dart';
 import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/auth/pages/Auth.dart';
 import 'package:monumental_habits/home/homePage.dart';
@@ -10,9 +11,12 @@ import 'package:monumental_habits/pages/settings_profile/FAQ/f_a_q_controller.da
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences? introSP;
+SharedPreferences? token;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   introSP = await SharedPreferences.getInstance();
+
+  token = await SharedPreferences.getInstance();
   Get.put(FAQController());
   // status bar color in the app dammmnscc
   // SystemChrome.setSystemUIOverlayStyle(
@@ -29,16 +33,21 @@ class MyApp extends StatelessWidget {
     Get.put(LocaleController());
     return GetMaterialApp(
       getPages: [
-        GetPage(name: "/", page: () => const Intropages()),
-        GetPage(name: "/Auth", page: () => const Auth()),
+        GetPage(
+          name: "/",
+          page: () => const Intropages(),
+        ),
+        GetPage(
+            name: "/Auth",
+            page: () => const Auth(),
+            middlewares: [AuthMiddleware()]),
         GetPage(name: "/Home", page: () => HomePage()),
       ],
       debugShowCheckedModeBanner: false,
       theme: Themes().lightMode,
       locale: Get.deviceLocale,
       translations: MyLocale(),
-      initialRoute: "/",
+      initialRoute: introSP!.getString("intro") != null ? "Auth" : "/",
     );
-    
   }
 }

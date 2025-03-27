@@ -6,7 +6,6 @@ import 'package:monumental_habits/pages/settings_profile/customization.dart';
 import 'package:monumental_habits/pages/settings_profile/profile.dart';
 import 'package:monumental_habits/pages/settings_profile/support/about.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/pages/settings_profile/support/contacts.dart';
 
 class Settings extends StatelessWidget {

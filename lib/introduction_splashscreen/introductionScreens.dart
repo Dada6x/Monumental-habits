@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/auth/pages/Auth.dart';
+import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -136,9 +137,14 @@ class camp extends StatelessWidget {
                 left: 10,
                 right: 10,
               ),
-              child: Button(context,"Get Started", () {
-                Get.to(const Auth());
-              },))
+              child: Button(
+                context,
+                "Get Started",
+                () {
+                  introSP!.setString("intro", "true");
+                  Get.to(const Auth());
+                },
+              ))
         ],
       ),
     );

@@ -1,12 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/personalInfo.dart';
-import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/customappBar.dart';
 import 'package:monumental_habits/widgets/settingsFunctions.dart';
 
 class ProfileDetails extends StatelessWidget {
-  const ProfileDetails({super.key});
+  var user_data = Get.arguments["data"];
+
+  ProfileDetails({super.key});
   Widget divider(BuildContext context) {
     return Divider(
       color: Theme.of(context).colorScheme.secondary,
@@ -34,9 +36,11 @@ class ProfileDetails extends StatelessWidget {
                 ]),
             child: Stack(children: [
               //! need some work for updating the image
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 80,
-                backgroundColor: Color(0xFFFFD2AF),
+                backgroundColor:
+                    Theme.of(context).colorScheme.primaryFixed.withOpacity(0.5),
+                foregroundImage: NetworkImage(user_data["user"]["photo"]),
               ),
               Positioned(
                   bottom: 1,
@@ -50,8 +54,8 @@ class ProfileDetails extends StatelessWidget {
                     fillColor: Colors.white,
                     padding: const EdgeInsets.all(15.0),
                     shape: const CircleBorder(),
-                    child: const Icon(Icons.camera_alt_outlined,
-                        color: Color(orange)),
+                    child: Icon(Icons.camera_alt_outlined,
+                        color: Theme.of(context).colorScheme.primaryFixed),
                   )),
             ]),
           ),
@@ -65,12 +69,12 @@ class ProfileDetails extends StatelessWidget {
                 children: [
                   SettingsFunctions(
                     leading: "Username :",
-                    text: "Ward-Ek",
+                    text: user_data["user"]["name"],
                   ),
                   divider(context),
                   SettingsFunctions(
                     leading: "Email :",
-                    text: "Wardekr@gmail.com",
+                    text: user_data["user"]["email"],
                   ),
                   divider(context),
                   SettingsFunctions(
@@ -80,7 +84,7 @@ class ProfileDetails extends StatelessWidget {
                   divider(context),
                   SettingsFunctions(
                     leading: "Timezone :",
-                    text: "Asia/Damascus",
+                    text: user_data["user"]["timezone"],
                   ),
                 ],
               ),

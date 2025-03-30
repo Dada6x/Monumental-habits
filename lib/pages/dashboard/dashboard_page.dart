@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monumental_habits/pages/dashboard/habit_table.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -91,15 +90,15 @@ class Dashboard extends StatelessWidget {
               ),
             ),
           ),
-          //! the DASHBOARD / TABLE OF THE WEEKS
+          //!  Habit Table
           Padding(
             padding: const EdgeInsets.all(10),
             child: SizedBox(
-              width: SizeConfig.screenWidth,
-              height: SizeConfig.screenHeight * 0.54,
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height * 0.54,
               child: HabitTable(),
             ),
-          )
+          ),
         ],
       ),
     );

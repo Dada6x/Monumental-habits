@@ -12,16 +12,20 @@ class IntroMiddleware extends GetMiddleware {
     if (introSP!.getString("intro") == null) {
       return const RouteSettings(name: "/", arguments: {"name": 2});
     }
+    return null;
   }
 }
 
 class AuthMiddleware extends GetMiddleware {
+  static bool isRedirectedAuth = false;
   @override
   RouteSettings? redirect(String? route) {
-    if (token!.getString("token") != "") {
+    if (token!.getString("token") != null) {
       return const RouteSettings(name: "/Home");
-    } else {
+    }
+    if (token!.getString("token") == null && isRedirectedAuth) {
       return const RouteSettings(name: "/Auth");
     }
+    return null;
   }
 }

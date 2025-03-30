@@ -282,7 +282,7 @@ Future newMessage() {
         child: Material(
           color: Colors.amber,
           child: Center(
-            child: Text("Make new MESSAGE NIGGA"),
+            child: Text("Make new MESSAGE "),
           ),
         ),
       ),
@@ -290,7 +290,10 @@ Future newMessage() {
   );
 }
 
-Widget customAction(BuildContext context, int index) {
+Widget customAction(
+  BuildContext context,
+  int index,
+) {
   if (index == 3) {
     return IconButton(
       style: ButtonStyle(
@@ -304,7 +307,7 @@ Widget customAction(BuildContext context, int index) {
       ),
     );
   }
-  if (index == 4) {
+  if (index == 4 || index == 5) {
     return const SizedBox();
   }
   return const CircleAvatar();

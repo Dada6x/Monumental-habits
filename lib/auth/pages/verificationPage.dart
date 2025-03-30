@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/auth/pages/Auth.dart';
-import 'package:monumental_habits/auth/pages/personalInfo.dart';
 
+import 'package:monumental_habits/auth/pages/personalInfo.dart';
+import 'package:monumental_habits/auth/pages/landing_page.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
@@ -148,10 +148,13 @@ class _VerificationPageState extends State<VerificationPage> {
                                             const Duration(milliseconds: 500),
                                             () {
                                           if (operation == "reg") {
-                                            Get.to(PersonalInfo(), arguments: {
-                                              "code": code,
-                                              "email": email
-                                            });
+                                            print(code);
+                                            Get.to(
+                                              PersonalInfo(
+                                                email: email,
+                                                code: code!,
+                                              ),
+                                            );
                                           }
                                           if (operation == "forgot") {
                                             setState(() {});

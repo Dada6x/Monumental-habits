@@ -63,7 +63,7 @@ class Settings extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              Get.to(() => const ProfilePage());
+                              Get.to(() => ProfilePage());
                             },
                             child: Padding(
                               padding:

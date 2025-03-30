@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,28 +8,36 @@ import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/main.dart';
 
 class PersonalInfo extends StatelessWidget {
-  var token;
-  final email = Get.arguments["email"];
-  final code = Get.arguments["code"];
+  bool registerStatus = false;
+  final String email;
+  final int code;
   Future<void> register() async {
+    print(email);
+    print(code);
+    print(nameController.text);
+    print(passwordController.text);
+    print(confirmPasswordController.text);
+
     var data = dio.FormData.fromMap({
       "name": nameController.text,
       "password": passwordController.text,
       "password_confirmation": confirmPasswordController.text,
       "email": email,
       "code": code,
-      "timezone": "Asia/Damscus",
+      "timezone": "Asia/Damascus",
       "fcm_token": "sometoken",
       "photo": await dio.MultipartFile.fromFile(
-          Get.find<SignUpController>().returnedImage!.path,
-          filename: "User_photo"),
+        Get.find<SignUpController>().returnedImage!.path,
+      ),
     });
     final request =
-        await Dio().post("http://10.0.2.2:8000/api/register", data: data);
+        await dio.Dio().post("http://10.0.2.2:8000/api/register", data: data);
     if (request.data["status"]) {
-      token = request.data["token"];
+      token!.setString("token", request.data["token"]);
+      registerStatus = true;
     }
   }
 
@@ -39,7 +46,7 @@ class PersonalInfo extends StatelessWidget {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   //!-------------------controllers--------------------------
-  PersonalInfo({super.key});
+  PersonalInfo({super.key, required this.email, required this.code});
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +101,7 @@ class PersonalInfo extends StatelessWidget {
                 ]),
                 //! name
                 TextField(
+                  controller: nameController,
                   decoration: customTextFieldDecoration(
                       hint: "Name",
                       prefixIcon: const Icon(Icons.person),
@@ -111,8 +119,11 @@ class PersonalInfo extends StatelessWidget {
                   hint: "Confirm Password",
                   isWhite: true,
                 ),
-                Button(context, "next", () {
-                  Get.to(HomePage());
+                Button(context, "next", () async {
+                  await register();
+                  if (registerStatus) {
+                    Get.off(HomePage());
+                  }
                 }),
               ],
             ),

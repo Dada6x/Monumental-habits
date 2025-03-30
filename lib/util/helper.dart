@@ -55,6 +55,11 @@ const TextStyle klasikHeader = TextStyle(
   fontSize: 25,
   color: Color(darkPurple),
 );
+const clockStyle = TextStyle(
+  fontFamily: "Klasik",
+  fontSize: 40,
+);
+
 //$ ------------------manrope------------------
 
 TextStyle manropeFun(BuildContext context) {
@@ -94,6 +99,12 @@ TextStyle manropeOrangeAndPurple(BuildContext context) {
     color: Theme.of(context).colorScheme.primaryFixed,
   );
 }
+
+const TextStyle manropeGrey = TextStyle(
+    fontFamily: "manrope",
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey);
 
 const TextStyle manrope2 = TextStyle(
   color: Colors.white,

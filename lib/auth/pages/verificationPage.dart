@@ -32,18 +32,6 @@ class _VerificationPageState extends State<VerificationPage> {
     return Scaffold(
         backgroundColor: const Color(background),
         resizeToAvoidBottomInset: true,
-        // appBar: AppBar(
-        //   leading: IconButton(
-        //       color: const Color.fromRGBO(87, 51, 83, 0.1),
-        //       onPressed: () {
-        //         Get.back();
-        //       },
-        //       icon: const Icon(
-        //         Icons.arrow_back,
-        //         color: Color(darkPurple),
-        //         size: 30,
-        //       )),
-        // ),
         body: SingleChildScrollView(
           child: Stack(
             children: [

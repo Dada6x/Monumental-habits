@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
     }
   }
 
-  Future<String> getProfile() async {
+  static Future<String> getProfile(String returnedData) async {
     final request = await Dio().get("http://10.0.2.2:8000/api/profile",
         options: Options(headers: {
           "Accept": 'application/json',
@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
         )
       ], "Profile".tr, context),
       body: FutureBuilder(
-          future: getProfile(),
+          future: getProfile(returnedData),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               var returnedData = jsonDecode(snapshot.data!);
@@ -128,7 +128,7 @@ class ProfilePage extends StatelessWidget {
                                                     .colorScheme
                                                     .primaryFixed))),
                                     onPressed: () {
-                                      Get.to(() =>  ProfileDetails(),
+                                      Get.to(() => ProfileDetails(),
                                           arguments: {"data": returnedData});
                                     },
                                     icon: Expanded(

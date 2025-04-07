@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monumental_habits/auth/pages/forgetPassword.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
@@ -70,6 +71,8 @@ class LoginForm extends StatelessWidget {
         //! forgot password
         TextButton(
             onPressed: () {
+              GoogleSignIn g = GoogleSignIn();
+              g.disconnect();
               Get.to(forgetPassword());
             },
             child: Text("Forgot Password ?", style: manropeFun(context))),

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "179337004221",
+    "project_id": "monumental-habits-f1eec",
+    "storage_bucket": "monumental-habits-f1eec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179337004221:android:1dd9f6500124a3f8bfa3d4",
+        "android_client_info": {
+          "package_name": "com.example.monumental_habits"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179337004221-9shsic85qps6fpv38k93japf5rg5nh2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.monumental_habits",
+            "certificate_hash": "8926e9de97b2b603e0a3bc882232ba1c96af3a75"
+          }
+        },
+        {
+          "client_id": "179337004221-pg58l9s02gj5hmdolh1vs76u3s8229ib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGPxJ0C5dDzSbQlqcql0xcltNqiqGgBsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179337004221-pg58l9s02gj5hmdolh1vs76u3s8229ib.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "179337004221-1junffkjkg1hbm4qldfobmifg0mde7nb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.monumentalHabits"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

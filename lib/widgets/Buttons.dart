@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:monumental_habits/Models/Signup_models.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 Widget Button(BuildContext context, String text, Function fun) {
@@ -16,7 +17,7 @@ Widget Button(BuildContext context, String text, Function fun) {
       ),
     ),
     onPressed: () {
-       fun();
+      fun();
     },
     child: Text(
       text,
@@ -34,9 +35,11 @@ Widget googleButton(BuildContext context) {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      onPressed: () {
+      onPressed: () async{
         //! GO TO GOOGLE HEHEHE
         //jk login or signup via google
+        //dumb ass joke
+         await SignupModels.signInWithGoogle();
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -5,6 +5,8 @@ import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/Theme/themes_contoller.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
+import 'package:monumental_habits/pages/settings_profile/profile.dart';
+import 'package:monumental_habits/pages/settings_profile/support/profile_details.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
@@ -300,7 +302,9 @@ Widget customAction(
           backgroundColor: WidgetStatePropertyAll(
         Theme.of(context).colorScheme.secondaryContainer,
       )),
-      onPressed: () {},
+      onPressed: () {
+        Get.to(() => ProfileDetails());
+      },
       icon: Icon(
         Icons.edit_outlined,
         color: Get.isDarkMode ? Colors.white : const Color(darkPurple),
@@ -310,5 +314,9 @@ Widget customAction(
   if (index == 4 || index == 5) {
     return const SizedBox();
   }
-  return const CircleAvatar();
+  return GestureDetector(
+      onTap: () {
+        Get.to(() => ProfilePage());
+      },
+      child: const CircleAvatar());
 }

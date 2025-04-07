@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:monumental_habits/Models/Profile_models.dart';
 import 'package:monumental_habits/auth/pages/personalInfo.dart';
+import 'package:monumental_habits/widgets/Custom_snackBar.dart';
 import 'package:monumental_habits/widgets/customappBar.dart';
+import 'package:monumental_habits/widgets/profileDialog.dart';
 import 'package:monumental_habits/widgets/settingsFunctions.dart';
 
 class ProfileDetails extends StatelessWidget {
@@ -67,21 +70,32 @@ class ProfileDetails extends StatelessWidget {
               child: Column(
                 children: [
                   SettingsFunctions(
+                    type: "Update",
                     leading: "Username :",
                     text: user_data["user"]["name"],
+                    whatsCopied: "Name",
+                    func: () {
+                      Get.dialog(UpdateDialog(
+                        textFieldContent: "Username",
+                      ));
+                    },
                   ),
                   divider(context),
                   SettingsFunctions(
                     leading: "Email :",
                     text: user_data["user"]["email"],
+                    whatsCopied: "Email Address",
+                    type: "",
                   ),
                   divider(context),
                   SettingsFunctions(
+                    type: "",
                     leading: "Password :",
                     text: "********",
                   ),
                   divider(context),
                   SettingsFunctions(
+                    type: "",
                     leading: "Timezone :",
                     text: user_data["user"]["timezone"],
                   ),

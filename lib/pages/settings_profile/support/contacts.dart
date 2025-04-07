@@ -25,18 +25,21 @@ class ContactsPage extends StatelessWidget {
                   style: headerStyle(context)),
             ),
             SettingsFunctions(
+              type: "Copy",
               text: "team.habitly@gmail.com",
               leading: "Email us :".tr,
               textToCopy: "team.habitly@gmail.com",
               whatsCopied: "Email",
             ),
             SettingsFunctions(
+              type: "Copy",
               text: "+963-965455216",
               leading: "Call us :".tr,
               textToCopy: "+963-965455216",
               whatsCopied: "Number",
             ),
             SettingsFunctions(
+              type: "Copy",
               text: "Help Your Friends and Family develop Healthy habits".tr,
               leading: "Share Habitly ".tr,
               textToCopy: "http://google.com",

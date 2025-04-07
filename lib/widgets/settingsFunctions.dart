@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:monumental_habits/widgets/Custom_snackBar.dart';
 
 // ignore: must_be_immutable
 class SettingsFunctions extends StatelessWidget {
-  SettingsFunctions(
-      {super.key,
-      this.leading,
-      required this.text,
-      this.subtitle,
-      this.textToCopy,
-      this.whatsCopied});
+  SettingsFunctions({
+    super.key,
+    this.leading,
+    required this.text,
+    this.subtitle,
+    this.textToCopy,
+    this.whatsCopied,
+    this.func,
+    required this.type,
+  });
   String? leading;
   final String text;
   String? subtitle;
   String? textToCopy;
   String? whatsCopied;
+  Function? func;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,18 +31,14 @@ class SettingsFunctions extends StatelessWidget {
         child: ListTile(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          onLongPress: () {
-            Clipboard.setData(ClipboardData(text: text));
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                "$whatsCopied Copied !",
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontFamily: "klasik"),
-              ),
-              duration: const Duration(milliseconds: 500),
-              backgroundColor: Theme.of(context).colorScheme.onSurface,
-            ));
+          onLongPress: () async {
+            if (func == null) {
+              Clipboard.setData(ClipboardData(text: text));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(Custom_snackBar(context, whatsCopied!, type));
+            } else {
+              func!();
+            }
           },
           leading: leading == null
               ? null

@@ -69,12 +69,12 @@ class HabitInfoPage extends StatelessWidget {
                             SizeConfig.screenWidth * 0.04),
                         child: Image.asset(
                           "assets/images/tent.png",
-                          width: SizeConfig.screenWidth * 0.27,
-                          height: SizeConfig.screenHeight * 0.12,
+                          width: MediaQuery.sizeOf(context).width * 0.27,
+                          height: MediaQuery.sizeOf(context).height * 0.12,
                           fit: BoxFit.cover,
                         ),
                       ),
-                      SizedBox(width: SizeConfig.screenWidth * 0.03),
+                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.03),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,9 @@ class HabitInfoPage extends StatelessWidget {
                             Text(habit.name,
                                 style: klasikFun(context),
                                 overflow: TextOverflow.ellipsis),
-                            SizedBox(height: SizeConfig.screenHeight * 0.005),
+                            SizedBox(
+                                height:
+                                    MediaQuery.sizeOf(context).height * 0.005),
                             infoRow(
                                 Icons.notifications_outlined,
                                 //function to print everyday if the user selected it all
@@ -95,33 +97,34 @@ class HabitInfoPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: SizeConfig.screenHeight * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
                 //! Calendar
                 Container(
                   height: constraints.maxWidth > 600
-                      ? SizeConfig.screenHeight * 0.5
-                      : SizeConfig.screenHeight * 0.65,
+                      ? MediaQuery.sizeOf(context).height * 0.5
+                      : MediaQuery.sizeOf(context).height * 0.65,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.tertiary,
-                    borderRadius:
-                        BorderRadius.circular(SizeConfig.screenWidth * 0.04),
+                    borderRadius: BorderRadius.circular(
+                        MediaQuery.sizeOf(context).width * 0.04),
                   ),
                   child: const Center(child: HabitCalendar()),
                 ),
                 //! Analytics Section
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.02),
+                      vertical: MediaQuery.sizeOf(context).height * 0.02),
                   child: Align(
                       alignment: Alignment.center,
                       child: Text("Analytics", style: manropeFun(context))),
                 ),
                 Container(
-                  padding: EdgeInsets.all(SizeConfig.screenWidth * 0.025),
+                  padding:
+                      EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.025),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.tertiary,
-                    borderRadius:
-                        BorderRadius.circular(SizeConfig.screenWidth * 0.04),
+                    borderRadius: BorderRadius.circular(
+                        MediaQuery.sizeOf(context).width * 0.04),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -144,10 +147,10 @@ class HabitInfoPage extends StatelessWidget {
                 //! Delete Button
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.02,
-                      horizontal: SizeConfig.screenHeight * 0.02),
-                  child: Button(
-                      "Delete This Habit ?", () => _deleteHabit(context)),
+                      vertical: MediaQuery.sizeOf(context).height * 0.02,
+                      horizontal: MediaQuery.sizeOf(context).height * 0.02),
+                  child: Button(context, "Delete This Habit ?",
+                      () => _deleteHabit(context)),
                 ),
               ],
             ),

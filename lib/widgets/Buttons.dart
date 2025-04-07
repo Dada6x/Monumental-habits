@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:monumental_habits/Models/Signup_models.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 
-Widget Button(String text, Function fun) {
+Widget Button(BuildContext context, String text, Function fun) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      fixedSize: Size(SizeConfig.screenWidth, 42),
+      fixedSize: Size(MediaQuery.of(context).size.width, 42),
       backgroundColor: Get.isDarkMode
           ? const Color.fromRGBO(240, 222, 250, 0.8)
           : const Color(orange),
@@ -17,7 +17,7 @@ Widget Button(String text, Function fun) {
       ),
     ),
     onPressed: () {
-       fun();
+      fun();
     },
     child: Text(
       text,
@@ -26,18 +26,20 @@ Widget Button(String text, Function fun) {
   );
 }
 
-Widget googleButton() {
+Widget googleButton(BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(SizeConfig.screenWidth, 41),
+        fixedSize: Size(MediaQuery.sizeOf(context).width, 41),
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      onPressed: () {
+      onPressed: () async{
         //! GO TO GOOGLE HEHEHE
         //jk login or signup via google
+        //dumb ass joke
+         await SignupModels.signInWithGoogle();
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,10 +61,10 @@ Widget googleButton() {
       ));
 }
 
-Widget faceBookButton() {
+Widget faceBookButton(BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(SizeConfig.screenWidth, 41),
+        fixedSize: Size(MediaQuery.sizeOf(context).width, 41),
         backgroundColor: const Color.fromARGB(252, 36, 112, 235),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

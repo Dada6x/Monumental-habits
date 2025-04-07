@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 
 class NewHabit extends StatelessWidget {
   final HabitController habitController = Get.put(HabitController());
@@ -244,8 +243,8 @@ class Reminder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.tertiary,
-      height: SizeConfig.screenHeight * 0.5,
-      width: SizeConfig.screenHeight,
+      height: MediaQuery.sizeOf(context).height * 0.5,
+      width: MediaQuery.sizeOf(context).width,
       child: Column(
         children: [
           _buildHeader(context),

@@ -1,15 +1,30 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/auth/pages/personalInfo.dart';
+import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
-
 class SignupForm extends StatelessWidget {
-  final emailController = TextEditingController();
-  final RxBool isChecked = false.obs; 
+  
 
+  Future<void> sendVerifyRegister() async {
+    final request = await Dio().post(
+        "http://10.0.2.2:8000/api/verificationCode/send",
+        data: {"email": emailController.text, "registration": 1});
+    var response = request.data;
+    print(response);
+    if (response["status"]) {
+      status = true;
+      print(status);
+    }
+  }
+
+  bool status = false;
+  final emailController = TextEditingController();
+  final RxBool isChecked = false.obs;
+  final formKey = GlobalKey<FormState>();
   SignupForm({super.key});
 
   @override
@@ -27,11 +42,25 @@ class SignupForm extends StatelessWidget {
           //! Email Input
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: TextField(
-              decoration: customTextFieldDecoration(
-                  hint: "Email",
-                  prefixIcon: const Icon(Icons.mail),
-                  isWhite: true),
+            child: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: emailController,
+                validator: (value) {
+                  if (value!.isNotEmpty && value.length <= 10 ||
+                      value.isNotEmpty && !value.contains("@gmail.com")) {
+                    return 'Please enter a valid email address with "@gmail.com"';
+                  }
+                  return null;
+                },
+                onChanged: (val) {
+                  formKey.currentState!.validate();
+                },
+                decoration: customTextFieldDecoration(
+                    hint: "Email",
+                    prefixIcon: const Icon(Icons.mail),
+                    isWhite: true),
+              ),
             ),
           ),
           //! Checkbox
@@ -55,16 +84,15 @@ class SignupForm extends StatelessWidget {
           //! Create Account Button
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Button("Create Account", () {
-              Get.off(PersonalInfo(), arguments: {
-                //? notes
-                //! how to pass the arguments dammmn
-                // "email": emailController.text,
-                // "isChecked": isChecked.value, // Pass checkbox value
-                //! and this how to recive them in the personalInfo class
-                // final String email = Get.arguments["email"];
-                // final bool isChecked = Get.arguments["isChecked"];
-              });
+            child: Button(context, "Create Account", () async {
+              if (formKey.currentState!.validate()) {
+                print("send request-----------------------");
+                await sendVerifyRegister();
+                if (status) {
+                  Get.to(const VerificationPage(),
+                      arguments: {"email": emailController.text, "op": "reg"});
+                }
+              }
             }),
           ),
 
@@ -93,9 +121,9 @@ class SignupForm extends StatelessWidget {
           //! Social Media Buttons
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: googleButton(),
+            child: googleButton(context),
           ),
-          faceBookButton(),
+          faceBookButton(context),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:monumental_habits/auth/pages/SIgnupForm.dart';
 import 'package:monumental_habits/auth/pages/loginform.dart';
+import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 import 'package:monumental_habits/widgets/animationbutton.dart';
@@ -19,6 +20,7 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
+    print(token);
     return LayoutBuilder(
       builder: (context, constraints) {
         //! idk what dose constraints is anyway wallahi

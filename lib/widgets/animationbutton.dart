@@ -28,7 +28,7 @@ class _animatedGoogleButtonState extends State<animatedGoogleButton>
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _animation,
-      child: googleButton(),
+      child: googleButton(context),
     );
   }
 }

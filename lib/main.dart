@@ -33,8 +33,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-//Ward checking shit
-//LocaleController localeController = Get.find();
   @override
   Widget build(BuildContext context) {
     Get.put(LocaleController());

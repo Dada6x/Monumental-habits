@@ -6,9 +6,9 @@ import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
-class SignupForm extends StatelessWidget {
-  
 
+// ignore: must_be_immutable
+class SignupForm extends StatelessWidget {
   Future<void> sendVerifyRegister() async {
     final request = await Dio().post(
         "http://10.0.2.2:8000/api/verificationCode/send",

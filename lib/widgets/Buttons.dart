@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:monumental_habits/Models/Signup_models.dart';
+import 'package:monumental_habits/auth/pages/Models/Signup_models.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 Widget Button(BuildContext context, String text, Function fun) {

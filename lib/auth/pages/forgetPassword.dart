@@ -9,6 +9,7 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
 
+// ignore: must_be_immutable
 class forgetPassword extends StatelessWidget {
   Future<void> sendVerifyForgot() async {
     final request = await Dio().post(

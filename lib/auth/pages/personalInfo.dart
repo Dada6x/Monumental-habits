@@ -10,6 +10,7 @@ import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:monumental_habits/widgets/text_fields.dart';
 import 'package:monumental_habits/main.dart';
 
+// ignore: must_be_immutable
 class PersonalInfo extends StatelessWidget {
   bool registerStatus = false;
   final String email;

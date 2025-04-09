@@ -92,56 +92,53 @@ class _HabitListPageState extends State<HabitListPage> {
           } else if (snapshot.hasData) {
             var habits = snapshot.data?['habits'];
 
-            return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  headingRowHeight: 60,
-                  dataRowMinHeight: 50,
-                  dataRowMaxHeight: 80,
-                  showBottomBorder: false,
-                  dividerThickness: double.infinity,
-                  showCheckboxColumn: false,
-                  columns: const [
-                    DataColumn(label: Text('Habit Name')),
-                    DataColumn(label: Text('Sun')),
-                    DataColumn(label: Text('Mon')),
-                    DataColumn(label: Text('Tue')),
-                    DataColumn(label: Text('Wed')),
-                    DataColumn(label: Text('Thu')),
-                    DataColumn(label: Text('Fri')),
-                    DataColumn(label: Text('Sat')),
-                  ],
-                  rows: habits.map<DataRow>((habit) {
-                    int rowIndex = habits.indexOf(habit);
-                    return DataRow(cells: [
-                      // Habit Name as the first cell
-                      DataCell(Text(habit['name'])),
-                      // Days of the week as the other cells
-                      ...[
-                        'Sunday',
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday'
-                      ].map((day) {
-                        return DataCell(
-                          Container(
-                            width: 43,
-                            height: 43,
-                            decoration: BoxDecoration(
-                              color: randomRowColors[rowIndex % 4],
-                              borderRadius: BorderRadius.circular(6),
-                            ),
+            return InteractiveViewer(
+              constrained: false,
+              child: DataTable(
+                headingRowHeight: 60,
+                dataRowMinHeight: 50,
+                dataRowMaxHeight: 80,
+                showBottomBorder: false,
+                dividerThickness: double.infinity,
+                showCheckboxColumn: false,
+                columns: const [
+                  DataColumn(label: Text('Habit Name')),
+                  DataColumn(label: Text('Sun')),
+                  DataColumn(label: Text('Mon')),
+                  DataColumn(label: Text('Tue')),
+                  DataColumn(label: Text('Wed')),
+                  DataColumn(label: Text('Thu')),
+                  DataColumn(label: Text('Fri')),
+                  DataColumn(label: Text('Sat')),
+                ],
+                rows: habits.map<DataRow>((habit) {
+                  int rowIndex = habits.indexOf(habit);
+                  return DataRow(cells: [
+                    // Habit Name as the first cell
+                    DataCell(Text(habit['name'])),
+                    // Days of the week as the other cells
+                    ...[
+                      'Sunday',
+                      'Monday',
+                      'Tuesday',
+                      'Wednesday',
+                      'Thursday',
+                      'Friday',
+                      'Saturday'
+                    ].map((day) {
+                      return DataCell(
+                        Container(
+                          width: 43,
+                          height: 43,
+                          decoration: BoxDecoration(
+                            color: randomRowColors[rowIndex % 4],
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                        );
-                      }),
-                    ]);
-                  }).toList(),
-                ),
+                        ),
+                      );
+                    }),
+                  ]);
+                }).toList(),
               ),
             );
           }

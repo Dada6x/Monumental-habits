@@ -146,14 +146,9 @@ class NewHabit extends StatelessWidget {
 //! habit frequency Widget
 class HabitFrequencyRadioButtons extends StatelessWidget {
   final HabitController habitFrequencyController = Get.find<HabitController>();
+
   static const List<String> weekDays = [
-    "SUN",
-    "MON",
-    "TUE",
-    "WED",
-    "THU",
-    "FRI",
-    "SAT",
+    "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
   ];
 
   HabitFrequencyRadioButtons({super.key});
@@ -165,12 +160,14 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(7, (index) {
           String day = weekDays[index].toLowerCase();
-          bool isSelected = habitFrequencyController.selectedDays[day] ?? false;
+          bool isSelected = habitFrequencyController.selectedDays.contains(day);
           return GestureDetector(
             onTap: () {
-              // Toggle the selection for the selected day
-              habitFrequencyController.selectedDays[day] =
-                  !(habitFrequencyController.selectedDays[day] ?? false);
+              if (isSelected) {
+                habitFrequencyController.selectedDays.remove(day);
+              } else {
+                habitFrequencyController.selectedDays.add(day);
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -214,6 +211,7 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
     );
   }
 }
+
 //!  Habit reminder Widget
 class Reminder extends StatelessWidget {
   // Reactive state variables

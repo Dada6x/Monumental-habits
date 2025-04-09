@@ -7,7 +7,7 @@ class Habit {
   String name;
   String chosenTime;
   bool notificationsEnabled;
-  Map<String, bool> selectedDays;
+  List<String> selectedDays;
 
   Habit({
     // required this.id,

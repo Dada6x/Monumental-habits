@@ -124,8 +124,6 @@ class NotificationsService {
     debugPrint("Notification set for  $hour:$minute ✅✅");
   }
 
-
-
 //  // Schedule notification using UUID-based hash code
 //   Future<void> scheduledNotifications({
 //     required int id, // Using habit.id.hashCode
@@ -151,8 +149,4 @@ class NotificationsService {
 //   Future<void> cancelNotification(int id) async {
 //     await notificationsPlugin.cancel(id);
 //   }
-
-
-
-
 }

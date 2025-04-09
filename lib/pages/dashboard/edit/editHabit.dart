@@ -25,7 +25,7 @@ class _EditHabitState extends State<EditHabit> {
       widget.habitController.notificationsEnabled.value =
           widget.habitAAA.notificationsEnabled;
       widget.habitController.selectedDays.value =
-          Map<String, bool>.from(widget.habitAAA.selectedDays);
+          List<String>.from(widget.habitAAA.selectedDays);
     });
   }
 
@@ -180,17 +180,11 @@ class _EditHabitState extends State<EditHabit> {
     );
   }
 }
-
 class HabitFreq extends StatelessWidget {
   final HabitController habitFrequencyController = Get.find<HabitController>();
+
   static const List<String> weekDays = [
-    "SUN",
-    "MON",
-    "TUE",
-    "WED",
-    "THU",
-    "FRI",
-    "SAT",
+    "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
   ];
 
   HabitFreq({super.key});
@@ -201,12 +195,16 @@ class HabitFreq extends StatelessWidget {
       () => Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(7, (index) {
-          String day = weekDays[index].toLowerCase();
-          bool isSelected = habitFrequencyController.selectedDays[day] ?? false;
+          String day = weekDays[index].toLowerCase(); // "mon", "wed", etc.
+          bool isSelected = habitFrequencyController.selectedDays.contains(day);
+
           return GestureDetector(
             onTap: () {
-              habitFrequencyController.selectedDays[day] =
-                  !(habitFrequencyController.selectedDays[day] ?? false);
+              if (isSelected) {
+                habitFrequencyController.selectedDays.remove(day);
+              } else {
+                habitFrequencyController.selectedDays.add(day);
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -250,6 +248,7 @@ class HabitFreq extends StatelessWidget {
     );
   }
 }
+
 
 class EditReminder extends StatelessWidget {
   // Reactive state variables

@@ -128,24 +128,26 @@ class HabitTable extends StatelessWidget {
                         7,
                         (index) {
                           String dayKey = weekDays[index];
-                          bool isSelected = habit.selectedDays[dayKey] ?? false;
+                          bool isSelected = habit.selectedDays
+                              .contains(dayKey); // ✅ updated line
                           if (isSelected) {
                             return DataCell(
-                                placeholder: false,
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 3),
-                                  child: Center(
-                                    child: Container(
-                                      width: 43,
-                                      height: 43,
-                                      decoration: BoxDecoration(
-                                        color: randomRowColors[rowIndex % 4],
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
+                              placeholder: false,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                child: Center(
+                                  child: Container(
+                                    width: 43,
+                                    height: 43,
+                                    decoration: BoxDecoration(
+                                      color: randomRowColors[rowIndex % 4],
+                                      borderRadius: BorderRadius.circular(6),
                                     ),
                                   ),
-                                ));
+                                ),
+                              ),
+                            );
                           } else {
                             return const DataCell(SizedBox());
                           }

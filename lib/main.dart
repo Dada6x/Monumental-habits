@@ -12,9 +12,10 @@ import 'package:monumental_habits/pages/settings_profile/FAQ/f_a_q_controller.da
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
 import 'firebase_options.dart';
-  // status bar color in the app dammmnscc
-  // SystemChrome.setSystemUIOverlayStyle(
-  //     const SystemUiOverlayStyle(statusBarColor: Color(orange)));
+
+// status bar color in the app dammmnscc
+// SystemChrome.setSystemUIOverlayStyle(
+//     const SystemUiOverlayStyle(statusBarColor: Color(orange)));
 SharedPreferences? introSP;
 SharedPreferences? token;
 void main() async {

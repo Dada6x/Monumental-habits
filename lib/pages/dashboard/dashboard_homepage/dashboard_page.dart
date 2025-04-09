@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monumental_habits/pages/dashboard/dashboard_homepage/habit_table.dart';
+import 'package:monumental_habits/pages/dashboard/test.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class Dashboard extends StatelessWidget {
@@ -96,7 +96,7 @@ class Dashboard extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: MediaQuery.sizeOf(context).height * 0.54,
-              child: HabitTable(),
+              child: HabitListPage(),
             ),
           ),
         ],

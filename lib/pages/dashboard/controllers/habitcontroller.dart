@@ -69,6 +69,7 @@ class HabitController extends GetxController {
     reset();
   }
 
+
 //! deleting habits
   void deleteHabit(Habit habit) {
     habits.remove(habit);

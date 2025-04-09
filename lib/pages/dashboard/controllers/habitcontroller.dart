@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
 import 'package:monumental_habits/pages/dashboard/model/habit_model.dart';
 
@@ -18,9 +20,8 @@ class HabitController extends GetxController {
     'fri': false,
     'sat': false,
   });
-
 //! adding habits
-  void addHabit() {
+  void addHabit() async {
     if (habitName.value.isNotEmpty) {
       habits.add(Habit(
         name: habitName.value,
@@ -30,8 +31,34 @@ class HabitController extends GetxController {
       ));
       NotificationsService().habitScheduleNotification(
           HabitName: habitName.value, timeString: chosenTime.value);
-      reset();
     }
+    try {
+      print({Map<String, bool>.from(selectedDays)});
+      print("new HABIT ADD 🔴 ");
+      var response = await Dio().post(
+        "http://10.0.2.2:8000/api/habits",
+        data: {
+          'name': habitName.value,
+          "days": ["Monday"],
+          "reminder_time": null,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${token!.getString("token")}',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      if (response.data["status"]) {
+        print("Habit added successfully");
+      } else {
+        print("Something went wrong: ${response.data}");
+      }
+    } catch (e) {
+      print("Unexpected error: $e");
+    }
+    reset();
   }
 
 //! deleting habits
@@ -72,7 +99,6 @@ class HabitController extends GetxController {
     reset();
   }
 }
-
 
 /*
 import 'package:flutter/material.dart';

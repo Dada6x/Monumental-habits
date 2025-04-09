@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
-import 'package:monumental_habits/pages/dashboard/habit_Info.dart';
+import 'package:monumental_habits/pages/dashboard/info/habit_Info.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 

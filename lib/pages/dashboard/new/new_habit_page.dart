@@ -7,7 +7,6 @@ class NewHabit extends StatelessWidget {
   final HabitController habitController = Get.put(HabitController());
 
   NewHabit({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -166,9 +165,7 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(7, (index) {
           String day = weekDays[index].toLowerCase();
-          bool isSelected = habitFrequencyController.selectedDays[day] ??
-              false; // Use the map to get the status for the day
-
+          bool isSelected = habitFrequencyController.selectedDays[day] ?? false;
           return GestureDetector(
             onTap: () {
               // Toggle the selection for the selected day
@@ -218,13 +215,11 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
   }
 }
 //!  Habit reminder Widget
-
 class Reminder extends StatelessWidget {
   // Reactive state variables
   final RxInt selectedHour = 1.obs;
   final RxInt selectedMinute = 0.obs;
   final RxString selectedPeriod = 'AM'.obs;
-
   final FixedExtentScrollController _hourController =
       FixedExtentScrollController();
   final FixedExtentScrollController _minuteController =

@@ -1,14 +1,15 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 
-class HabitListPage extends StatefulWidget {
+class HabitTable extends StatefulWidget {
   @override
-  _HabitListPageState createState() => _HabitListPageState();
+  _HabitTableState createState() => _HabitTableState();
 }
 
-class _HabitListPageState extends State<HabitListPage> {
+class _HabitTableState extends State<HabitTable> {
   final List<Color> randomRowColors = const [
     Color(darkOrange),
     Color(0xFFF65B4E),
@@ -16,16 +17,28 @@ class _HabitListPageState extends State<HabitListPage> {
     Color(0xFF973456),
   ];
 
-  late Future<Map<String, dynamic>> futureHabits;
+  final StreamController<Map<String, dynamic>> _streamController =
+      StreamController.broadcast();
+
+  Timer? _pollingTimer;
 
   @override
   void initState() {
     super.initState();
-    futureHabits = fetchHabitData();
+    fetchHabitData(); // Initial fetch
+    _pollingTimer = Timer.periodic(Duration(seconds: 5), (_) {
+      fetchHabitData(); // Auto update every 5 seconds
+    });
   }
 
-  // Fetching the habit data from an API
-  Future<Map<String, dynamic>> fetchHabitData() async {
+  @override
+  void dispose() {
+    _pollingTimer?.cancel();
+    _streamController.close();
+    super.dispose();
+  }
+
+  void fetchHabitData() async {
     Dio dio = Dio();
     String apiUrl = 'http://10.0.2.2:8000/api/homepage?order=0';
 
@@ -39,51 +52,26 @@ class _HabitListPageState extends State<HabitListPage> {
           },
         ),
       );
-
       if (response.statusCode == 200) {
-        return response.data;
+        _streamController.add(response.data);
       } else {
-        throw Exception('Failed to load data');
+        _streamController.addError('Failed to load data');
       }
     } catch (e) {
-      throw Exception('Failed to load data: $e');
+      _streamController.addError('Failed to load data: $e');
     }
   }
 
-  // Get the status color for each day of the week for each habit
   Map<String, Color> getDayStatus(Map<String, dynamic> habit) {
     Map<String, Color> dayStatus = {};
-    List<String> daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ];
-
-    for (var day in daysOfWeek) {
-      var log = habit['habit_logs'].firstWhere(
-        (log) => log['day_of_week'] == day,
-        orElse: () => null,
-      );
-
-      // Default to green (status = 0)
-      dayStatus[day] = log != null && log['status'] == 0
-          ? Colors.green
-          : Colors.red; // Set to red if status == 1
-    }
-
     return dayStatus;
   }
-
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.tertiary,
-      child: FutureBuilder<Map<String, dynamic>>(
-        future: futureHabits,
+      child: StreamBuilder<Map<String, dynamic>>(
+        stream: _streamController.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -91,7 +79,6 @@ class _HabitListPageState extends State<HabitListPage> {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (snapshot.hasData) {
             var habits = snapshot.data?['habits'];
-
             return InteractiveViewer(
               constrained: false,
               child: DataTable(
@@ -102,21 +89,19 @@ class _HabitListPageState extends State<HabitListPage> {
                 dividerThickness: double.infinity,
                 showCheckboxColumn: false,
                 columns: const [
-                  DataColumn(label: Text('Habit Name')),
-                  DataColumn(label: Text('Sun')),
-                  DataColumn(label: Text('Mon')),
-                  DataColumn(label: Text('Tue')),
-                  DataColumn(label: Text('Wed')),
-                  DataColumn(label: Text('Thu')),
-                  DataColumn(label: Text('Fri')),
-                  DataColumn(label: Text('Sat')),
+                  DataColumn(label: Text('Habit', style: klasik)),
+                  DataColumn(label: Text('SUN', style: manrope)),
+                  DataColumn(label: Text('MON', style: manrope)),
+                  DataColumn(label: Text('TUE', style: manrope)),
+                  DataColumn(label: Text('WED', style: manrope)),
+                  DataColumn(label: Text('THU', style: manrope)),
+                  DataColumn(label: Text('FRI', style: manrope)),
+                  DataColumn(label: Text('SAT', style: manrope)),
                 ],
                 rows: habits.map<DataRow>((habit) {
                   int rowIndex = habits.indexOf(habit);
                   return DataRow(cells: [
-                    // Habit Name as the first cell
-                    DataCell(Text(habit['name'])),
-                    // Days of the week as the other cells
+                    DataCell(Text(habit['name'], style: klasik)),
                     ...[
                       'Sunday',
                       'Monday',
@@ -131,7 +116,9 @@ class _HabitListPageState extends State<HabitListPage> {
                           width: 43,
                           height: 43,
                           decoration: BoxDecoration(
-                            color: randomRowColors[rowIndex % 4],
+                            color: habit['status'] != null
+                                ? Colors.red
+                                : randomRowColors[rowIndex % 4],
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -142,16 +129,9 @@ class _HabitListPageState extends State<HabitListPage> {
               ),
             );
           }
-
-          return const Center(child: Text("No data found"));
+          return const Center(child: Text("No Habits yet \n add something !"));
         },
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: HabitListPage(),
-  ));
 }

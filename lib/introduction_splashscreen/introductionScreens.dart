@@ -8,14 +8,14 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class Intropages extends StatefulWidget {
-  const Intropages({super.key});
+class IntroPages extends StatefulWidget {
+  const IntroPages({super.key});
 
   @override
-  State<Intropages> createState() => _IntropagesState();
+  State<IntroPages> createState() => _IntroPagesState();
 }
 
-class _IntropagesState extends State<Intropages> {
+class _IntroPagesState extends State<IntroPages> {
   final _pageController = PageController();
   bool onLastPage = false;
 

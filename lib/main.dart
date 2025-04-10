@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'firebase_options.dart';
 //     const SystemUiOverlayStyle(statusBarColor: Color(orange)));
 SharedPreferences? introSP;
 SharedPreferences? token;
+Dio dio = Dio();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: "/",
-          page: () => const Intropages(),
+          page: () => const IntroPages(),
         ),
         GetPage(
           name: "/Auth",
@@ -52,6 +54,7 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       theme: Themes().lightMode,
+      darkTheme: Themes().darkMode,
       locale: Get.deviceLocale,
       translations: MyLocale(),
       initialRoute: introSP!.getString("intro") != null ? "Auth" : "/",

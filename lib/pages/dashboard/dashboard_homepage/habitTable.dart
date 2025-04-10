@@ -1,11 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class HabitTable extends StatefulWidget {
+  const HabitTable({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HabitTableState createState() => _HabitTableState();
 }
 
@@ -26,8 +32,8 @@ class _HabitTableState extends State<HabitTable> {
   void initState() {
     super.initState();
     fetchHabitData(); // Initial fetch
-    _pollingTimer = Timer.periodic(Duration(seconds: 5), (_) {
-      fetchHabitData(); // Auto update every 5 seconds
+    _pollingTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+      fetchHabitData(); //! Auto update every 5 seconds
     });
   }
 
@@ -39,9 +45,7 @@ class _HabitTableState extends State<HabitTable> {
   }
 
   void fetchHabitData() async {
-    Dio dio = Dio();
     String apiUrl = 'http://10.0.2.2:8000/api/homepage?order=0';
-
     try {
       final response = await dio.get(
         apiUrl,
@@ -56,16 +60,28 @@ class _HabitTableState extends State<HabitTable> {
         _streamController.add(response.data);
       } else {
         _streamController.addError('Failed to load data');
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: "Error",
+            message: "Failed to load data from server",
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     } catch (e) {
-      _streamController.addError('Failed to load data: $e');
+      _streamController.addError('Exception :Failed to load data: $e');
+      Get.showSnackbar(
+        GetSnackBar(
+          title: "Exception",
+          message: e.toString(),
+          duration: const Duration(seconds: 2),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
-  Map<String, Color> getDayStatus(Map<String, dynamic> habit) {
-    Map<String, Color> dayStatus = {};
-    return dayStatus;
-  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -76,9 +92,30 @@ class _HabitTableState extends State<HabitTable> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
           } else if (snapshot.hasData) {
             var habits = snapshot.data?['habits'];
+            if (habits == null || habits.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      "assets/animations/ghost.json",
+                      filterQuality: FilterQuality.high,
+                    ),
+                    const Text(
+                      "No Habits yet\nAdd something!",
+                      textAlign: TextAlign.center,
+                      style: manrope,
+                    ),
+                    Icon(
+                      Icons.arrow_downward,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ],
+                ),
+              );
+            }
             return InteractiveViewer(
               constrained: false,
               child: DataTable(
@@ -129,7 +166,7 @@ class _HabitTableState extends State<HabitTable> {
               ),
             );
           }
-          return const Center(child: Text("No Habits yet \n add something !"));
+          return const SizedBox(); // Fallback, just in case
         },
       ),
     );

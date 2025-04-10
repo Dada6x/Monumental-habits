@@ -49,6 +49,7 @@ dependencies:
   icons_flutter: ^0.0.4
   image_picker: ^1.1.2
   intl: ^0.18.0
+  lottie: any
   shared_preferences: ^2.5.3
   smooth_page_indicator: ^1.2.1
   table_calendar: any

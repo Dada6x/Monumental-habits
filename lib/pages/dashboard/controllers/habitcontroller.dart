@@ -26,49 +26,82 @@ class HabitController extends GetxController {
   // the selected days should be an array of unselected days then the user select them
 //! adding habitsun
   void addHabit() async {
+    habits.add(Habit(
+      name: habitName.value,
+      chosenTime: chosenTime.value,
+      notificationsEnabled: notificationsEnabled.value,
+      selectedDays: List<String>.from(selectedDays),
+    ));
+
     //! adding the habit to the GetX controller
     if (habitName.value.isNotEmpty) {
-      habits.add(Habit(
-        name: habitName.value,
-        chosenTime: chosenTime.value,
-        notificationsEnabled: notificationsEnabled.value,
-        selectedDays: List<String>.from(selectedDays),
-      ));
       NotificationsService().habitScheduleNotification(
-          HabitName: habitName.value, timeString: chosenTime.value);
-    }
-    try {
-      print({List<String>.from(selectedDays)});
-      print("new HABIT ADD 🔴 ");
-      print(
-        selectedDays.map((d) => fullDayNames[d]!).toList(),
+        HabitName: habitName.value,
+        timeString: chosenTime.value,
       );
-      var response = await Dio().post(
-        "http://10.0.2.2:8000/api/habits",
-        data: {
-          'name': habitName.value,
-          "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
-          "reminder_time": null,
-        },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${token!.getString("token")}',
-            'Accept': 'application/json',
+
+      try {
+        var response = await Dio().post(
+          "http://10.0.2.2:8000/api/habits",
+          data: {
+            'name': habitName.value,
+            "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
+            "reminder_time": null,
           },
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer ${token!.getString("token")}',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+
+        if (response.data["status"]) {
+          print("Habit added successfully 💚");
+
+          Get.showSnackbar(
+            const GetSnackBar(
+              title: "Success",
+              message: "Habit added successfully 🎉",
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        } else {
+          // print("Something went wrong: ${response.data}");
+          Get.showSnackbar(
+            GetSnackBar(
+              title: "Error",
+              message: response.data["message"] ?? "Something went wrong",
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        print("Unexpected error: $e");
+
+        Get.showSnackbar(
+          GetSnackBar(
+            title: "Exception",
+            message: e.toString(),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+      reset();
+    } else {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: "Validation Error",
+          message: "Please enter a habit name",
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 3),
         ),
       );
-
-      if (response.data["status"]) {
-        print("Habit added successfully");
-      } else {
-        print("Something went wrong: ${response.data}");
-      }
-    } catch (e) {
-      print("Unexpected error: $e");
     }
-    reset();
   }
-
 
 //! deleting habits
   void deleteHabit(Habit habit) {

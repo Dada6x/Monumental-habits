@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/Theme/themes_contoller.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
-import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/settings_profile/profile.dart';
 import 'package:monumental_habits/pages/settings_profile/support/profile_details.dart';
@@ -156,7 +155,7 @@ class HomePage extends StatelessWidget {
                               //$ Save the new habit
                             } else if (navController.currentIndex.value == 4) {
                               habitController.addHabit();
-                              print(token!.getString("token"));
+                              Get.off(HomePage());//! FUCK THIS CODE SUCKS BUT FIX IT LATER
                               navController.changePage(0);
                               habitController.reset();
                               FocusManager.instance.primaryFocus

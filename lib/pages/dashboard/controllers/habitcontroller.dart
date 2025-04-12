@@ -32,14 +32,13 @@ class HabitController extends GetxController {
       notificationsEnabled: notificationsEnabled.value,
       selectedDays: List<String>.from(selectedDays),
     ));
-
     //! adding the habit to the GetX controller
     if (habitName.value.isNotEmpty) {
       NotificationsService().habitScheduleNotification(
         HabitName: habitName.value,
         timeString: chosenTime.value,
       );
-
+//! backend
       try {
         var response = await Dio().post(
           "http://10.0.2.2:8000/api/habits",
@@ -58,7 +57,6 @@ class HabitController extends GetxController {
 
         if (response.data["status"]) {
           print("Habit added successfully 💚");
-
           Get.showSnackbar(
             const GetSnackBar(
               title: "Success",
@@ -67,6 +65,7 @@ class HabitController extends GetxController {
               duration: Duration(seconds: 3),
             ),
           );
+
         } else {
           // print("Something went wrong: ${response.data}");
           Get.showSnackbar(
@@ -80,7 +79,6 @@ class HabitController extends GetxController {
         }
       } catch (e) {
         print("Unexpected error: $e");
-
         Get.showSnackbar(
           GetSnackBar(
             title: "Exception",

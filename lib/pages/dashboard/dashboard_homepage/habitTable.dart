@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:monumental_habits/main.dart';
+import 'package:monumental_habits/pages/dashboard/info/habit_Info.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class HabitTable extends StatefulWidget {
@@ -32,9 +32,6 @@ class _HabitTableState extends State<HabitTable> {
   void initState() {
     super.initState();
     fetchHabitData(); // Initial fetch
-    _pollingTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-      fetchHabitData(); //! Auto update every 5 seconds
-    });
   }
 
   @override
@@ -94,6 +91,7 @@ class _HabitTableState extends State<HabitTable> {
           } else if (snapshot.hasError) {
           } else if (snapshot.hasData) {
             var habits = snapshot.data?['habits'];
+            //! var id = snapshot.data?['id']; then pass this id to the info where you want to delete and pass it there then refresh the UI
             if (habits == null || habits.isEmpty) {
               return Center(
                 child: Column(
@@ -137,31 +135,42 @@ class _HabitTableState extends State<HabitTable> {
                 ],
                 rows: habits.map<DataRow>((habit) {
                   int rowIndex = habits.indexOf(habit);
-                  return DataRow(cells: [
-                    DataCell(Text(habit['name'], style: klasik)),
-                    ...[
-                      'Sunday',
-                      'Monday',
-                      'Tuesday',
-                      'Wednesday',
-                      'Thursday',
-                      'Friday',
-                      'Saturday'
-                    ].map((day) {
-                      return DataCell(
-                        Container(
-                          width: 43,
-                          height: 43,
-                          decoration: BoxDecoration(
-                            color: habit['status'] != null
-                                ? Colors.red
-                                : randomRowColors[rowIndex % 4],
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        ),
-                      );
-                    }),
-                  ]);
+                  return DataRow(
+                      onLongPress: () {
+                        Get.to(HabitInfoPage(id: habit['id']));
+                      },
+                      cells: [
+                        DataCell(Text(habit['name'], style: klasik)),
+                        ...[
+                          'Sunday',
+                          'Monday',
+                          'Tuesday',
+                          'Wednesday',
+                          'Thursday',
+                          'Friday',
+                          'Saturday'
+                        ].map((day) {
+                          return DataCell(
+                            // onTap: () {
+                            // },
+                            GestureDetector(
+                              onTap: () {
+                                // i dont know if i want to make it the cell or this gesture detector
+                              },
+                              child: Container(
+                                width: 43,
+                                height: 43,
+                                decoration: BoxDecoration(
+                                  color: habit['status'] != null
+                                      ? Colors.red
+                                      : randomRowColors[rowIndex % 4],
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      ]);
                 }).toList(),
               ),
             );

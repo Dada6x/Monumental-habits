@@ -14,7 +14,6 @@ class Dashboard extends StatelessWidget {
     final String quoteText = quoteParts.first.trim();
     final String author =
         quoteParts.length > 1 ? "- ${quoteParts.last.trim()}" : "- Unknown";
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -96,7 +95,7 @@ class Dashboard extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: MediaQuery.sizeOf(context).height * 0.54,
-              child: HabitTable(),
+              child:  const HabitTable(),
             ),
           ),
         ],

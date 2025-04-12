@@ -146,13 +146,16 @@ class NewHabit extends StatelessWidget {
 //! habit frequency Widget
 class HabitFrequencyRadioButtons extends StatelessWidget {
   final HabitController habitFrequencyController = Get.find<HabitController>();
-
   static const List<String> weekDays = [
-    "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
   ];
-
   HabitFrequencyRadioButtons({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -214,7 +217,6 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
 
 //!  Habit reminder Widget
 class Reminder extends StatelessWidget {
-  // Reactive state variables
   final RxInt selectedHour = 1.obs;
   final RxInt selectedMinute = 0.obs;
   final RxString selectedPeriod = 'AM'.obs;
@@ -222,7 +224,6 @@ class Reminder extends StatelessWidget {
       FixedExtentScrollController();
   final FixedExtentScrollController _minuteController =
       FixedExtentScrollController();
-
   Reminder({super.key});
 
   void _saveReminder() {

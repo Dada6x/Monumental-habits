@@ -1,18 +1,64 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:monumental_habits/home/homePage.dart';
+import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/dashboard/info/calander.dart';
-import 'package:monumental_habits/pages/dashboard/edit/editHabit.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 
 class HabitInfoPage extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
-  final habit;
+  final id;
   final HabitController habitController = Get.find<HabitController>();
-  HabitInfoPage({super.key, required this.habit});
+  HabitInfoPage({super.key, required this.id});
+
+  void deleteHabit() async {
+    try {
+      String apiUrl = 'http://10.0.2.2:8000/api/habits/$id';
+      var response = await dio.delete(
+        apiUrl,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${token!.getString("token")}',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      // Check the response status code
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Habit deleted successfully! ',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: const Color(darkOrange),
+        );
+        Get.off(HomePage());
+      } else {
+        // Show error Snackbar if not 200 OK
+        Get.snackbar(
+          'Error',
+          'Failed to delete habit. Try again later. ❌',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      // Show error Snackbar if there's a network or any other issue
+      Get.snackbar(
+        'Error',
+        'Error: Unable to delete habit. Please check your connection. ❌',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +73,7 @@ class HabitInfoPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          habit.name,
+          'Habit Name',
           style: manropeFun(context),
           overflow: TextOverflow.ellipsis,
         ),
@@ -35,9 +81,9 @@ class HabitInfoPage extends StatelessWidget {
           IconButton(
             onPressed: () {
               //! EDIT HABIT
-              Get.to(() => EditHabit(
-                    habitAAA: habit,
-                  ));
+              // Get.to(() => EditHabit(
+              //       habitAAA: habit,
+              //     ));
             },
             icon: Icon(
               Icons.edit_outlined,
@@ -50,109 +96,148 @@ class HabitInfoPage extends StatelessWidget {
         builder: (context, constraints) {
           return SingleChildScrollView(
             padding: EdgeInsets.all(SizeConfig.screenWidth * 0.04),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //! Habit Info
-                Container(
-                  padding: EdgeInsets.all(SizeConfig.screenWidth * 0.025),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.tertiary,
-                    borderRadius:
-                        BorderRadius.circular(SizeConfig.screenWidth * 0.04),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            SizeConfig.screenWidth * 0.04),
-                        child: Image.asset(
-                          "assets/images/tent.png",
-                          width: MediaQuery.sizeOf(context).width * 0.27,
-                          height: MediaQuery.sizeOf(context).height * 0.12,
-                          fit: BoxFit.cover,
+            child: Padding(
+              padding: const EdgeInsets.all(13.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //! Habit Info
+                  Container(
+                    padding: EdgeInsets.all(SizeConfig.screenWidth * 0.025),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(19),
+                          child: Image.asset(
+                            "assets/images/tent.png",
+                            width: MediaQuery.sizeOf(context).width * 0.27,
+                            height: MediaQuery.sizeOf(context).height * 0.12,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.03),
-                      Expanded(
-                        child: Column(
+                        SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.03),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(habit.name,
-                                style: klasikFun(context),
-                                overflow: TextOverflow.ellipsis),
-                            SizedBox(
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.005),
-                            infoRow(
-                                Icons.notifications_outlined,
-                                //function to print everyday if the user selected it all
-                                "Repeat: ${getSelectedDays(habit.selectedDays)}"),
-                            infoRow(Icons.restart_alt_outlined,
-                                "Reminder: ${habit.chosenTime}"),
+                            Text(
+                              'habit name',
+                              style: klasikFun(context),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.notifications_outlined,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                const Text("habit notification time "),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.restart_alt_outlined,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                const Text("habit reminder time "),
+                              ],
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-                //! Calendar
-                Container(
-                  height: constraints.maxWidth > 600
-                      ? MediaQuery.sizeOf(context).height * 0.5
-                      : MediaQuery.sizeOf(context).height * 0.65,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.tertiary,
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.sizeOf(context).width * 0.04),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                  //! Calendar
+                  Container(
+                    height: constraints.maxWidth > 600
+                        ? MediaQuery.sizeOf(context).height * 0.5
+                        : MediaQuery.sizeOf(context).height * 0.65,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      borderRadius: BorderRadius.circular(
+                          MediaQuery.sizeOf(context).width * 0.04),
+                    ),
+                    child: const Center(child: HabitCalendar()),
                   ),
-                  child: const Center(child: HabitCalendar()),
-                ),
-                //! Analytics Section
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.sizeOf(context).height * 0.02),
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: Text("Analytics", style: manropeFun(context))),
-                ),
-                Container(
-                  padding:
-                      EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.025),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.tertiary,
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.sizeOf(context).width * 0.04),
+                  //! Analytics Section
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.sizeOf(context).height * 0.02),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Analytics", style: manropeFun(context))),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      analyticsColumn([
-                        customWidget("20 Days", "Longest Streak",
-                            "assets/images/Fire.svg"),
-                        customWidget("98%", "Completion Rate",
-                            "assets/images/EllipseDiagrams.svg"),
-                      ]),
-                      analyticsColumn([
-                        customWidget("0 Days", "Current Streak",
-                            "assets/images/LightningIcon.svg"),
-                        customWidget("7", "Average Easiness Score",
-                            "assets/images/Leaf.svg"),
-                      ]),
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(
+                        MediaQuery.sizeOf(context).width * 0.025),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      borderRadius: BorderRadius.circular(
+                          MediaQuery.sizeOf(context).width * 0.04),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        analyticsColumn([
+                          customWidget("20 Days", "Longest Streak",
+                              "assets/images/Fire.svg"),
+                          customWidget("98%", "Completion Rate",
+                              "assets/images/EllipseDiagrams.svg"),
+                        ]),
+                        analyticsColumn([
+                          customWidget("0 Days", "Current Streak",
+                              "assets/images/LightningIcon.svg"),
+                          customWidget("7", "Average Easiness Score",
+                              "assets/images/Leaf.svg"),
+                        ]),
+                      ],
+                    ),
                   ),
-                ),
-                //! Delete Button
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.sizeOf(context).height * 0.02,
-                      horizontal: MediaQuery.sizeOf(context).height * 0.02),
-                  child: Button(context, "Delete This Habit ?",
-                      () => _deleteHabit(context)),
-                ),
-              ],
+                  //! Delete Button
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.sizeOf(context).height * 0.02,
+                        horizontal: MediaQuery.sizeOf(context).height * 0.02),
+                    child: Button(context, "Delete This Habit ?", () async {
+                      // Show a confirmation dialog before deletion
+                      bool? confirmDelete = await Get.dialog(
+                        AlertDialog(
+                          title: const Text('Are you sure?'),
+                          content: const Text(
+                              'Do you want to delete this habit? This action cannot be undone.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Get.back(result: false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Get.back(result: true),
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (confirmDelete == true) {
+                        deleteHabit();
+                      } else {
+                        Get.snackbar(
+                          'Cancelled',
+                          'Habit deletion was cancelled. 🔒',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.blue,
+                          colorText: Colors.white,
+                        );
+                      }
+                    }),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -160,39 +245,14 @@ class HabitInfoPage extends StatelessWidget {
     );
   }
 
-  void _deleteHabit(BuildContext context) {
-    habitController.deleteHabit(habit);
-    Get.back();
-  }
+  // void _deleteHabit(BuildContext context) {
+  //   habitController.deleteHabit(habit);
+  //   Get.back();
+  // }
 
-  String getSelectedDays(Map<String, bool> days) {
-    List<String> selected = days.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
-    return selected.length == days.length ? "Everyday" : selected.join(', ');
-  }
-
-  Widget infoRow(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon,
-            size: SizeConfig.screenWidth * 0.05,
-            color: const Color(darkOrange)),
-        SizedBox(width: SizeConfig.screenWidth * 0.02),
-        Expanded(
-          child: Text(
-            text,
-            style: TextStyle(
-                fontSize: SizeConfig.screenWidth * 0.035,
-                fontFamily: "manrope",
-                color: Colors.grey),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget infoRow(IconData icon, String text) {
+  //   return
+  // }
 
   Widget analyticsColumn(List<Widget> children) {
     return Column(

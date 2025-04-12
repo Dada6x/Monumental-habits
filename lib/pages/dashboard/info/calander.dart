@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HabitCalendar extends StatefulWidget {
@@ -37,41 +36,53 @@ class _HabitCalendarState extends State<HabitCalendar> {
       _selectedMonth =
           DateTime(_selectedMonth.year, _selectedMonth.month + offset, 1);
       _generateHabitData();
-      //
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Get screen size and adjust layout accordingly
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Padding(
-      padding: const EdgeInsets.all(1.0),
+      padding:
+          const EdgeInsets.all(8.0), // Increased padding for responsiveness
       child: Column(
         children: [
           //! Month Selector
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  icon: Icon(
-                      size: 18,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      size: screenWidth * 0.05, // Scalable icon size
                       Icons.arrow_back_ios_new_outlined,
-                      color: Theme.of(context).colorScheme.scrim),
-                  onPressed: () => _changeMonth(-1)),
-              Text(
-                DateFormat.yMMMM()
-                    .format(_selectedMonth), // Format: "September 2024"
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.scrim),
-              ),
-              IconButton(
-                  icon: Icon(
-                      size: 18,
+                      color: Theme.of(context).colorScheme.scrim,
+                    ),
+                    onPressed: () => _changeMonth(-1),
+                  ),
+                  Text(
+                    DateFormat.yMMMM().format(_selectedMonth),
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06, // Scalable text size
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.scrim,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      size: screenWidth * 0.05, // Scalable icon size
                       Icons.arrow_forward_ios_outlined,
-                      color: Theme.of(context).colorScheme.scrim),
-                  onPressed: () => _changeMonth(1)),
-            ],
+                      color: Theme.of(context).colorScheme.scrim,
+                    ),
+                    onPressed: () => _changeMonth(1),
+                  ),
+                ],
+              );
+            },
           ),
           const SizedBox(
             height: 8,
@@ -91,7 +102,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
                   return Padding(
                     padding: const EdgeInsets.all(1.5),
                     child: Container(
-                      width: 42,
+                      width: screenWidth * 0.12, // Scalable width
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(9),
                         color: Theme.of(context).colorScheme.secondaryContainer,
@@ -110,8 +121,8 @@ class _HabitCalendarState extends State<HabitCalendar> {
                             height: 9,
                           ),
                           Container(
-                            width: 33,
-                            height: 33,
+                            width: screenWidth * 0.08, // Scalable size
+                            height: screenWidth * 0.08, // Scalable size
                             decoration: BoxDecoration(
                               color: Get.isDarkMode
                                   ? altPurple
@@ -131,7 +142,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
                     return Padding(
                       padding: const EdgeInsets.all(1.5),
                       child: Container(
-                        width: 42,
+                        width: screenWidth * 0.12, // Scalable width
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(9),
                           color:
@@ -151,8 +162,8 @@ class _HabitCalendarState extends State<HabitCalendar> {
                             ),
                             //! IF DONE AND undone
                             Container(
-                              width: 33,
-                              height: 33,
+                              width: screenWidth * 0.08, // Scalable size
+                              height: screenWidth * 0.08, // Scalable size
                               decoration: BoxDecoration(
                                 color: Get.isDarkMode
                                     ? altPurple
@@ -171,7 +182,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
               daysOfWeekVisible: true,
               daysOfWeekStyle: const DaysOfWeekStyle(
                   weekdayStyle: manropeGrey, weekendStyle: manropeGrey),
-              rowHeight: SizeConfig.screenHeight * 0.088,
+              rowHeight: screenHeight * 0.088, // Scalable height
               daysOfWeekHeight: 30,
               calendarStyle: const CalendarStyle(
                   cellPadding: EdgeInsets.all(2), isTodayHighlighted: true),

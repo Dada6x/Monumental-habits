@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/Theme/themes_contoller.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
-import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
+import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/settings_profile/profile.dart';
 import 'package:monumental_habits/pages/settings_profile/support/profile_details.dart';
 import 'package:monumental_habits/util/helper.dart';
@@ -156,10 +156,10 @@ class HomePage extends StatelessWidget {
                             } else if (navController.currentIndex.value == 4) {
                               habitController.addHabit();
                               Get.off(HomePage());//! FUCK THIS CODE SUCKS BUT FIX IT LATER
-                              navController.changePage(0);
                               habitController.reset();
                               FocusManager.instance.primaryFocus
                                   ?.unfocus(); // make the controller empty of the textfield
+                              navController.changePage(0);
                             }
                           },
                           backgroundColor:

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:monumental_habits/main.dart';
-import 'package:monumental_habits/pages/dashboard/info/habit_Info.dart';
+import 'package:monumental_habits/pages/habit/info/habit_Info.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class HabitTable extends StatefulWidget {
@@ -26,8 +26,6 @@ class _HabitTableState extends State<HabitTable> {
   final StreamController<Map<String, dynamic>> _streamController =
       StreamController.broadcast();
 
-  Timer? _pollingTimer;
-
   @override
   void initState() {
     super.initState();
@@ -36,7 +34,6 @@ class _HabitTableState extends State<HabitTable> {
 
   @override
   void dispose() {
-    _pollingTimer?.cancel();
     _streamController.close();
     super.dispose();
   }
@@ -91,7 +88,6 @@ class _HabitTableState extends State<HabitTable> {
           } else if (snapshot.hasError) {
           } else if (snapshot.hasData) {
             var habits = snapshot.data?['habits'];
-            //! var id = snapshot.data?['id']; then pass this id to the info where you want to delete and pass it there then refresh the UI
             if (habits == null || habits.isEmpty) {
               return Center(
                 child: Column(
@@ -151,21 +147,17 @@ class _HabitTableState extends State<HabitTable> {
                           'Saturday'
                         ].map((day) {
                           return DataCell(
-                            // onTap: () {
-                            // },
-                            GestureDetector(
-                              onTap: () {
-                                // i dont know if i want to make it the cell or this gesture detector
-                              },
-                              child: Container(
-                                width: 43,
-                                height: 43,
-                                decoration: BoxDecoration(
-                                  color: habit['status'] != null
-                                      ? Colors.red
-                                      : randomRowColors[rowIndex % 4],
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
+                            onTap: () {
+//! or in gesture detector 
+                            },
+                            Container(
+                              width: 43,
+                              height: 43,
+                              decoration: BoxDecoration(
+                                color: habit['status'] != null
+                                    ? Colors.red
+                                    : randomRowColors[rowIndex % 4],
+                                borderRadius: BorderRadius.circular(6),
                               ),
                             ),
                           );
@@ -175,7 +167,7 @@ class _HabitTableState extends State<HabitTable> {
               ),
             );
           }
-          return const SizedBox(); // Fallback, just in case
+          return const SizedBox(); 
         },
       ),
     );

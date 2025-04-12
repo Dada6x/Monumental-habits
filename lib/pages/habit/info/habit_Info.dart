@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
-import 'package:monumental_habits/pages/dashboard/controllers/habitcontroller.dart';
-import 'package:monumental_habits/pages/dashboard/info/calander.dart';
+import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
+import 'package:monumental_habits/pages/habit/info/calander.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
@@ -30,32 +30,36 @@ class HabitInfoPage extends StatelessWidget {
       );
       // Check the response status code
       if (response.statusCode == 200) {
-        Get.snackbar(
-          'Success',
-          'Habit deleted successfully! ',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
-          colorText: const Color(darkOrange),
-        );
-        Get.off(HomePage());
+        Get.snackbar('Success', 'Habit deleted successfully! ',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.white,
+            colorText: const Color(darkOrange),
+            icon: const Icon(Icons.delete));
+        Get.off(()=>HomePage());
       } else {
-        // Show error Snackbar if not 200 OK
         Get.snackbar(
           'Error',
           'Failed to delete habit. Try again later. ❌',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.orange,
           colorText: Colors.white,
+          icon: const Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
         );
       }
     } catch (e) {
-      // Show error Snackbar if there's a network or any other issue
       Get.snackbar(
         'Error',
         'Error: Unable to delete habit. Please check your connection. ❌',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.orange,
         colorText: Colors.white,
+        icon: const Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
       );
     }
   }
@@ -245,14 +249,6 @@ class HabitInfoPage extends StatelessWidget {
     );
   }
 
-  // void _deleteHabit(BuildContext context) {
-  //   habitController.deleteHabit(habit);
-  //   Get.back();
-  // }
-
-  // Widget infoRow(IconData icon, String text) {
-  //   return
-  // }
 
   Widget analyticsColumn(List<Widget> children) {
     return Column(

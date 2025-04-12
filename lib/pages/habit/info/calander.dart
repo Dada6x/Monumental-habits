@@ -73,6 +73,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
                     ),
                   ),
                   IconButton(
+                    //TODO MAKE IT SO CANT GO TO FUTURE BUT IF GO BACK YOU CAN GO FOWRARD
                     icon: Icon(
                       size: screenWidth * 0.05, // Scalable icon size
                       Icons.arrow_forward_ios_outlined,
@@ -182,7 +183,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
               daysOfWeekVisible: true,
               daysOfWeekStyle: const DaysOfWeekStyle(
                   weekdayStyle: manropeGrey, weekendStyle: manropeGrey),
-              rowHeight: screenHeight * 0.088, // Scalable height
+              rowHeight: screenHeight * 0.088,
               daysOfWeekHeight: 30,
               calendarStyle: const CalendarStyle(
                   cellPadding: EdgeInsets.all(2), isTodayHighlighted: true),

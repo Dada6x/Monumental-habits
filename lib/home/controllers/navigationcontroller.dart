@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:monumental_habits/pages/community/community.dart';
-import 'package:monumental_habits/pages/dashboard/dashboard_homepage/dashboard_page.dart';
+import 'package:monumental_habits/pages/habit/dashboard_homepage/dashboard_page.dart';
 
-import 'package:monumental_habits/pages/dashboard/new/new_habit_page.dart';
+import 'package:monumental_habits/pages/habit/new/new_habit_page.dart';
 import 'package:monumental_habits/pages/maps/maps.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';
 

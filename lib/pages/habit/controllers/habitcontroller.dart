@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
-import 'package:monumental_habits/pages/dashboard/model/habit_model.dart';
+import 'package:monumental_habits/pages/habit/model/habit_model.dart';
 
 class HabitController extends GetxController {
   RxList<Habit> habits = <Habit>[].obs;

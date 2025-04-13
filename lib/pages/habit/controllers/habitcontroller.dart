@@ -43,7 +43,6 @@ class HabitController extends GetxController {
         var response = await Dio().post(
           "http://10.0.2.2:8000/api/habits",
           data: {
-          
             'name': habitName.value,
             "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
             "reminder_time": null,
@@ -57,7 +56,7 @@ class HabitController extends GetxController {
         );
 
         if (response.data["status"]) {
-          print("Habit added successfully 💚");
+          print("Habit added successfully ");
           Get.showSnackbar(
             const GetSnackBar(
               title: "Success",
@@ -66,7 +65,6 @@ class HabitController extends GetxController {
               duration: Duration(seconds: 3),
             ),
           );
-
         } else {
           // print("Something went wrong: ${response.data}");
           Get.showSnackbar(

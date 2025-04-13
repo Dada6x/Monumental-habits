@@ -2,24 +2,45 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
+import 'package:monumental_habits/pages/habit/controllers/service.dart';
 import 'package:monumental_habits/pages/habit/info/calander.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/widgets/Buttons.dart';
 
-class HabitInfoPage extends StatelessWidget {
+class HabitInfoPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   final id;
-  final HabitController habitController = Get.find<HabitController>();
+
   HabitInfoPage({super.key, required this.id});
 
-  void deleteHabit() async {
+  @override
+  State<HabitInfoPage> createState() => _HabitInfoPageState();
+}
+
+class _HabitInfoPageState extends State<HabitInfoPage> {
+  final HabitController habitController = Get.find<HabitController>();
+
+  String name = 'default name';
+  String reminderTime = ' 10:00 AM';
+  int longestStreak = 0;
+  int currentStreak = 0;
+  double completionRate = 0.0;
+  String easiness = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHabitData();
+  }
+
+  void fetchHabitData() async {
+    String apiUrl = 'http://10.0.2.2:8000/habits/${widget.id}';
+
     try {
-      String apiUrl = 'http://10.0.2.2:8000/api/habits/$id';
-      var response = await dio.delete(
+      final response = await dio.get(
         apiUrl,
         options: Options(
           headers: {
@@ -28,39 +49,21 @@ class HabitInfoPage extends StatelessWidget {
           },
         ),
       );
-      // Check the response status code
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Habit deleted successfully! ',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.white,
-            colorText: const Color(darkOrange),
-            icon: const Icon(Icons.delete));
-        Get.off(()=>HomePage());
+        print("DATA WAS FETCHUESD ⚪");
+        setState(() {
+          name = response.data['habit']['name'];
+          reminderTime = response.data['reminder_time'];
+          longestStreak = response.data['longest_streak'];
+          currentStreak = response.data['current_streak'];
+          completionRate = response.data['complete_rate'];
+          easiness = response.data['easiness'];
+        });
       } else {
-        Get.snackbar(
-          'Error',
-          'Failed to delete habit. Try again later. ❌',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.orange,
-          colorText: Colors.white,
-          icon: const Icon(
-          Icons.error,
-          color: Colors.red,
-        ),
-        );
+        print('error');
       }
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error: Unable to delete habit. Please check your connection. ❌',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.orange,
-        colorText: Colors.white,
-        icon: const Icon(
-          Icons.error,
-          color: Colors.red,
-        ),
-      );
+      print('exception $e');
     }
   }
 
@@ -77,7 +80,7 @@ class HabitInfoPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Habit Name',
+          name,
           style: manropeFun(context),
           overflow: TextOverflow.ellipsis,
         ),
@@ -130,7 +133,7 @@ class HabitInfoPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'habit name',
+                              name,
                               style: klasikFun(context),
                             ),
                             Row(
@@ -139,18 +142,18 @@ class HabitInfoPage extends StatelessWidget {
                                   Icons.notifications_outlined,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
-                                const Text("habit notification time "),
+                                Text(reminderTime),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.restart_alt_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                const Text("habit reminder time "),
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     Icon(
+                            //       Icons.restart_alt_outlined,
+                            //       color: Theme.of(context).colorScheme.primary,
+                            //     ),
+                            //     const Text("habit reminder time "),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ],
@@ -189,15 +192,15 @@ class HabitInfoPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         analyticsColumn([
-                          customWidget("20 Days", "Longest Streak",
-                              "assets/images/Fire.svg"),
-                          customWidget("98%", "Completion Rate",
+                          customWidget("${longestStreak} Days",
+                              "Longest Streak", "assets/images/Fire.svg"),
+                          customWidget("${completionRate} %", "Completion Rate",
                               "assets/images/EllipseDiagrams.svg"),
                         ]),
                         analyticsColumn([
-                          customWidget("0 Days", "Current Streak",
+                          customWidget("${currentStreak}", "Current Streak",
                               "assets/images/LightningIcon.svg"),
-                          customWidget("7", "Average Easiness Score",
+                          customWidget("${easiness}", "Average Easiness Score",
                               "assets/images/Leaf.svg"),
                         ]),
                       ],
@@ -228,7 +231,7 @@ class HabitInfoPage extends StatelessWidget {
                         ),
                       );
                       if (confirmDelete == true) {
-                        deleteHabit();
+                        HabitService().deleteHabit(widget.id);
                       } else {
                         Get.snackbar(
                           'Cancelled',
@@ -248,7 +251,6 @@ class HabitInfoPage extends StatelessWidget {
       ),
     );
   }
-
 
   Widget analyticsColumn(List<Widget> children) {
     return Column(

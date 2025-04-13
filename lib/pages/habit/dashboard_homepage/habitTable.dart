@@ -148,7 +148,7 @@ class _HabitTableState extends State<HabitTable> {
                         ].map((day) {
                           return DataCell(
                             onTap: () {
-//! or in gesture detector 
+//! or in gesture detector
                             },
                             Container(
                               width: 43,
@@ -167,7 +167,7 @@ class _HabitTableState extends State<HabitTable> {
               ),
             );
           }
-          return const SizedBox(); 
+          return const SizedBox();
         },
       ),
     );

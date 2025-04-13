@@ -43,6 +43,7 @@ class HabitController extends GetxController {
         var response = await Dio().post(
           "http://10.0.2.2:8000/api/habits",
           data: {
+          
             'name': habitName.value,
             "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
             "reminder_time": null,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,8 +15,7 @@ class HabitInfoPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   final id;
 
-  HabitInfoPage({super.key, required this.id});
-
+  const HabitInfoPage({super.key, required this.id});
   @override
   State<HabitInfoPage> createState() => _HabitInfoPageState();
 }
@@ -25,13 +23,13 @@ class HabitInfoPage extends StatefulWidget {
 class _HabitInfoPageState extends State<HabitInfoPage> {
   final HabitController habitController = Get.find<HabitController>();
 
-  var name = '';
+  // var name = '';
   var reminderTime = '';
   var longestStreak = 0;
   var currentStreak = 0;
   var completionRate = 0.0;
   var easiness = '';
-  // var data;
+
   @override
   void initState() {
     super.initState();
@@ -40,8 +38,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
 
   Future<String> fetchHabitData() async {
     String apiUrl = 'http://10.0.2.2:8000/api/habits/${widget.id}';
-    print("fetch shit  ${widget.id}");
-
     try {
       final response = await dio.get(
         apiUrl,
@@ -54,18 +50,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
       );
       if (response.statusCode == 200) {
         return jsonEncode(response.data);
-        // data = response.data;
-        // print("DATA WAS FETCHUESD ⚪");
-        // print(response.data['habit']['name']);
-        // setState(() {
-        //   name = response.data['habit']['name'];
-        //   reminderTime = response.data['habit']['reminder_time'];
-
-        //   longestStreak = response.data['longest_streak'];
-        //   currentStreak = response.data['current_streak'];
-        //   completionRate = response.data['complete_rate'];
-        //   easiness = response.data['easiness'];
-        // });
       } else {
         print('error');
       }
@@ -87,15 +71,15 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Text(
-          name,
-          style: manropeFun(context),
-          overflow: TextOverflow.ellipsis,
-        ),
+        // title: Text(
+        //   name,
+        //   style: manropeFun(context),
+        //   overflow: TextOverflow.ellipsis,
+        // ),
         actions: [
           IconButton(
             onPressed: () {
-              //! EDIT HABIT
+              // !!! EDIT HABIT
               // Get.to(() => EditHabit(
               //       habitAAA: habit,
               //     ));
@@ -150,7 +134,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    // data['habit']['name'],
                                     returnedData['habit']['name'],
                                     style: klasikFun(context),
                                   ),
@@ -162,19 +145,23 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                             .colorScheme
                                             .primary,
                                       ),
-                                      Text(returnedData['habit']
-                                          ['reminder_time']),
+                                      Text(
+                                        "Reminder Time : ${returnedData['habit']['reminder_time']}",
+                                      ),
                                     ],
                                   ),
-                                  // Row(
-                                  //   children: [
-                                  //     Icon(
-                                  //       Icons.restart_alt_outlined,
-                                  //       color: Theme.of(context).colorScheme.primary,
-                                  //     ),
-                                  //     const Text("habit reminder time "),
-                                  //   ],
-                                  // ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.restart_alt_outlined,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      //TODO wait for abdo to fix this 
+                                      const Text("Repeat : days "),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
@@ -186,7 +173,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                         Container(
                           height: constraints.maxWidth > 600
                               ? MediaQuery.sizeOf(context).height * 0.5
-                              : MediaQuery.sizeOf(context).height * 0.65,
+                              : MediaQuery.sizeOf(context).height * 0.59,
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.tertiary,
                             borderRadius: BorderRadius.circular(
@@ -299,7 +286,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
       children: children,
     );
   }
-
+//TODO make it look nicer :D @Ward-ikhtiyar plz @
   Widget customWidget(String bigText, String smallText, String assets) {
     return Row(
       children: [
@@ -310,7 +297,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
             Text(smallText, softWrap: true, textAlign: TextAlign.left),
           ],
         ),
-        SvgPicture.asset(assets, height: 20, width: 20),
+        SvgPicture.asset(assets, height: 30, width: 30),
       ],
     );
   }

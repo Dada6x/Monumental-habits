@@ -173,7 +173,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                         Container(
                           height: constraints.maxWidth > 600
                               ? MediaQuery.sizeOf(context).height * 0.5
-                              : MediaQuery.sizeOf(context).height * 0.59,
+                              : MediaQuery.sizeOf(context).height * 0.65,
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.tertiary,
                             borderRadius: BorderRadius.circular(

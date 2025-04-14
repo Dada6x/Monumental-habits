@@ -7,8 +7,6 @@ import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class HabitService {
-
-
   void deleteHabit(int id) async {
     try {
       String apiUrl = 'http://10.0.2.2:8000/api/habits/$id';
@@ -55,9 +53,4 @@ class HabitService {
       );
     }
   }
-
-
-
-
-
 }

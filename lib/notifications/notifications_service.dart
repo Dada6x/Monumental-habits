@@ -113,7 +113,7 @@ class NotificationsService {
     int minute = int.parse(DateFormat("mm").format(dateTime));
 
     NotificationsService().scheduledNotifications(
-      id: 99,
+      id: 99 + 1,
       //! Not unique yet
       hour: hour,
       minute: minute,

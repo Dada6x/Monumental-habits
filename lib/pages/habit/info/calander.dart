@@ -12,6 +12,7 @@ class HabitCalendar extends StatefulWidget {
   _HabitCalendarState createState() => _HabitCalendarState();
 }
 
+// 01:10 PM
 class _HabitCalendarState extends State<HabitCalendar> {
   DateTime _selectedMonth = DateTime.now();
   Map<int, int> habitStatus = {};
@@ -41,7 +42,6 @@ class _HabitCalendarState extends State<HabitCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen size and adjust layout accordingly
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 

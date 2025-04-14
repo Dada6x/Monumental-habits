@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
 import 'package:monumental_habits/pages/habit/model/habit_model.dart';
@@ -30,7 +31,7 @@ class HabitController extends GetxController {
       name: habitName.value,
       chosenTime: chosenTime.value,
       notificationsEnabled: notificationsEnabled.value,
-      selectedDays: List<String>.from(selectedDays),
+      selectedDays: [''],
     ));
     //! adding the habit to the GetX controller
     if (habitName.value.isNotEmpty) {
@@ -38,6 +39,7 @@ class HabitController extends GetxController {
         HabitName: habitName.value,
         timeString: chosenTime.value,
       );
+
 //! backend
       try {
         var response = await Dio().post(
@@ -87,7 +89,6 @@ class HabitController extends GetxController {
           ),
         );
       }
-      reset();
     } else {
       Get.showSnackbar(
         const GetSnackBar(
@@ -98,18 +99,23 @@ class HabitController extends GetxController {
         ),
       );
     }
+
+    print('${selectedDays} 🤰🏾');
+    print("HABIT BEEN RESET ########### 💛 ");
+    reset();
+    print("${selectedDays}");
   }
 
 //! deleting habits
-  void deleteHabit(Habit habit) {
-    habits.remove(habit);
-  }
+  // void deleteHabit(Habit habit) {
+  //   habits.remove(habit);
+  // }
 
 //! resetting the fields
   void reset() {
     textFieldController.clear();
     habitName.value = '';
-    chosenTime.value = "01:00 AM";
+    chosenTime.value = "10:00 AM";
     notificationsEnabled.value = false;
     selectedDays.clear();
   }

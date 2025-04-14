@@ -170,6 +170,8 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
                 habitFrequencyController.selectedDays.remove(day);
               } else {
                 habitFrequencyController.selectedDays.add(day);
+                print("day been added $day   \\\\\\\\\\\\⟶ ");
+                print(habitFrequencyController.selectedDays);
               }
             },
             child: Padding(

@@ -11,13 +11,23 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
 // ignore: must_be_immutable
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   //$ -------------------controllers--------------------------
   final NavigationController navController = Get.put(NavigationController());
+
   final HabitController habitController = Get.put(HabitController());
+
   final PageController _pageController = PageController();
+
   final ThemesContoller _themesContoller = Get.put(ThemesContoller());
+
   //$ -------------------controllers--------------------------
   final List<String> lightBackgroundImages = [
     'assets/images/BackGround2.svg',
@@ -25,13 +35,16 @@ class HomePage extends StatelessWidget {
     'assets/images/BackGround2.svg',
     'assets/images/bacground22.svg',
   ];
+
   final List<String> darkBackgroundImages = [
     'assets/images/DarkMode.svg',
     'assets/images/DarkModeMoon.svg',
     'assets/images/DarkMode.svg',
     'assets/images/DarkModeMoon.svg',
   ];
+
   RxBool isDarkMode = false.obs;
+
   bool isThemeDark = false;
 
   @override
@@ -145,7 +158,6 @@ class HomePage extends StatelessWidget {
                           onPressed: () {
                             if (navController.currentIndex.value == 0) {
                               navController.changePage(4);
-                              //! the floating action button should be changed to tick used to save habit
                               //$ new map
                             } else if (navController.currentIndex.value == 1) {
                               newMap();
@@ -155,11 +167,10 @@ class HomePage extends StatelessWidget {
                               //$ Save the new habit
                             } else if (navController.currentIndex.value == 4) {
                               habitController.addHabit();
-                              Get.off(HomePage());//! FUCK THIS CODE SUCKS BUT FIX IT LATER
-                              habitController.reset();
-                              FocusManager.instance.primaryFocus
-                                  ?.unfocus(); // make the controller empty of the textfield
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              Get.off(() => HomePage());
                               navController.changePage(0);
+                              habitController.reset();
                             }
                           },
                           backgroundColor:

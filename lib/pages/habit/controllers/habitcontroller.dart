@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
+import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/pages/habit/model/habit_model.dart';
 
 class HabitController extends GetxController {
@@ -48,6 +48,7 @@ class HabitController extends GetxController {
             'name': habitName.value,
             "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
             "reminder_time": null,
+            //TODO SEND THE CHOOSEN TIME
           },
           options: Options(
             headers: {
@@ -99,7 +100,8 @@ class HabitController extends GetxController {
         ),
       );
     }
-
+    //! REFRESH THE TABLE
+    habitTableKey.currentState?.refreshTable();
     print('${selectedDays} 🤰🏾');
     print("HABIT BEEN RESET ########### 💛 ");
     reset();

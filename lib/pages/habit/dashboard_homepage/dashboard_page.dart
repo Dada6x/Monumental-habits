@@ -95,7 +95,7 @@ class Dashboard extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: MediaQuery.sizeOf(context).height * 0.54,
-              child:  const HabitTable(),
+              child: HabitTable(key: habitTableKey),
             ),
           ),
         ],

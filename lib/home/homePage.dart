@@ -21,11 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //$ -------------------controllers--------------------------
   final NavigationController navController = Get.put(NavigationController());
-
   final HabitController habitController = Get.put(HabitController());
-
   final PageController _pageController = PageController();
-
   final ThemesContoller _themesContoller = Get.put(ThemesContoller());
 
   //$ -------------------controllers--------------------------
@@ -44,7 +41,6 @@ class _HomePageState extends State<HomePage> {
   ];
 
   RxBool isDarkMode = false.obs;
-
   bool isThemeDark = false;
 
   @override
@@ -158,6 +154,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             if (navController.currentIndex.value == 0) {
                               navController.changePage(4);
+                              // Get.off(() => NewHabit());
                               //$ new map
                             } else if (navController.currentIndex.value == 1) {
                               newMap();
@@ -166,11 +163,14 @@ class _HomePageState extends State<HomePage> {
                               newMessage();
                               //$ Save the new habit
                             } else if (navController.currentIndex.value == 4) {
-                              habitController.addHabit();
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              Get.off(() => HomePage());
+                              if (habitController.habitName.isNotEmpty) {
+                                //todo and another things also
+                                habitController.addHabit();
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                Get.off(() => HomePage());
+                                habitController.reset();
+                              }
                               navController.changePage(0);
-                              habitController.reset();
                             }
                           },
                           backgroundColor:

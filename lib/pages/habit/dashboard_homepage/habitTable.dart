@@ -9,13 +9,21 @@ import 'package:monumental_habits/util/helper.dart';
 
 class HabitTable extends StatefulWidget {
   const HabitTable({super.key});
-
   @override
+
   // ignore: library_private_types_in_public_api
   _HabitTableState createState() => _HabitTableState();
 }
 
+final GlobalKey<_HabitTableState> habitTableKey = GlobalKey<_HabitTableState>();
+
 class _HabitTableState extends State<HabitTable> {
+//
+
+  void refreshTable() {
+    fetchHabitData();
+  }
+
   final List<Color> randomRowColors = const [
     Color(darkOrange),
     Color(0xFFF65B4E),
@@ -120,8 +128,9 @@ class _HabitTableState extends State<HabitTable> {
                 dividerThickness: double.infinity,
                 showCheckboxColumn: false,
                 columns: const [
+                  // make the dynamic 
                   DataColumn(label: Text('Habit', style: klasik)),
-                  DataColumn(label: Text('SUN', style: manrope)),
+                  DataColumn(label: Text('Today\nSun', style: manrope)),
                   DataColumn(label: Text('MON', style: manrope)),
                   DataColumn(label: Text('TUE', style: manrope)),
                   DataColumn(label: Text('WED', style: manrope)),
@@ -146,17 +155,36 @@ class _HabitTableState extends State<HabitTable> {
                           'Friday',
                           'Saturday'
                         ].map((day) {
+                          final logs = habit['habit_logs'] as List<dynamic>;
+                          final log = logs.firstWhere(
+                            (l) => l['day_of_week'] == day,
+                            orElse: () => null,
+                          );
+
+                          Color? boxColor;
+
+                          if (log == null || log['status'] == null) {
+                            boxColor = Colors.transparent;
+                          } else if (log['status'] == 1) {
+                            boxColor = randomRowColors[rowIndex % 4];
+                          } else if (log['status'] == 0) {
+                            boxColor = Colors.grey.shade200;
+                          }
+
                           return DataCell(
+                            //todo make gesture detectour in order not to show the splash effect
                             onTap: () {
-//! or in gesture detector
+                              if (log != null) {
+                                print('Day ID: ${log['id']}');
+                              } else {
+                                print('No log for this day');
+                              }
                             },
                             Container(
                               width: 43,
                               height: 43,
                               decoration: BoxDecoration(
-                                color: habit['status'] != null
-                                    ? Colors.red
-                                    : randomRowColors[rowIndex % 4],
+                                color: boxColor,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),

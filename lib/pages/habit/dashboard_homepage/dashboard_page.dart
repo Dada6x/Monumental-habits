@@ -107,7 +107,6 @@ class Dashboard extends StatelessWidget {
   String getRandomQuote() {
     final List<String> quotes = [
       "We first make our habits, and then our habits make us. - John Dryden",
-      "I hate NIGGAS . -  fiodour Yahea Dada",
       "Success is the sum of small efforts, repeated day in and day out. - Robert Collier",
       "The secret of getting ahead is getting started. - Mark Twain",
       "Motivation is what gets you started. Habit is what keeps you going. - Jim Ryun",

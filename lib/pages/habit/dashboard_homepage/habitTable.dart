@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/info/habit_Info.dart';
 import 'package:monumental_habits/util/helper.dart';
+import 'package:collection/collection.dart';
 
 class HabitTable extends StatefulWidget {
   const HabitTable({super.key});
@@ -94,6 +95,7 @@ class _HabitTableState extends State<HabitTable> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
+            return const Center(child: Text('Something went wrong.'));
           } else if (snapshot.hasData) {
             var habits = snapshot.data?['habits'];
             if (habits == null || habits.isEmpty) {
@@ -118,6 +120,15 @@ class _HabitTableState extends State<HabitTable> {
                 ),
               );
             }
+
+            // Get unique ordered days from the first habit's logs
+            final firstHabitLogs = habits.first['habit_logs'] as List<dynamic>;
+            final orderedDays =
+                <String>{}; // Use Set to preserve order and avoid duplicates
+            for (var log in firstHabitLogs) {
+              orderedDays.add(log['day_of_week']);
+            }
+
             return InteractiveViewer(
               constrained: false,
               child: DataTable(
@@ -127,74 +138,65 @@ class _HabitTableState extends State<HabitTable> {
                 showBottomBorder: false,
                 dividerThickness: double.infinity,
                 showCheckboxColumn: false,
-                columns: const [
-                  // make the dynamic 
-                  DataColumn(label: Text('Habit', style: klasik)),
-                  DataColumn(label: Text('Today\nSun', style: manrope)),
-                  DataColumn(label: Text('MON', style: manrope)),
-                  DataColumn(label: Text('TUE', style: manrope)),
-                  DataColumn(label: Text('WED', style: manrope)),
-                  DataColumn(label: Text('THU', style: manrope)),
-                  DataColumn(label: Text('FRI', style: manrope)),
-                  DataColumn(label: Text('SAT', style: manrope)),
+                columns: [
+                  const DataColumn(label: Text('Habit', style: klasik)),
+                  ...orderedDays.mapIndexed((index, day) {
+                    final label = index == 0
+                        ? 'Today\n${day.substring(0, 3).toUpperCase()}'
+                        : day.substring(0, 3).toUpperCase();
+                    return DataColumn(label: Text(label, style: manrope));
+                  }),
                 ],
                 rows: habits.map<DataRow>((habit) {
                   int rowIndex = habits.indexOf(habit);
                   return DataRow(
-                      onLongPress: () {
-                        Get.to(HabitInfoPage(id: habit['id']));
-                      },
-                      cells: [
-                        DataCell(Text(habit['name'], style: klasik)),
-                        ...[
-                          'Sunday',
-                          'Monday',
-                          'Tuesday',
-                          'Wednesday',
-                          'Thursday',
-                          'Friday',
-                          'Saturday'
-                        ].map((day) {
-                          final logs = habit['habit_logs'] as List<dynamic>;
-                          final log = logs.firstWhere(
-                            (l) => l['day_of_week'] == day,
-                            orElse: () => null,
-                          );
+                    // to info page
+                    onLongPress: () {
+                      Get.to(HabitInfoPage(id: habit['id']));
+                    },
+                    cells: [
+                      DataCell(Text(habit['name'], style: klasikFun(context))),
+                      ...orderedDays.map((day) {
+                        final logs = habit['habit_logs'] as List<dynamic>;
+                        final log = logs.firstWhere(
+                          (l) => l['day_of_week'] == day,
+                          orElse: () => null,
+                        );
 
-                          Color? boxColor;
+                        Color? boxColor;
+                        if (log == null || log['status'] == null) {
+                          boxColor = Colors.transparent;
+                        } else if (log['status'] == 1) {
+                          boxColor = randomRowColors[rowIndex % 4];
+                        } else if (log['status'] == 0) {
+                          boxColor = Colors.grey.shade200;
+                        }
 
-                          if (log == null || log['status'] == null) {
-                            boxColor = Colors.transparent;
-                          } else if (log['status'] == 1) {
-                            boxColor = randomRowColors[rowIndex % 4];
-                          } else if (log['status'] == 0) {
-                            boxColor = Colors.grey.shade200;
-                          }
-
-                          return DataCell(
-                            //todo make gesture detectour in order not to show the splash effect
-                            onTap: () {
-                              if (log != null) {
-                                print('Day ID: ${log['id']}');
-                              } else {
-                                print('No log for this day');
-                              }
-                            },
-                            Container(
-                              width: 43,
-                              height: 43,
-                              decoration: BoxDecoration(
-                                color: boxColor,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
+                        return DataCell(
+                          onTap: () {
+                            if (log != null) {
+                              print('Day ID: ${log['id']}');
+                            } else {
+                              print('No log for this day');
+                            }
+                          },
+                          Container(
+                            width: 43,
+                            height: 43,
+                            decoration: BoxDecoration(
+                              color: boxColor,
+                              borderRadius: BorderRadius.circular(6),
                             ),
-                          );
-                        }),
-                      ]);
+                          ),
+                        );
+                      }).toList(),
+                    ],
+                  );
                 }).toList(),
               ),
             );
           }
+
           return const SizedBox();
         },
       ),

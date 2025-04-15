@@ -19,13 +19,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //$ -------------------controllers--------------------------
-  final NavigationController navController = Get.put(NavigationController());
+  //$ -------------------controllers-------------------------)
+  final NavigationController navController = Get.put(NavigationController());   
   final HabitController habitController = Get.put(HabitController());
   final PageController _pageController = PageController();
   final ThemesContoller _themesContoller = Get.put(ThemesContoller());
 
-  //$ -------------------controllers--------------------------
+  //$ -------------------controllers--------------------------)
   final List<String> lightBackgroundImages = [
     'assets/images/BackGround2.svg',
     'assets/images/bacground22.svg',
@@ -163,7 +163,8 @@ class _HomePageState extends State<HomePage> {
                               newMessage();
                               //$ Save the new habit
                             } else if (navController.currentIndex.value == 4) {
-                              if (habitController.habitName.isNotEmpty) {
+                              if (habitController.habitName.isNotEmpty &&
+                                  habitController.selectedDays.isNotEmpty) {
                                 //todo and another things also
                                 habitController.addHabit();
                                 FocusManager.instance.primaryFocus?.unfocus();
@@ -235,7 +236,6 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
   //! Bottom navigation bar Icons
   Widget buildNavIcon(NavigationController navController, int pageIndex,
       String selectedPath, String unselectedPath) {
@@ -258,7 +258,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 //! Function to get page title
 String title(int PageIndex) {
   if (PageIndex == 0) return "HomePage".tr;

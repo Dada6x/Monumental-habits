@@ -3,7 +3,7 @@ import 'package:monumental_habits/util/helper.dart';
 
 class Themes {
   final ThemeData lightMode = ThemeData(
-      colorScheme: const ColorScheme.light(
+      colorScheme: ColorScheme.light(
           // surface: Color(0xFFFFF3E9),
 
           secondaryContainer: Color.fromRGBO(253, 167, 88, 0.1),
@@ -13,13 +13,14 @@ class Themes {
           primaryFixed: Color(0xFFFDA758),
           secondary: Color(0xFFFFF3E9),
           tertiary: Colors.white,
+          onTertiary: Colors.grey.shade200,
           //me added this
           onSurface: Color(darkPurple),
           tertiaryContainer: Color(lightOrange),
           surface: Color(background)));
 
   final ThemeData darkMode = ThemeData(
-      colorScheme: const ColorScheme.dark(
+      colorScheme:  ColorScheme.dark(
     secondaryContainer: Color.fromRGBO(255, 255, 255, 0.05),
     brightness: Brightness.dark,
     scrim: Colors.white,
@@ -27,6 +28,7 @@ class Themes {
     primaryFixed: altPurple,
     secondary: Color(0xFF151437),
     tertiary: Color(0xFF111111),
+    onTertiary: Colors.grey.shade900,
     //me added this
     onSurface: altPurple,
     tertiaryContainer: Color(0xFF1B1B1B),

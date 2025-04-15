@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:dio/dio.dart';
+import 'package:collection/collection.dart'; // for mapIndexed
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/info/habit_Info.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:collection/collection.dart';
 
 class HabitTable extends StatefulWidget {
   const HabitTable({super.key});
-  @override
 
+  @override
   // ignore: library_private_types_in_public_api
   _HabitTableState createState() => _HabitTableState();
 }
@@ -19,14 +19,12 @@ class HabitTable extends StatefulWidget {
 final GlobalKey<_HabitTableState> habitTableKey = GlobalKey<_HabitTableState>();
 
 class _HabitTableState extends State<HabitTable> {
-//
-
   void refreshTable() {
     fetchHabitData();
   }
 
   final List<Color> randomRowColors = const [
-    Color(darkOrange),
+    Color(0xFFFF8C00), // darkOrange (or use your const)
     Color(0xFFF65B4E),
     Color(0xFF29319F),
     Color(0xFF973456),
@@ -123,8 +121,7 @@ class _HabitTableState extends State<HabitTable> {
 
             // Get unique ordered days from the first habit's logs
             final firstHabitLogs = habits.first['habit_logs'] as List<dynamic>;
-            final orderedDays =
-                <String>{}; // Use Set to preserve order and avoid duplicates
+            final orderedDays = <String>{};
             for (var log in firstHabitLogs) {
               orderedDays.add(log['day_of_week']);
             }
@@ -139,64 +136,62 @@ class _HabitTableState extends State<HabitTable> {
                 dividerThickness: double.infinity,
                 showCheckboxColumn: false,
                 columns: [
-                  const DataColumn(label: Text('Habit', style: klasik)),
+                  DataColumn(label: Text('Habit', style: klasikFun(context))),
                   ...orderedDays.mapIndexed((index, day) {
                     final label = index == 0
                         ? 'Today\n${day.substring(0, 3).toUpperCase()}'
                         : day.substring(0, 3).toUpperCase();
-                    return DataColumn(label: Text(label, style: manrope));
+                    return DataColumn(
+                        label: Text(label, style: klasikFun(context)));
                   }),
                 ],
                 rows: habits.map<DataRow>((habit) {
                   int rowIndex = habits.indexOf(habit);
                   return DataRow(
-                    // to info page
-                    onLongPress: () {
-                      Get.to(HabitInfoPage(id: habit['id']));
-                    },
                     cells: [
-                      DataCell(Text(habit['name'], style: klasikFun(context))),
-                      ...orderedDays.map((day) {
+                      DataCell(onLongPress: () {
+                        Get.to(HabitInfoPage(id: habit['id']));
+                      }, Text(habit['name'], style: klasikFun(context))),
+                      ...orderedDays.mapIndexed((index, day) {
                         final logs = habit['habit_logs'] as List<dynamic>;
                         final log = logs.firstWhere(
                           (l) => l['day_of_week'] == day,
                           orElse: () => null,
                         );
-
                         Color? boxColor;
                         if (log == null || log['status'] == null) {
                           boxColor = Colors.transparent;
                         } else if (log['status'] == 1) {
                           boxColor = randomRowColors[rowIndex % 4];
                         } else if (log['status'] == 0) {
-                          boxColor = Colors.grey.shade200;
+                          boxColor = Theme.of(context).colorScheme.onTertiary;
                         }
-
-                        return DataCell(
-                          onTap: () {
-                            if (log != null) {
-                              print('Day ID: ${log['id']}');
-                            } else {
-                              print('No log for this day');
-                            }
-                          },
-                          Container(
-                            width: 43,
-                            height: 43,
-                            decoration: BoxDecoration(
-                              color: boxColor,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
+                        final cellBox = Container(
+                          width: 43,
+                          height: 43,
+                          decoration: BoxDecoration(
+                            color: boxColor,
+                            borderRadius: BorderRadius.circular(6),
                           ),
                         );
-                      }).toList(),
+                        if (index == 0 && log != null) {
+                          return DataCell(
+                            GestureDetector(
+                                onTap: () {
+                                  print("Tapped today's log ID: ${log['id']}");
+                                },
+                                child: cellBox),
+                          );
+                        } else {
+                          return DataCell(cellBox);
+                        }
+                      }),
                     ],
                   );
                 }).toList(),
               ),
             );
           }
-
           return const SizedBox();
         },
       ),

@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                           0,
                           "assets/images/dashboardcolored.svg",
                           "assets/images/dashboardUncolored.svg"),
-                      Padding(
+                      Padding( 
                         padding: const EdgeInsets.only(right: 30),
                         child: buildNavIcon(
                             navController,

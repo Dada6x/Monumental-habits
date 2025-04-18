@@ -166,6 +166,51 @@ class _HabitTableState extends State<HabitTable> {
                         } else if (log['status'] == 0) {
                           boxColor = Theme.of(context).colorScheme.onTertiary;
                         }
+                        //! SEND HABIT LOGS
+                        void sendHabitLogs() async {
+                          String apiUrl =
+                              'http://10.0.2.2:8000/api/habit_logs/${log['id']}';
+                          try {
+                            final response = await dio.post(
+                              data: {"status": "1"},
+                              apiUrl,
+                              options: Options(
+                                headers: {
+                                  'Authorization':
+                                      'Bearer ${token!.getString("token")}',
+                                  'Accept': 'application/json',
+                                },
+                              ),
+                            );
+                            if (response.statusCode == 200) {
+                              print("Tapped today's log ID: ${log['id']} ");
+                            } else {
+                              _streamController.addError('Failed to load data');
+                              Get.showSnackbar(
+                                const GetSnackBar(
+                                  title: "Error",
+                                  message:
+                                      "Something Went Wrong, Try again Later",
+                                  duration: Duration(seconds: 2),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            _streamController
+                                .addError('Exception :Failed to  data: $e');
+                            Get.showSnackbar(
+                              const GetSnackBar(
+                                title: "Exception",
+                                message:
+                                    "Something Went Wrong, Try again Later",
+                                duration: Duration(seconds: 2),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+
                         final cellBox = Container(
                           width: 43,
                           height: 43,
@@ -177,8 +222,11 @@ class _HabitTableState extends State<HabitTable> {
                         if (index == 0 && log != null) {
                           return DataCell(
                             GestureDetector(
-                                onTap: () {
-                                  print("Tapped today's log ID: ${log['id']}");
+                                onTap: () async {
+                                  if (log['status'] == 0) {
+                                    sendHabitLogs();
+                                    habitTableKey.currentState?.refreshTable();
+                                  }
                                 },
                                 child: cellBox),
                           );

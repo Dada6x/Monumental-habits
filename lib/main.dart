@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Middleware/auth_middleware.dart';
+import 'package:monumental_habits/auth/Middleware/auth_middleware.dart';
 import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/auth/pages/landing_page.dart';
 import 'package:monumental_habits/home/homePage.dart';
@@ -13,7 +13,7 @@ import 'package:monumental_habits/locale/locale_controller.dart';
 import 'package:monumental_habits/pages/settings_profile/FAQ/f_a_q_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
 
 // status bar color in the app dammmnscc
 // SystemChrome.setSystemUIOverlayStyle(

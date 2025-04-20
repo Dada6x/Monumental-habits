@@ -86,7 +86,7 @@ class SignupForm extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Button(context, "Create Account", () async {
               if (formKey.currentState!.validate()) {
-                print("send request-----------------------");
+                // print("send request-----------------------");
                 await sendVerifyRegister();
                 if (status) {
                   Get.to(const VerificationPage(),

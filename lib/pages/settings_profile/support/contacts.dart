@@ -31,7 +31,7 @@ class ContactsPage extends StatelessWidget {
               whatsCopied: "Email",
             ),
             SettingsFunctions(
-              text: "+963-965455216",
+              text: "+963-965455216\n+963-980817760 ", //! added my number
               leading: "Call us :".tr,
               textToCopy: "+963-965455216",
               whatsCopied: "Number",

@@ -41,6 +41,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17
   flutter_timezone: ^4.1.0
+  graphview: ^1.2.0  
   flutter_verification_code: ^1.1.7
   font_awesome_flutter: ^10.8.0
   get: ^4.7.2

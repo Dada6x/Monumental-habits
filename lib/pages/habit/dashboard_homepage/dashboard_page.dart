@@ -14,9 +14,36 @@ class Dashboard extends StatelessWidget {
     final String quoteText = quoteParts.first.trim();
     final String author =
         quoteParts.length > 1 ? "- ${quoteParts.last.trim()}" : "- Unknown";
+
+    String getGreeting() {
+      final hour = DateTime.now().hour;
+      if (hour < 12) {
+        return "Good Morning! 🌅";
+      } else if (hour < 17) {
+        return "Good Afternoon! 🌞";
+      } else {
+        return "Good Evening! 🌙";
+      }
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Row(
+              children: [
+                Text(
+                  getGreeting(),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: MediaQuery.of(context).size.width * 0.049,
+                      fontFamily: "klasik",
+                      fontWeight: FontWeight.w700),
+                )
+              ],
+            ),
+          ),
           //! Random Quote
           Padding(
             padding: const EdgeInsets.all(8),

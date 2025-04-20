@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Middleware/auth_middleware.dart';
+import 'package:monumental_habits/auth/Middleware/auth_middleware.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/settings_profile/customization.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';

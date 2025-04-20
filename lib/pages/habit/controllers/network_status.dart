@@ -5,6 +5,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:lottie/lottie.dart';
 
 import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
+import 'package:monumental_habits/util/helper.dart';
 
 class NetworkStatus extends StatefulWidget {
   //! this is the class the determine that the scaffold going to show damn man or error message
@@ -58,20 +59,16 @@ class _NetworkStatusState extends State<NetworkStatus> {
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Lottie.asset('assets/animations/dinolightmode.json'),
                 ),
-                const Text(
+                Text(
                   '  You\'re Offline :(',
-                  style: TextStyle(
-                      // color: MainPage.orangeColor,
-                      ),
+                  style: manropeFun(context),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
+                Text(
                   'Please Make Sure You\'re Connected To The Internet',
-                  style: TextStyle(
-                      // color: MainPage.orangeColor,
-                      ),
+                  style: manropeFun(context),
                 ),
               ],
             ),

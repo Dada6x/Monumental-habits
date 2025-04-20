@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(3.0),
-            child: Obx(() => navController.currentIndex.value != 2
+            child: Obx(() => navController.currentIndex.value == 0||navController.currentIndex.value == 1||navController.currentIndex.value == 4
                 // TODO FIX THAT IT DOSENT SHOW UP ON THE PROILE
                 ? Container(
                     decoration:

@@ -68,7 +68,7 @@ class _NetworkStatusState extends State<NetworkStatus> {
                   height: 10,
                 ),
                 const Text(
-                  'Please Make Sure You\'re Connected To The Internet\n   make sure you\'re connected and try again ',
+                  'Please Make Sure You\'re Connected To The Internet',
                   style: TextStyle(
                       // color: MainPage.orangeColor,
                       ),

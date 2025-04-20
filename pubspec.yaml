@@ -46,6 +46,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   get: ^4.7.2
   google_sign_in: ^6.2.2
+  internet_connection_checker_plus: ^2.6.0
   http: ^1.3.0
   flutter_chat_ui: ^1.6.15
   icons_flutter: ^0.0.4
@@ -74,7 +75,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/animations/ghost.json
+    - assets/animations/
     # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

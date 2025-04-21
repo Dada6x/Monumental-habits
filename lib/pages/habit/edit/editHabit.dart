@@ -5,7 +5,7 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 
 class EditHabit extends StatefulWidget {
-  final habitAAA; // habit passed for editing
+  final habitAAA;
   final HabitController habitController = Get.put(HabitController());
 
   EditHabit({super.key, this.habitAAA});
@@ -180,11 +180,18 @@ class _EditHabitState extends State<EditHabit> {
     );
   }
 }
+
 class HabitFreq extends StatelessWidget {
   final HabitController habitFrequencyController = Get.find<HabitController>();
 
   static const List<String> weekDays = [
-    "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
   ];
 
   HabitFreq({super.key});
@@ -248,7 +255,6 @@ class HabitFreq extends StatelessWidget {
     );
   }
 }
-
 
 class EditReminder extends StatelessWidget {
   // Reactive state variables

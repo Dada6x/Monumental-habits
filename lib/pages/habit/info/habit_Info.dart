@@ -8,6 +8,7 @@ import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
 
 import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
+import 'package:monumental_habits/pages/habit/edit/editHabit.dart';
 import 'package:monumental_habits/pages/habit/info/calander.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
@@ -25,7 +26,6 @@ class HabitInfoPage extends StatefulWidget {
 class _HabitInfoPageState extends State<HabitInfoPage> {
   final HabitController habitController = Get.find<HabitController>();
 
-  // var name = '';
   var reminderTime = '';
   var longestStreak = 0;
   var currentStreak = 0;
@@ -130,9 +130,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
           IconButton(
             onPressed: () {
               // !!! EDIT HABIT
-              // Get.to(() => EditHabit(
-              //       habitAAA: habit,
-              //     ));
+              Get.to(() => EditHabit());
             },
             icon: Icon(
               Icons.edit_outlined,

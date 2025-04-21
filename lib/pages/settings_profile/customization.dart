@@ -74,5 +74,18 @@ class CustomizePage extends StatelessWidget {
         ],
       ),
     );
-  }
+  }  
 }
+
+/*
+Show Case
+[Habit]
+add new Habit button. 
+    set name, set Days want the habit to be invoked , set Reminder , set notifications , click the add new habit 
+when habit Added.
+    select the day
+    ongtap for the Habit Info,
+    edit Habit
+    Delete Habit 
+[Profile ]
+*/

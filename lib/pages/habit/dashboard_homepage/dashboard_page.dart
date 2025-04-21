@@ -1,8 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monumental_habits/pages/habit/controllers/network_status.dart';
-// import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
+import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class Dashboard extends StatelessWidget {
@@ -123,7 +122,7 @@ class Dashboard extends StatelessWidget {
             child: SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: MediaQuery.sizeOf(context).height * 0.54,
-              child: const NetworkStatus(),
+              child: HabitTable(key: habitTableKey),
             ),
           ),
         ],

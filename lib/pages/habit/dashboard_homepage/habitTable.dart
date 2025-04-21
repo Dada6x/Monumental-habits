@@ -16,6 +16,7 @@ class HabitTable extends StatefulWidget {
   _HabitTableState createState() => _HabitTableState();
 }
 
+// ignore: library_private_types_in_public_api
 final GlobalKey<_HabitTableState> habitTableKey = GlobalKey<_HabitTableState>();
 
 class _HabitTableState extends State<HabitTable> {

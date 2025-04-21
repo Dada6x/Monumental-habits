@@ -25,19 +25,23 @@ class HabitInfoPage extends StatefulWidget {
 
 class _HabitInfoPageState extends State<HabitInfoPage> {
   final HabitController habitController = Get.find<HabitController>();
+  //?analytics
+  // var longestStreak = 0;
+  // var completionRate = 0.0;
+  // var easiness = '';
+  var currentStreak = 3;
 
-  var reminderTime = '';
-  var longestStreak = 0;
-  var currentStreak = 0;
-  var completionRate = 0.0;
-  var easiness = '';
+// Editable info
+  var reminderTime;
+  var name;
+  var days;
 
   @override
   void initState() {
     super.initState();
     fetchHabitData();
   }
-
+//! Delete Habit Request
   void deleteHabit(int id) async {
     try {
       String apiUrl = 'http://10.0.2.2:8000/api/habits/$id';
@@ -85,7 +89,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
       );
     }
   }
-
+//! fetching Habits Data
   Future<String> fetchHabitData() async {
     String apiUrl = 'http://10.0.2.2:8000/api/habits/${widget.id}';
     try {
@@ -99,6 +103,10 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         ),
       );
       if (response.statusCode == 200) {
+        name = response.data['habit']['name'];
+        reminderTime = response.data['habit']['reminder_time'];
+        currentStreak = response.data['current_streak'];
+        days = response.data['habit']['days'];
         return jsonEncode(response.data);
       } else {
         print('error');
@@ -130,7 +138,14 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
           IconButton(
             onPressed: () {
               // !!! EDIT HABIT
-              Get.to(() => EditHabit());
+              Get.to(
+                () => Edithabit(
+                  name: name,
+                  habitFreq: days,
+                  reminder: reminderTime,
+                  noti: true,
+                ),
+              );
             },
             icon: Icon(
               Icons.edit_outlined,
@@ -182,7 +197,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    returnedData['habit']['name'],
+                                    name,
                                     style: klasikFun(context),
                                   ),
                                   Row(
@@ -207,7 +222,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                             .primary,
                                       ),
                                       //TODO wait for abdo to fix this
-                                      const Text("Repeat : days "),
+                                      Text("Repeat : $days "),
                                     ],
                                   ),
                                 ],
@@ -256,7 +271,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                     "Longest Streak",
                                     "assets/images/Fire.svg"),
                                 customWidget(
-                                    "${returnedData['current_streak']} %",
+                                    "${currentStreak} %",
                                     "Completion Rate",
                                     "assets/images/EllipseDiagrams.svg"),
                               ]),

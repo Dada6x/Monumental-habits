@@ -1,45 +1,130 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
+import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/util/sizedconfig.dart';
 
-class EditHabit extends StatefulWidget {
-  final habitAAA;
-  final HabitController habitController = Get.put(HabitController());
+class Edithabit extends StatefulWidget {
+  final String name;
+  final List<String> habitFreq;
+  final String reminder;
+  final bool noti;
 
-  EditHabit({super.key, this.habitAAA});
+  const Edithabit(
+      {super.key,
+      required this.name,
+      required this.habitFreq,
+      required this.reminder,
+      required this.noti});
 
   @override
-  _EditHabitState createState() => _EditHabitState();
+  State<Edithabit> createState() => _EdithabitState();
 }
 
-class _EditHabitState extends State<EditHabit> {
+void updateHabit(String name, dynamic habitFreq) async {
+  try {
+    var response = await Dio().post(
+      "http://10.0.2.2:8000/api/habits",
+      data: {'name': name, "days": habitFreq, "reminder_time": null},
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer ${token!.getString("token")}',
+          'Accept': 'application/json',
+        },
+      ),
+    );
+
+    if (response.data["status"]) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: "Success",
+          message: "Habit Updated successfully ",
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } else {
+      Get.showSnackbar(
+        GetSnackBar(
+          title: "Error",
+          message: response.data["message"] ?? "Something went wrong",
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  } catch (e) {
+    print("Unexpected error: $e");
+    Get.showSnackbar(
+      GetSnackBar(
+        title: "Exception",
+        message: e.toString(),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+}
+
+class _EdithabitState extends State<Edithabit> {
+  late TextEditingController nameController;
+  late RxList<String> selectedDays;
+  late RxString chosenTime;
+  late RxBool notificationsEnabled;
+  static const List<String> weekDays = [
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
+  ];
+
   @override
   void initState() {
     super.initState();
-    // Using WidgetsBinding to delay setting the state until after build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.habitController.habitName.value = widget.habitAAA.name;
-      widget.habitController.chosenTime.value = widget.habitAAA.chosenTime;
-      widget.habitController.notificationsEnabled.value =
-          widget.habitAAA.notificationsEnabled;
-      widget.habitController.selectedDays.value =
-          List<String>.from(widget.habitAAA.selectedDays);
-    });
+    nameController = TextEditingController(text: widget.name);
+    selectedDays = widget.habitFreq.map((e) => e.toLowerCase()).toList().obs;
+    chosenTime = widget.reminder.obs;
+    notificationsEnabled = widget.noti.obs;
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
+  void handleSave() {
+    final updatedName = nameController.text;
+    final updatedFreq = selectedDays.toList();
+    final updatedReminder = chosenTime.value;
+    final updatedNoti = notificationsEnabled.value;
+
+    // Here you can trigger your update request with these updated values
+    print("Saving updated habit:");
+    print("Name: $updatedName");
+    print("Freq: $updatedFreq");
+    print("Reminder: $updatedReminder");
+    print("Notification: $updatedNoti");
+
+    // Just pop for now
+    Get.back();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        surfaceTintColor: Colors.transparent,
-        forceMaterialTransparency: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text("Edit Habit", style: manropeFun(context)),
+        title: Text("Edit", style: manropeFun(context)),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: handleSave,
+            icon: const Icon(Icons.save_alt),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -47,13 +132,11 @@ class _EditHabitState extends State<EditHabit> {
           children: [
             //! Habit Name
             TextField(
-              controller: TextEditingController(text: widget.habitAAA.name),
+              controller: nameController,
               decoration: InputDecoration(
                 fillColor: Theme.of(context).colorScheme.tertiary,
                 filled: true,
-                prefixIconColor: Get.isDarkMode
-                    ? const Color(orange)
-                    : const Color(darkPurple),
+                labelText: "Habit Name",
                 labelStyle: klasikHint,
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.transparent),
@@ -61,12 +144,11 @@ class _EditHabitState extends State<EditHabit> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Get.isDarkMode ? altPurple : const Color(orange)),
+                    color: Get.isDarkMode ? altPurple : const Color(orange),
+                  ),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
               ),
-              onChanged: (value) =>
-                  widget.habitController.habitName.value = value,
             ),
             //! Habit Frequency
             Padding(
@@ -79,39 +161,86 @@ class _EditHabitState extends State<EditHabit> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Text(
-                            "Habit Frequency",
-                            style: manropeFun(context),
-                          ),
+                          Text("Habit Frequency", style: manropeFun(context)),
                           const Spacer(),
-                          Text(
-                            "Custom",
-                            style: manropeOrangeAndPurple(context),
-                          )
+                          Text("Custom", style: manropeOrangeAndPurple(context))
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: HabitFreq(),
-                    ),
+                    Obx(() => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: List.generate(7, (index) {
+                            String day = weekDays[index].toLowerCase();
+                            bool isSelected = selectedDays.contains(day);
+                            return GestureDetector(
+                              onTap: () {
+                                if (isSelected) {
+                                  selectedDays.remove(day);
+                                } else {
+                                  selectedDays.add(day);
+                                }
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                child: Column(
+                                  children: [
+                                    Text(weekDays[index],
+                                        style: manropeLavander),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 2),
+                                      child: Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiaryContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: isSelected
+                                            ? Center(
+                                                child: Container(
+                                                  width: 31,
+                                                  height: 31,
+                                                  decoration: BoxDecoration(
+                                                    color: Get.isDarkMode
+                                                        ? const Color(
+                                                            darkPurple)
+                                                        : const Color(
+                                                            darkOrange),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6),
+                                                  ),
+                                                ),
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        )),
                     const SizedBox(height: 10)
                   ],
                 ),
               ),
             ),
-            //! Habit EditReminder
+            //! Reminder
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: GestureDetector(
                 onTap: () async {
                   final time = await Get.bottomSheet(
-                    EditReminder(),
+                    Reminder(initial: chosenTime.value),
                     isScrollControlled: true,
                   );
-                  if (time != null) {
-                    widget.habitController.chosenTime.value = time;
-                  }
+                  if (time != null) chosenTime.value = time;
                 },
                 child: Container(
                   height: 60,
@@ -120,19 +249,17 @@ class _EditHabitState extends State<EditHabit> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Text("EditReminder", style: manropeFun(context)),
+                        Text("Reminder", style: manropeFun(context)),
                         const Spacer(),
-                        Obx(() => Text(
-                              widget.habitController.chosenTime.value,
-                              style: manropeOrangeAndPurple(context),
-                            ))
+                        Obx(() => Text(chosenTime.value,
+                            style: manropeOrangeAndPurple(context)))
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            //! Notifications Toggle
+            //! Notifications
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
@@ -150,30 +277,14 @@ class _EditHabitState extends State<EditHabit> {
                           inactiveTrackColor: const Color(lavander),
                           trackOutlineColor:
                               const WidgetStatePropertyAll(Colors.transparent),
-                          value:
-                              widget.habitController.notificationsEnabled.value,
-                          onChanged: (notificationsValue) {
-                            widget.habitController.notificationsEnabled.value =
-                                notificationsValue;
-                          }))
+                          value: notificationsEnabled.value,
+                          onChanged: (value) =>
+                              notificationsEnabled.value = value))
                     ],
                   ),
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                Get.find<HabitController>().editHabit(
-                    name: widget.habitAAA.name,
-                    time: widget.habitController.chosenTime.value,
-                    notifications:
-                        widget.habitController.notificationsEnabled.value,
-                    // ignore: invalid_use_of_protected_member
-                    days: widget.habitController.selectedDays.value);
-                Get.back();
-              },
-              child: const Text("Save Habit"),
-            )
           ],
         ),
       ),
@@ -181,109 +292,40 @@ class _EditHabitState extends State<EditHabit> {
   }
 }
 
-class HabitFreq extends StatelessWidget {
-  final HabitController habitFrequencyController = Get.find<HabitController>();
-
-  static const List<String> weekDays = [
-    "SUN",
-    "MON",
-    "TUE",
-    "WED",
-    "THU",
-    "FRI",
-    "SAT"
-  ];
-
-  HabitFreq({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(7, (index) {
-          String day = weekDays[index].toLowerCase(); // "mon", "wed", etc.
-          bool isSelected = habitFrequencyController.selectedDays.contains(day);
-
-          return GestureDetector(
-            onTap: () {
-              if (isSelected) {
-                habitFrequencyController.selectedDays.remove(day);
-              } else {
-                habitFrequencyController.selectedDays.add(day);
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: Column(
-                children: [
-                  Text(
-                    weekDays[index],
-                    style: manropeLavander,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.tertiaryContainer,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: isSelected
-                          ? Center(
-                              child: Container(
-                                width: 31,
-                                height: 31,
-                                decoration: BoxDecoration(
-                                  color: Get.isDarkMode
-                                      ? const Color(darkPurple)
-                                      : const Color(darkOrange),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                              ),
-                            )
-                          : null,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }),
-      ),
-    );
-  }
-}
-
-class EditReminder extends StatelessWidget {
-  // Reactive state variables
+// Reminder Widget - same as before but accepts initial value
+class Reminder extends StatelessWidget {
   final RxInt selectedHour = 1.obs;
   final RxInt selectedMinute = 0.obs;
   final RxString selectedPeriod = 'AM'.obs;
-
   final FixedExtentScrollController _hourController =
       FixedExtentScrollController();
   final FixedExtentScrollController _minuteController =
       FixedExtentScrollController();
 
-  EditReminder({super.key});
+  Reminder({super.key, required String initial}) {
+    if (initial.isNotEmpty) {
+      final parts = initial.split(RegExp(r'[: ]'));
+      if (parts.length == 3) {
+        selectedHour.value = int.parse(parts[0]);
+        selectedMinute.value = int.parse(parts[1]);
+        selectedPeriod.value = parts[2];
+        _hourController.jumpToItem(selectedHour.value - 1);
+        _minuteController.jumpToItem(selectedMinute.value);
+      }
+    }
+  }
 
   void _saveReminder() {
     String formattedTime =
         "${selectedHour.value.toString().padLeft(2, '0')}:${selectedMinute.value.toString().padLeft(2, '0')} ${selectedPeriod.value}";
-
     Get.back(result: formattedTime);
-    print(formattedTime);
-    //! SEND IT TO THE NOTIFICATIONS
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.tertiary,
-      height: SizeConfig.screenHeight * 0.5,
-      width: SizeConfig.screenHeight,
+      height: MediaQuery.sizeOf(context).height * 0.5,
       child: Column(
         children: [
           _buildHeader(context),
@@ -299,23 +341,14 @@ class EditReminder extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () => Get.back(),
-          child: Text(
-            "Cancel",
-            style: manropeOrangeAndPurple(context),
-          ),
+          child: Text("Cancel", style: manropeOrangeAndPurple(context)),
         ),
         const Spacer(),
-        Text(
-          "Add EditReminder",
-          style: manropeFun(context),
-        ),
+        Text("Add Reminder", style: manropeFun(context)),
         const Spacer(),
         TextButton(
           onPressed: _saveReminder,
-          child: Text(
-            "Save",
-            style: manropeOrangeAndPurple(context),
-          ),
+          child: Text("Save", style: manropeOrangeAndPurple(context)),
         ),
       ],
     );

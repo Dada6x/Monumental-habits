@@ -47,8 +47,8 @@ class HabitController extends GetxController {
           data: {
             'name': habitName.value,
             "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
-            "reminder_time": null,
-            //TODO SEND THE CHOOSEN TIME
+            "reminder_time": "10:00 AM",
+            // SHOULDNT WORK LIKE THISSSSSS
           },
           options: Options(
             headers: {
@@ -59,7 +59,9 @@ class HabitController extends GetxController {
         );
 
         if (response.data["status"]) {
-          print("Habit added successfully ");
+          // print("Habit added successfully ");
+          // print("###################################|||||||||");
+          // print(chosenTime);
           Get.showSnackbar(
             const GetSnackBar(
               title: "Success",
@@ -102,10 +104,10 @@ class HabitController extends GetxController {
     }
     //! REFRESH THE TABLE
     habitTableKey.currentState?.refreshTable();
-    print('${selectedDays} 🤰🏾');
-    print("HABIT BEEN RESET ########### 💛 ");
+    // print('${selectedDays} 🤰🏾');
+    // print("HABIT BEEN RESET ########### 💛 ");
     reset();
-    print("${selectedDays}");
+    // print("${selectedDays}");
   }
 
 //! deleting habits

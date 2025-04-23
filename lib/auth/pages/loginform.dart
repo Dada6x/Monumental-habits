@@ -21,7 +21,7 @@ class LoginForm extends StatelessWidget {
 
     if (response.data["status"]) {
       token!.setString("token", response.data["token"]);
-      print("give token is ${token!.getString("token")}");
+
     }else{
       //@Ward-ikhtiyar add cases exceptions you nigger and add snack bars
     }

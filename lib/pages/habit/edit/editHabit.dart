@@ -29,9 +29,18 @@ void updateHabit(String name, dynamic habitFreq, int id) async {
       "http://10.0.2.2:8000/api/habits/$id",
       data: {
         'name': name,
-        "days": habitFreq,
-        "reminder_time":
-            "10:00 AM", //! SHOULDNT WORK LIKE THISSSSSS check the reminder widget
+        "days": habitFreq
+            .map((d) => {
+                  "sun": "Sunday",
+                  "mon": "Monday",
+                  "tue": "Tuesday",
+                  "wed": "Wednesday",
+                  "thu": "Thursday",
+                  "fri": "Friday",
+                  "sat": "Saturday"
+                }[d]!)
+            .toList(),
+        "reminder_time": "10:00 AM",
       },
       options: Options(
         headers: {
@@ -40,10 +49,6 @@ void updateHabit(String name, dynamic habitFreq, int id) async {
         },
       ),
     );
-    print("########");
-    print(name);
-    print(habitFreq);
-    print(id);
     if (response.data["status"]) {
       Get.showSnackbar(
         const GetSnackBar(
@@ -99,7 +104,7 @@ class _editHabitState extends State<editHabit> {
     selectedDays = RxList<String>(
       widget.habitFreq.map<String>((e) => e.toLowerCase()).toList(),
     );
-    chosenTime = widget.reminder.obs;
+    chosenTime = widget.reminder.obs; // need to be change
     notificationsEnabled = widget.noti.obs;
   }
 
@@ -121,6 +126,14 @@ class _editHabitState extends State<editHabit> {
               updateHabit(
                 nameController.text,
                 selectedDays.toList(),
+                widget.id,
+              );
+
+              print(nameController.text);
+              print(
+                selectedDays.toList(),
+              );
+              print(
                 widget.id,
               );
             },

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Theme/themes.dart';
-import 'package:monumental_habits/Theme/themes_contoller.dart';
+import 'package:monumental_habits/services/Theme/themes.dart';
+import 'package:monumental_habits/services/Theme/themes_contoller.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
-import 'package:monumental_habits/locale/locale_controller.dart';
+import 'package:monumental_habits/services/locale/locale_controller.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
-import 'package:monumental_habits/widgets/settings_comps.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/settings_comps.dart';
 
 class CustomizePage extends StatelessWidget {
   CustomizePage({super.key});

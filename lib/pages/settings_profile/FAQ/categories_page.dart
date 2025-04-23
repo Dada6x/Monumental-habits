@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/pages/settings_profile/FAQ/f_a_q_controller.dart';
 import 'package:monumental_habits/pages/settings_profile/FAQ/question_page.dart';
-import 'package:monumental_habits/widgets/FAQ/question_tile.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/FAQ/question_tile.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
 
 // ignore: must_be_immutable
 class FAQCateogryPage extends StatelessWidget {

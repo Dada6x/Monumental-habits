@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/personalInfo.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
-import 'package:monumental_habits/widgets/settingsFunctions.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/settingsFunctions.dart';
 
 class ProfileDetails extends StatelessWidget {
   var user_data = Get.arguments["data"];

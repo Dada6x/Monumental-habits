@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/text_fields.dart';
 
 // ignore: must_be_immutable
 class SignupForm extends StatelessWidget {

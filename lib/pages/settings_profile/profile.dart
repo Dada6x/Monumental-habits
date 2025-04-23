@@ -9,7 +9,7 @@ import 'package:monumental_habits/pages/settings_profile/customization.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';
 import 'package:monumental_habits/pages/settings_profile/support/profile_details.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});

@@ -6,8 +6,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/auth/pages/landing_page.dart';
 import 'package:monumental_habits/auth/pages/verificationPage.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/text_fields.dart';
 
 // ignore: must_be_immutable
 class forgetPassword extends StatelessWidget {

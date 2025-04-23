@@ -4,28 +4,35 @@ import 'package:get/get.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 
-class Edithabit extends StatefulWidget {
+class editHabit extends StatefulWidget {
   final String name;
-  final List<String> habitFreq;
+  final List<dynamic> habitFreq;
   final String reminder;
   final bool noti;
+  final int id;
 
-  const Edithabit(
+  const editHabit(
       {super.key,
       required this.name,
       required this.habitFreq,
       required this.reminder,
-      required this.noti});
+      required this.noti,
+      required this.id});
 
   @override
-  State<Edithabit> createState() => _EdithabitState();
+  State<editHabit> createState() => _editHabitState();
 }
 
-void updateHabit(String name, dynamic habitFreq) async {
+void updateHabit(String name, dynamic habitFreq, int id) async {
   try {
-    var response = await Dio().post(
-      "http://10.0.2.2:8000/api/habits",
-      data: {'name': name, "days": habitFreq, "reminder_time": null},
+    var response = await Dio().put(
+      "http://10.0.2.2:8000/api/habits/$id",
+      data: {
+        'name': name,
+        "days": habitFreq,
+        "reminder_time":
+            "10:00 AM", //! SHOULDNT WORK LIKE THISSSSSS check the reminder widget
+      },
       options: Options(
         headers: {
           'Authorization': 'Bearer ${token!.getString("token")}',
@@ -66,7 +73,7 @@ void updateHabit(String name, dynamic habitFreq) async {
   }
 }
 
-class _EdithabitState extends State<Edithabit> {
+class _editHabitState extends State<editHabit> {
   late TextEditingController nameController;
   late RxList<String> selectedDays;
   late RxString chosenTime;
@@ -85,7 +92,7 @@ class _EdithabitState extends State<Edithabit> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.name);
-    selectedDays = widget.habitFreq.map((e) => e.toLowerCase()).toList().obs;
+    // selectedDays = widget.habitFreq.map((e) => e.toLowerCase()).toList().obs;
     chosenTime = widget.reminder.obs;
     notificationsEnabled = widget.noti.obs;
   }
@@ -96,23 +103,6 @@ class _EdithabitState extends State<Edithabit> {
     super.dispose();
   }
 
-  void handleSave() {
-    final updatedName = nameController.text;
-    final updatedFreq = selectedDays.toList();
-    final updatedReminder = chosenTime.value;
-    final updatedNoti = notificationsEnabled.value;
-
-    // Here you can trigger your update request with these updated values
-    print("Saving updated habit:");
-    print("Name: $updatedName");
-    print("Freq: $updatedFreq");
-    print("Reminder: $updatedReminder");
-    print("Notification: $updatedNoti");
-
-    // Just pop for now
-    Get.back();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +111,10 @@ class _EdithabitState extends State<Edithabit> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: handleSave,
+            onPressed: () {
+              //! UPDATING Habit with Id
+              updateHabit(widget.name, widget.habitFreq, widget.id);
+            },
             icon: const Icon(Icons.save_alt),
           )
         ],
@@ -131,6 +124,7 @@ class _EdithabitState extends State<Edithabit> {
         child: Column(
           children: [
             //! Habit Name
+            Text("${widget.id}"),
             TextField(
               controller: nameController,
               decoration: InputDecoration(

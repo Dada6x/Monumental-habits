@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
 
-import 'package:monumental_habits/widgets/customappBar.dart';
-import 'package:monumental_habits/widgets/settingsFunctions.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/settingsFunctions.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});

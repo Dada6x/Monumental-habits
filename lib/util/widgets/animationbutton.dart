@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
 
 class animatedGoogleButton extends StatefulWidget {
   const animatedGoogleButton({super.key});

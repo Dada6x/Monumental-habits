@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/main.dart';
-import 'package:monumental_habits/notifications/notifications_service.dart';
+import 'package:monumental_habits/services/notifications/notifications_service.dart';
 import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/pages/habit/model/habit_model.dart';
 
@@ -47,7 +47,7 @@ class HabitController extends GetxController {
           data: {
             'name': habitName.value,
             "days": selectedDays.map((d) => fullDayNames[d]!).toList(),
-            "reminder_time": "10:00 AM",
+            "reminder_time": "10:15 AM",
             // SHOULDNT WORK LIKE THISSSSSS
           },
           options: Options(

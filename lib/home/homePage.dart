@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Theme/themes.dart';
-import 'package:monumental_habits/Theme/themes_contoller.dart';
+import 'package:monumental_habits/services/Theme/themes.dart';
+import 'package:monumental_habits/services/Theme/themes_contoller.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/settings_profile/profile.dart';

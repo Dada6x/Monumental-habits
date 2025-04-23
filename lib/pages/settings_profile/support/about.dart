@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

@@ -6,13 +6,12 @@ import 'package:get/get.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
-
 import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/pages/habit/edit/editHabit.dart';
 import 'package:monumental_habits/pages/habit/info/calander.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
 
 class HabitInfoPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -26,21 +25,22 @@ class HabitInfoPage extends StatefulWidget {
 class _HabitInfoPageState extends State<HabitInfoPage> {
   final HabitController habitController = Get.find<HabitController>();
   //?analytics
-  // var longestStreak = 0;
-  // var completionRate = 0.0;
-  // var easiness = '';
-  var currentStreak = 3;
+  var completionRate;
+  var easiness;
+  var longestStreak;
+  var currentStreak;
 
 // Editable info
   var reminderTime;
   var name;
   var days;
-
+  // bool notificationEnabled=false;
   @override
   void initState() {
     super.initState();
     fetchHabitData();
   }
+
 //! Delete Habit Request
   void deleteHabit(int id) async {
     try {
@@ -89,6 +89,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
       );
     }
   }
+
 //! fetching Habits Data
   Future<String> fetchHabitData() async {
     String apiUrl = 'http://10.0.2.2:8000/api/habits/${widget.id}';
@@ -105,8 +106,13 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
       if (response.statusCode == 200) {
         name = response.data['habit']['name'];
         reminderTime = response.data['habit']['reminder_time'];
-        currentStreak = response.data['current_streak'];
         days = response.data['habit']['days'];
+        //
+        currentStreak = response.data['current_streak'];
+        longestStreak = response.data['longest_streak'];
+        completionRate = response.data['complete_rate'];
+        easiness = response.data['easiness'];
+
         return jsonEncode(response.data);
       } else {
         print('error');
@@ -137,9 +143,10 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         actions: [
           IconButton(
             onPressed: () {
-              // !!! EDIT HABIT
+              //!!! EDIT HABIT
               Get.to(
-                () => Edithabit(
+                () => editHabit(
+                  id:widget.id,
                   name: name,
                   habitFreq: days,
                   reminder: reminderTime,
@@ -210,6 +217,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                       ),
                                       Text(
                                         "Reminder Time : ${returnedData['habit']['reminder_time']}",
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
@@ -221,7 +229,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                             .colorScheme
                                             .primary,
                                       ),
-                                      //TODO wait for abdo to fix this
                                       Text("Repeat : $days "),
                                     ],
                                   ),
@@ -266,10 +273,8 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               analyticsColumn([
-                                customWidget(
-                                    "${returnedData['longest_streak']} Days",
-                                    "Longest Streak",
-                                    "assets/images/Fire.svg"),
+                                customWidget("${longestStreak} Days",
+                                    "Longest Streak", "assets/images/Fire.svg"),
                                 customWidget(
                                     "${currentStreak} %",
                                     "Completion Rate",
@@ -277,11 +282,11 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                               ]),
                               analyticsColumn([
                                 customWidget(
-                                    "${returnedData['complete_rate']}",
+                                    "${completionRate}",
                                     "Current Streak",
                                     "assets/images/LightningIcon.svg"),
                                 customWidget(
-                                    returnedData['easiness'],
+                                    "${easiness}",
                                     "Average Easiness Score",
                                     "assets/images/Leaf.svg"),
                               ]),

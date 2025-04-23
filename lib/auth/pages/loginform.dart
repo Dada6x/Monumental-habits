@@ -5,8 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monumental_habits/auth/pages/forgetPassword.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/text_fields.dart';
 
 // ignore: must_be_immutable
 class LoginForm extends StatelessWidget {
@@ -23,7 +23,7 @@ class LoginForm extends StatelessWidget {
       token!.setString("token", response.data["token"]);
       print("give token is ${token!.getString("token")}");
     }else{
-      //@Ward-ikhtiyar add cases exceptions you nigger 
+      //@Ward-ikhtiyar add cases exceptions you nigger and add snack bars
     }
   }
 

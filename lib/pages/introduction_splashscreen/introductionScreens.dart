@@ -5,7 +5,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:monumental_habits/auth/pages/landing_page.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroPages extends StatefulWidget {

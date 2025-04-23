@@ -10,8 +10,8 @@ import 'package:monumental_habits/auth/pages/personalInfo.dart';
 import 'package:monumental_habits/auth/pages/landing_page.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/text_fields.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});

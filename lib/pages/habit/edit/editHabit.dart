@@ -29,6 +29,7 @@ void updateHabit(String name, dynamic habitFreq, int id) async {
       "http://10.0.2.2:8000/api/habits/$id",
       data: {
         'name': name,
+        //! update it
         "days": habitFreq
             .map((d) => {
                   "sun": "Sunday",

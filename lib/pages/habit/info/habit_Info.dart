@@ -35,6 +35,17 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
   var name;
   var days;
   // bool notificationEnabled=false;
+
+  final dayShortener = {
+    "Sunday": "sun",
+    "monday": "mon",
+    "tuesday": "tue",
+    "wednesday": "wed",
+    "thursday": "thu",
+    "friday": "fri",
+    "saturday": "sat",
+  };
+
   @override
   void initState() {
     super.initState();
@@ -146,9 +157,19 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
               //!!! EDIT HABIT
               Get.to(
                 () => editHabit(
-                  id:widget.id,
+                  id: widget.id,
                   name: name,
-                  habitFreq: days,
+                  habitFreq: days
+                      .map((d) => {
+                            "Sunday": "sun",
+                            "Monday": "mon",
+                            "Tuesday": "tue",
+                            "Wednesday": "wed",
+                            "Thursday": "thu",
+                            "Friday": "fri",
+                            "Saturday": "sat"
+                          }[d]!)
+                      .toList(),
                   reminder: reminderTime,
                   noti: true,
                 ),

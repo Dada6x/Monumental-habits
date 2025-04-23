@@ -40,7 +40,10 @@ void updateHabit(String name, dynamic habitFreq, int id) async {
         },
       ),
     );
-
+    print("########");
+    print(name);
+    print(habitFreq);
+    print(id);
     if (response.data["status"]) {
       Get.showSnackbar(
         const GetSnackBar(
@@ -78,6 +81,7 @@ class _editHabitState extends State<editHabit> {
   late RxList<String> selectedDays;
   late RxString chosenTime;
   late RxBool notificationsEnabled;
+
   static const List<String> weekDays = [
     "SUN",
     "MON",
@@ -92,7 +96,9 @@ class _editHabitState extends State<editHabit> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.name);
-    // selectedDays = widget.habitFreq.map((e) => e.toLowerCase()).toList().obs;
+    selectedDays = RxList<String>(
+      widget.habitFreq.map<String>((e) => e.toLowerCase()).toList(),
+    );
     chosenTime = widget.reminder.obs;
     notificationsEnabled = widget.noti.obs;
   }
@@ -112,8 +118,11 @@ class _editHabitState extends State<editHabit> {
         actions: [
           IconButton(
             onPressed: () {
-              //! UPDATING Habit with Id
-              updateHabit(widget.name, widget.habitFreq, widget.id);
+              updateHabit(
+                nameController.text,
+                selectedDays.toList(),
+                widget.id,
+              );
             },
             icon: const Icon(Icons.save_alt),
           )
@@ -124,7 +133,6 @@ class _editHabitState extends State<editHabit> {
         child: Column(
           children: [
             //! Habit Name
-            Text("${widget.id}"),
             TextField(
               controller: nameController,
               decoration: InputDecoration(
@@ -144,6 +152,7 @@ class _editHabitState extends State<editHabit> {
                 ),
               ),
             ),
+
             //! Habit Frequency
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -157,15 +166,32 @@ class _editHabitState extends State<editHabit> {
                         children: [
                           Text("Habit Frequency", style: manropeFun(context)),
                           const Spacer(),
-                          Text("Custom", style: manropeOrangeAndPurple(context))
+                          Text("Tap to toggle",
+                              style: manropeOrangeAndPurple(context)),
                         ],
                       ),
                     ),
+
+                    // Row with weekday labels
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: weekDays.map((day) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: Text(day, style: manropeLavander),
+                        );
+                      }).toList(),
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    // Row with tappable boxes
                     Obx(() => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(7, (index) {
-                            String day = weekDays[index].toLowerCase();
+                          children: weekDays.map((dayLabel) {
+                            String day = dayLabel.toLowerCase();
                             bool isSelected = selectedDays.contains(day);
+
                             return GestureDetector(
                               onTap: () {
                                 if (isSelected) {
@@ -174,57 +200,31 @@ class _editHabitState extends State<editHabit> {
                                   selectedDays.add(day);
                                 }
                               },
-                              child: Padding(
-                                padding:
+                              child: Container(
+                                width: 35,
+                                height: 35,
+                                margin:
                                     const EdgeInsets.symmetric(horizontal: 3),
-                                child: Column(
-                                  children: [
-                                    Text(weekDays[index],
-                                        style: manropeLavander),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 2),
-                                      child: Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .tertiaryContainer,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: isSelected
-                                            ? Center(
-                                                child: Container(
-                                                  width: 31,
-                                                  height: 31,
-                                                  decoration: BoxDecoration(
-                                                    color: Get.isDarkMode
-                                                        ? const Color(
-                                                            darkPurple)
-                                                        : const Color(
-                                                            darkOrange),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6),
-                                                  ),
-                                                ),
-                                              )
-                                            : null,
-                                      ),
-                                    ),
-                                  ],
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? (Get.isDarkMode
+                                          ? const Color(darkPurple)
+                                          : const Color(darkOrange))
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .tertiaryContainer,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             );
-                          }),
+                          }).toList(),
                         )),
-                    const SizedBox(height: 10)
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
+
             //! Reminder
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -253,6 +253,7 @@ class _editHabitState extends State<editHabit> {
                 ),
               ),
             ),
+
             //! Notifications
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -286,7 +287,6 @@ class _editHabitState extends State<editHabit> {
   }
 }
 
-// Reminder Widget - same as before but accepts initial value
 class Reminder extends StatelessWidget {
   final RxInt selectedHour = 1.obs;
   final RxInt selectedMinute = 0.obs;

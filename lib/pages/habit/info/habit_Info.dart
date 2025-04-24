@@ -8,7 +8,6 @@ import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/pages/habit/edit/editHabit.dart';
-import 'package:monumental_habits/pages/habit/info/calander.dart';
 import 'package:monumental_habits/pages/habit/info/log.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
@@ -69,7 +68,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         Get.snackbar('Success', 'Habit deleted successfully! ',
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.white,
-            colorText:  Color(darkOrange),
+            colorText: Color(darkOrange),
             icon: const Icon(Icons.delete));
         Get.off(() => HomePage());
         habitTableKey.currentState?.refreshTable();
@@ -270,7 +269,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                             borderRadius: BorderRadius.circular(
                                 MediaQuery.sizeOf(context).width * 0.04),
                           ),
-                          child: const Center(child: HClander()),
+                          child:  Center(child: Hcalander ()),
                         ),
                         //! Analytics Section
                         Padding(

@@ -5,6 +5,7 @@ import 'package:monumental_habits/pages/habit/dashboard_homepage/dashboard_page.
 
 import 'package:monumental_habits/pages/habit/new/new_habit_page.dart';
 import 'package:monumental_habits/pages/maps/maps.dart';
+import 'package:monumental_habits/pages/maps/soonmaps.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';
 
 class NavigationController extends GetxController {
@@ -13,7 +14,7 @@ class NavigationController extends GetxController {
   // List of pages
   final List<Widget> pages = [
     const Dashboard(), //0
-    const Maps(), //1
+    const SoonWidget(), //1
     const Community(), //2
     const Settings(), //3
     NewHabit(), //4

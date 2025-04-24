@@ -26,6 +26,27 @@ Widget Button(BuildContext context, String text, Function fun) {
   );
 }
 
+Widget ButtonLighter(BuildContext context, String text, Function fun) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      fixedSize: Size(MediaQuery.of(context).size.width, 42),
+      backgroundColor: Get.isDarkMode
+          ? const Color.fromRGBO(240, 222, 250, 0.8)
+          : const Color.fromRGBO(255, 221, 191, 1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+    onPressed: () {
+      fun();
+    },
+    child: Text(
+      text,
+      style: manrope,
+    ),
+  );
+}
+
 Widget googleButton(BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -35,11 +56,11 @@ Widget googleButton(BuildContext context) {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      onPressed: () async{
+      onPressed: () async {
         //! GO TO GOOGLE HEHEHE
         //jk login or signup via google
         //dumb ass joke
-         await SignupModels.signInWithGoogle();
+        await SignupModels.signInWithGoogle();
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

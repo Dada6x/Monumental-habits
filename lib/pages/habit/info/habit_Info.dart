@@ -3,15 +3,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
-import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/pages/habit/edit/editHabit.dart';
 import 'package:monumental_habits/pages/habit/info/log.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/util/widgets/Buttons.dart';
+
 
 class HabitInfoPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -50,55 +49,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
   void initState() {
     super.initState();
     fetchHabitData();
-  }
-
-//! Delete Habit Request
-  void deleteHabit(int id) async {
-    try {
-      String apiUrl = 'http://10.0.2.2:8000/api/habits/$id';
-      var response = await dio.delete(
-        apiUrl,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${token!.getString("token")}',
-            'Accept': 'application/json',
-          },
-        ),
-      );
-      if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Habit deleted successfully! ',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.white,
-            colorText: Color(darkOrange),
-            icon: const Icon(Icons.delete));
-        Get.off(() => HomePage());
-        habitTableKey.currentState?.refreshTable();
-      } else {
-        Get.snackbar(
-          'Error',
-          'Failed to delete habit. Try again later. ❌',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.orange,
-          colorText: Colors.white,
-          icon: const Icon(
-            Icons.error,
-            color: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error: Unable to delete habit. Please check your connection. ❌',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.orange,
-        colorText: Colors.white,
-        icon: const Icon(
-          Icons.error,
-          color: Colors.red,
-        ),
-      );
-    }
   }
 
 //! fetching Habits Data
@@ -334,35 +284,29 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                   MediaQuery.sizeOf(context).height * 0.02),
                           child:
                               Button(context, "Delete This Habit ?", () async {
-                            // Show a confirmation dialog before deletion
                             bool? confirmDelete = await Get.dialog(
                               AlertDialog(
-                                title: const Text('Are you sure?'),
+                                title: const Center(
+                                  child: Text(
+                                    'Are you sure?',
+                                    style: klasikHeader,
+                                  ),
+                                ),
                                 content: const Text(
-                                    'Do you want to delete this habit? This action cannot be undone.'),
+                                    'Do you want to delete this habit .This action cannot be undone.',style: manrope,),
                                 actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () => Get.back(result: false),
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => Get.back(result: true),
-                                    child: const Text('Delete'),
-                                  ),
+                                  ButtonLighter(context, "Cancel", () {
+                                    Get.back(result: false);
+                                  }),
+                                  Button(context, "Delete", () {
+                                    Get.back(result: true);
+                                  }),
                                 ],
                               ),
                             );
                             if (confirmDelete == true) {
-                              deleteHabit(widget.id);
-                            } else {
-                              Get.snackbar(
-                                'Cancelled',
-                                'Habit deletion was cancelled. 🔒',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.blue,
-                                colorText: Colors.white,
-                              );
-                            }
+                              HabitController().deleteHabit(widget.id);
+                            } else {}
                           }),
                         ),
                       ],

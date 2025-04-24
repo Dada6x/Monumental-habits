@@ -5,7 +5,8 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Hcalander extends StatefulWidget {
-  const Hcalander({super.key});
+  final id;
+  const Hcalander({super.key, this.id});
 
   @override
   _HabitCalendarState createState() => _HabitCalendarState();
@@ -103,8 +104,7 @@ class _HabitCalendarState extends State<Hcalander> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding:
-          const EdgeInsets.all(8.0), // Increased padding for responsiveness
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           //! Month Selector
@@ -157,38 +157,25 @@ class _HabitCalendarState extends State<Hcalander> {
               todayBuilder: (context, day, focusedDay) {
                 int currentDay = DateTime.now().day;
                 int dayNumber = day.day;
-
-                // Set the text color for today
                 TextStyle dayTextStyle = TextStyle(
                   fontWeight: FontWeight.bold,
                   color: (dayNumber == currentDay)
-                      ? (Get.isDarkMode
-                          ? altPurple
-                          : const Color(orange)) // Highlight for today
-                      : Theme.of(context)
-                          .colorScheme
-                          .scrim, // Default color for other days
+                      ? (Get.isDarkMode ? altPurple : const Color(orange))
+                      : Theme.of(context).colorScheme.scrim,
                 );
-
-                Color containerColor =
-                    Colors.transparent; // Default color for habit status
-
+                Color containerColor = Colors.transparent;
                 if (habitStatus.containsKey(dayNumber)) {
                   int? status = habitStatus[dayNumber];
                   // Set color based on habit status
                   if (status == 1) {
-                    containerColor = Get.isDarkMode
-                        ? altPurple
-                        : const Color(darkOrange); // Green for completed
+                    containerColor =
+                        Get.isDarkMode ? altPurple : const Color(darkOrange);
                   } else if (status == 0) {
-                    containerColor = Theme.of(context)
-                        .colorScheme
-                        .onTertiary; // Red for not completed
+                    containerColor = Theme.of(context).colorScheme.onTertiary;
                   } else {
                     containerColor = Colors.transparent; // Yellow for //!null
                   }
                 }
-
                 return Padding(
                   padding: const EdgeInsets.all(1.5),
                   child: Container(
@@ -206,7 +193,6 @@ class _HabitCalendarState extends State<Hcalander> {
                         const SizedBox(
                           height: 9,
                         ),
-                        // Container color based on habit status
                         Container(
                           width: screenWidth * 0.08, // Scalable size
                           height: screenWidth * 0.08, // Scalable size
@@ -221,20 +207,16 @@ class _HabitCalendarState extends State<Hcalander> {
                   ),
                 );
               },
-
               //! defaultBuilder ##########################
               defaultBuilder: (context, date, _) {
                 int dayNumber = date.day;
-
                 TextStyle dayTextStyle = TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context)
                       .colorScheme
                       .scrim, // Default color for other days
                 );
-
                 Color containerColor = Colors.transparent;
-
                 if (habitStatus.containsKey(dayNumber)) {
                   int? status = habitStatus[dayNumber];
                   // Set color based on habit status

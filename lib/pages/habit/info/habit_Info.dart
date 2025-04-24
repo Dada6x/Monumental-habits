@@ -33,6 +33,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
   var reminderTime;
   var name;
   var days;
+  var habitID;
   // bool notificationEnabled=false;
 
   final dayShortener = {
@@ -117,7 +118,8 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         name = response.data['habit']['name'];
         reminderTime = response.data['habit']['reminder_time'];
         days = response.data['habit']['days'];
-        //
+        habitID = response.data['habit']['id'];
+
         currentStreak = response.data['current_streak'];
         longestStreak = response.data['longest_streak'];
         completionRate = response.data['complete_rate'];
@@ -196,6 +198,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //! Habit Info
+                        // Text("${habitID}"),
                         Container(
                           padding:
                               EdgeInsets.all(SizeConfig.screenWidth * 0.025),
@@ -249,7 +252,16 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                             .colorScheme
                                             .primary,
                                       ),
-                                      Text("Repeat : $days "),
+                                      Text("Repeat: ${days.map((d) => {
+                                            'Sunday': 'Sun',
+                                            'Monday': 'Mon',
+                                            'everyday': 'Everyday',
+                                            'Tuesday': 'Tue',
+                                            'Wednesday': 'Wed',
+                                            'Thursday': 'Thu',
+                                            'Friday': 'Fri',
+                                            'Saturday': 'Sat'
+                                          }[d.trim()]!).join(',')} "),
                                     ],
                                   ),
                                 ],
@@ -269,7 +281,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                             borderRadius: BorderRadius.circular(
                                 MediaQuery.sizeOf(context).width * 0.04),
                           ),
-                          child:  Center(child: Hcalander ()),
+                          child: Center(child: Hcalander(id: widget.id)),
                         ),
                         //! Analytics Section
                         Padding(

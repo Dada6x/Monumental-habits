@@ -160,7 +160,6 @@ class _MapsState extends State<Maps> {
                     final idx = node.key!.value as int;
                     final label = nodeLabels[idx] ?? 'Node';
                     final cloudPath = nodeClouds[idx] ?? cloudAssets[0];
-
                     return GestureDetector(
                       onTap: () => _onNodeTap(node),
                       onLongPress: () => _showDeleteConfirmationDialog(node),
@@ -193,7 +192,7 @@ class _MapsState extends State<Maps> {
               ),
             ),
           ),
-          Expanded(flex: 1, child: SizedBox())
+          const Expanded(flex: 1, child: SizedBox())
         ],
       ),
     );

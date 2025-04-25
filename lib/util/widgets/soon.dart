@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class SoonWidget extends StatelessWidget {
-  const SoonWidget({super.key});
+  final String widgetName;
+  final String image1path;
+  final String image2path;
+  SoonWidget(
+      {super.key,
+      required this.widgetName,
+      required this.image1path,
+      required this.image2path});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +17,7 @@ class SoonWidget extends StatelessWidget {
       child: Column(
         children: [
           Card(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.tertiary,
             child: Column(
               children: [
                 SizedBox(
@@ -31,10 +38,11 @@ class SoonWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                             child: Image.asset(
                               // fit: BoxFit.fitHeight,
-                              "assets/images/Screenshot_1745499895.png",
+                              image1path,
                             ),
                           )),
-                          const VerticalDivider(
+                          VerticalDivider(
+                            color: Colors.grey.shade600,
                             endIndent: 19,
                             indent: 19,
                           ),
@@ -43,7 +51,7 @@ class SoonWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                             child: Image.asset(
                               // fit: BoxFit.fitHeight,
-                              "assets/images/Screenshot_1745499895.png",
+                              image2path,
                             ),
                           )),
                         ],
@@ -51,11 +59,11 @@ class SoonWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    "Community Comming Soon..",
-                    style: klasik,
+                    "$widgetName Comming Soon..",
+                    style: klasikFun(context)
                   ),
                 ),
               ],

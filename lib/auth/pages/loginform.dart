@@ -21,8 +21,7 @@ class LoginForm extends StatelessWidget {
 
     if (response.data["status"]) {
       token!.setString("token", response.data["token"]);
-
-    }else{
+    } else {
       //@Ward-ikhtiyar add cases exceptions you nigger and add snack bars
     }
   }
@@ -83,5 +82,5 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-//! inputDecoration of the textFiles
+
 

@@ -36,13 +36,10 @@ class _HabitCalendarState extends State<HabitCalendar> {
           },
         ),
       );
-
       if (response.statusCode == 200 && response.data['status'] == true) {
         final responseData = response.data;
-
         Map<int, int?> statusMap = {};
         final habitLogs = responseData['habit']?['habit_logs'];
-
         if (habitLogs != null) {
           for (var log in habitLogs) {
             final date = DateTime.parse(log['date']);
@@ -52,7 +49,6 @@ class _HabitCalendarState extends State<HabitCalendar> {
             }
           }
         }
-
         setState(() {
           habitStatus = statusMap;
         });
@@ -74,10 +70,18 @@ class _HabitCalendarState extends State<HabitCalendar> {
   }
 
   void _changeMonth(int offset) {
+    final nextMonth =
+        DateTime(_selectedMonth.year, _selectedMonth.month + offset, 1);
+    final now = DateTime.now();
+
+    if (nextMonth.isAfter(DateTime(now.year, now.month))) {
+      return;
+    }
+
     setState(() {
-      _selectedMonth =
-          DateTime(_selectedMonth.year, _selectedMonth.month + offset, 1);
+      _selectedMonth = nextMonth;
       _generateHabitData();
+      _fetchHabitLogs();
     });
   }
 

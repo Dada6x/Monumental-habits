@@ -1,11 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:monumental_habits/pages/community/community.dart';
 import 'package:monumental_habits/pages/habit/dashboard_homepage/dashboard_page.dart';
-
 import 'package:monumental_habits/pages/habit/new/new_habit_page.dart';
-import 'package:monumental_habits/pages/maps/maps.dart';
-import 'package:monumental_habits/pages/maps/soonmaps.dart';
+import 'package:monumental_habits/util/widgets/soon.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';
 
 class NavigationController extends GetxController {
@@ -14,21 +11,21 @@ class NavigationController extends GetxController {
   // List of pages
   final List<Widget> pages = [
     const Dashboard(), //0
-    const SoonWidget(), //1
-    const Community(), //2
+    SoonWidget(
+      widgetName: "Road Maps",
+      image1path: "assets/images/Screenshot_1745589378.png",
+      image2path: "assets/images/Screenshot_1745589597.png",
+    ), //1
+    SoonWidget(
+      widgetName: "Community",
+      image1path: "assets/images/Screenshot_1745589378.png",
+      image2path: "assets/images/Screenshot_1745589597.png",
+    ), //2
     const Settings(), //3
     NewHabit(), //4
-    // EditHabit() //5
   ];
 
   void changePage(int index) {
     currentIndex.value = index;
   }
-
-  // void editHabti(Habit, int index) {
-  //   EditHabit(
-  //     habitAAA: Habit,
-  //   );
-  //   currentIndex.value = 5;
-  // }
 }

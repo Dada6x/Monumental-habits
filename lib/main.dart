@@ -32,7 +32,6 @@ void main() async {
   Get.put(FAQController());
 //! init Notifications
   NotificationsService().initNotification();
-
   runApp(const MyApp());
 }
 

@@ -222,7 +222,7 @@ class _editHabitState extends State<editHabit> {
                                 decoration: BoxDecoration(
                                   color: isSelected
                                       ? (Get.isDarkMode
-                                          ? const Color(darkPurple)
+                                          ?  altPurple
                                           : const Color(darkOrange))
                                       : Theme.of(context)
                                           .colorScheme

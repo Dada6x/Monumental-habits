@@ -57,7 +57,7 @@ class Settings extends StatelessWidget {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
+                                  Theme.of(context).colorScheme.primaryFixed,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -70,10 +70,10 @@ class Settings extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Text(
                                 "View".tr,
-                                style: const TextStyle(
-                                    color: Color(darkPurple),
+                                style:  TextStyle(
+                                    color: Theme.of(context).colorScheme.scrim,
                                     fontFamily: "klasik",
-                                    fontSize: 16,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
@@ -148,7 +148,7 @@ class Settings extends StatelessWidget {
           targetPage: const FAQPage(),
         ),
         SettingsTabs(
-          title: "About".tr,
+          title: "About Us".tr,
           subTitle: null,
           leadIcon: Icons.info,
           targetPage: const AboutPage(),

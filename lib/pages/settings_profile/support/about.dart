@@ -43,15 +43,15 @@ class AboutPage extends StatelessWidget {
                   style: headerStyle(context)),
               const ProfileTab(
                 name: "Ward Ekhtiar",
-                role: "Flutter Developer",
+                role: "flutter Developer ",
               ),
               const ProfileTab(
                 name: "Yahea Dada",
-                role: "Flutter Developer",
+                role: "flutter Developer ",
               ),
               const ProfileTab(
-                name: "AbdAlrzaq Najeeb ",
-                role: "PHP Developer",
+                name: "Abd Alrzaq Najeeb ",
+                role: "php Developer ",
               ),
               Text("------------  Purpose  ------------".tr,
                   style: headerStyle(context)),
@@ -60,12 +60,12 @@ class AboutPage extends StatelessWidget {
                     .tr,
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.scrim,
-                    fontSize: 16,
-                    fontFamily: "klasik",
+                    fontSize: 14,
+                    fontFamily: "manrope",
                     fontWeight: FontWeight.w700),
               ),
               const SizedBox(
-                height: 30,
+                height: 35,
               )
             ],
           ),
@@ -119,8 +119,7 @@ class ProfileTab extends StatelessWidget {
           child: ListTile(
             onLongPress: () {},
             leading: const CircleAvatar(
-              foregroundImage:
-                  NetworkImage("https://picsum.photos/200/320.jpg"),
+              foregroundImage: AssetImage("assets/images/tent.png"),
               radius: 25,
             ),
             title: Text(

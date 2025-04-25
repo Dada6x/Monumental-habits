@@ -198,7 +198,7 @@ class HabitFrequencyRadioButtons extends StatelessWidget {
                                 height: 31,
                                 decoration: BoxDecoration(
                                   color: Get.isDarkMode
-                                      ? const Color(darkPurple)
+                                      ? altPurple
                                       : const Color(darkOrange),
                                   borderRadius: BorderRadius.circular(6),
                                 ),

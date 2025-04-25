@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -5,15 +6,15 @@ import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class Hcalander extends StatefulWidget {
+class HabitCalendar extends StatefulWidget {
   final id;
-  const Hcalander({super.key, this.id});
+  const HabitCalendar({super.key, this.id});
 
   @override
   _HabitCalendarState createState() => _HabitCalendarState();
 }
 
-class _HabitCalendarState extends State<Hcalander> {
+class _HabitCalendarState extends State<HabitCalendar> {
   DateTime _selectedMonth = DateTime.now();
   Map<int, int?> habitStatus = {}; // Allow nullable status
 
@@ -26,228 +27,40 @@ class _HabitCalendarState extends State<Hcalander> {
 
   Future<void> _fetchHabitLogs() async {
     try {
-      final response = {
-        "status": true,
-        "user_current_date": "2025-04-25",
-        "habit": {
-          "id": 155,
-          "name": "beating the Wife",
-          "days": [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Saturday"
-          ],
-          "reminder_time": "10:00 AM",
-          "notifications_enabled": 0,
-          "habit_logs": [
-            {
-              "id": 56455,
-              "date": "2025-04-01",
-              "status": 0,
-              "day_of_week": "Tuesday"
-            },
-            {
-              "id": 56456,
-              "date": "2025-04-02",
-              "status": 0,
-              "day_of_week": "Wednesday"
-            },
-            {
-              "id": 56457,
-              "date": "2025-04-03",
-              "status": 0,
-              "day_of_week": "Thursday"
-            },
-            {
-              "id": 56458,
-              "date": "2025-04-04",
-              "status": null,
-              "day_of_week": "Friday"
-            },
-            {
-              "id": 56459,
-              "date": "2025-04-05",
-              "status": 0,
-              "day_of_week": "Saturday"
-            },
-            {
-              "id": 56460,
-              "date": "2025-04-06",
-              "status": 0,
-              "day_of_week": "Sunday"
-            },
-            {
-              "id": 56461,
-              "date": "2025-04-07",
-              "status": 0,
-              "day_of_week": "Monday"
-            },
-            {
-              "id": 56462,
-              "date": "2025-04-08",
-              "status": 0,
-              "day_of_week": "Tuesday"
-            },
-            {
-              "id": 56463,
-              "date": "2025-04-09",
-              "status": 0,
-              "day_of_week": "Wednesday"
-            },
-            {
-              "id": 56464,
-              "date": "2025-04-10",
-              "status": 0,
-              "day_of_week": "Thursday"
-            },
-            {
-              "id": 56465,
-              "date": "2025-04-11",
-              "status": null,
-              "day_of_week": "Friday"
-            },
-            {
-              "id": 56466,
-              "date": "2025-04-12",
-              "status": 0,
-              "day_of_week": "Saturday"
-            },
-            {
-              "id": 56467,
-              "date": "2025-04-13",
-              "status": 0,
-              "day_of_week": "Sunday"
-            },
-            {
-              "id": 56468,
-              "date": "2025-04-14",
-              "status": 0,
-              "day_of_week": "Monday"
-            },
-            {
-              "id": 56469,
-              "date": "2025-04-15",
-              "status": 0,
-              "day_of_week": "Tuesday"
-            },
-            {
-              "id": 56470,
-              "date": "2025-04-16",
-              "status": 0,
-              "day_of_week": "Wednesday"
-            },
-            {
-              "id": 56471,
-              "date": "2025-04-17",
-              "status": 0,
-              "day_of_week": "Thursday"
-            },
-            {
-              "id": 56472,
-              "date": "2025-04-18",
-              "status": null,
-              "day_of_week": "Friday"
-            },
-            {
-              "id": 56473,
-              "date": "2025-04-19",
-              "status": 0,
-              "day_of_week": "Saturday"
-            },
-            {
-              "id": 56474,
-              "date": "2025-04-20",
-              "status": 0,
-              "day_of_week": "Sunday"
-            },
-            {
-              "id": 56475,
-              "date": "2025-04-21",
-              "status": 0,
-              "day_of_week": "Monday"
-            },
-            {
-              "id": 56476,
-              "date": "2025-04-22",
-              "status": 0,
-              "day_of_week": "Tuesday"
-            },
-            {
-              "id": 56477,
-              "date": "2025-04-23",
-              "status": 1,
-              "day_of_week": "Wednesday"
-            },
-            {
-              "id": 56478,
-              "date": "2025-04-24",
-              "status": 1,
-              "day_of_week": "Thursday"
-            },
-            {
-              "id": 56479,
-              "date": "2025-04-25",
-              "status": null,
-              "day_of_week": "Friday"
-            },
-            {
-              "id": 56480,
-              "date": "2025-04-26",
-              "status": 0,
-              "day_of_week": "Saturday"
-            },
-            {
-              "id": 56481,
-              "date": "2025-04-27",
-              "status": 0,
-              "day_of_week": "Sunday"
-            },
-            {
-              "id": 56482,
-              "date": "2025-04-28",
-              "status": 0,
-              "day_of_week": "Monday"
-            },
-            {
-              "id": 56483,
-              "date": "2025-04-29",
-              "status": 0,
-              "day_of_week": "Tuesday"
-            },
-            {
-              "id": 56484,
-              "date": "2025-04-30",
-              "status": 0,
-              "day_of_week": "Wednesday"
+      final response = await dio.get(
+        'http://10.0.2.2:8000/api/habits/${widget.id}',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${token!.getString("token")}',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 && response.data['status'] == true) {
+        final responseData = response.data;
+
+        Map<int, int?> statusMap = {};
+        final habitLogs = responseData['habit']?['habit_logs'];
+
+        if (habitLogs != null) {
+          for (var log in habitLogs) {
+            final date = DateTime.parse(log['date']);
+            if (date.month == _selectedMonth.month &&
+                date.year == _selectedMonth.year) {
+              statusMap[date.day] = log['status'];
             }
-          ]
-        },
-      };
-
-      Map<String, dynamic> responseData = response;
-
-      // Extract habit logs
-      Map<int, int?> statusMap = {};
-      final habitLogs = responseData['habit']?['habit_logs'];
-
-      if (habitLogs != null) {
-        for (var log in habitLogs) {
-          final date = DateTime.parse(log['date']);
-          if (date.month == _selectedMonth.month &&
-              date.year == _selectedMonth.year) {
-            statusMap[date.day] = log['status'];
           }
         }
-      }
 
-      setState(() {
-        habitStatus = statusMap;
-      });
+        setState(() {
+          habitStatus = statusMap;
+        });
+      } else {
+        print('Error: Unexpected response status');
+      }
     } catch (e) {
-      print('Error fetching data: $e');
+      print('Error fetching Calendar data: $e');
     }
   }
 

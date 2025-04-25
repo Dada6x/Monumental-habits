@@ -11,7 +11,6 @@ import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/util/widgets/Buttons.dart';
 
-
 class HabitInfoPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   final id;
@@ -231,7 +230,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                             borderRadius: BorderRadius.circular(
                                 MediaQuery.sizeOf(context).width * 0.04),
                           ),
-                          child: Center(child: Hcalander(id: widget.id)),
+                          child: Center(child: HabitCalendar(id: widget.id)),
                         ),
                         //! Analytics Section
                         Padding(
@@ -293,7 +292,9 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                                   ),
                                 ),
                                 content: const Text(
-                                    'Do you want to delete this habit .This action cannot be undone.',style: manrope,),
+                                  'Do you want to delete this habit .This action cannot be undone.',
+                                  style: manrope,
+                                ),
                                 actions: <Widget>[
                                   ButtonLighter(context, "Cancel", () {
                                     Get.back(result: false);

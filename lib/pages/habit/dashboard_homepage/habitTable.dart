@@ -71,9 +71,9 @@ class _HabitTableState extends State<HabitTable> {
             return const Center(
                 child: Column(
               children: [
-                SizedBox(height: 150),
+                SizedBox(height: 20),
                 CircularProgressIndicator(),
-                SizedBox(height: 150),
+                SizedBox(height: 20),
               ],
             ));
           } else if (snapshot.hasError) {
@@ -102,11 +102,13 @@ class _HabitTableState extends State<HabitTable> {
                 ),
               );
             }
+
             final firstHabitLogs = habits.first['habit_logs'] as List<dynamic>;
             final orderedDays = <String>{};
             for (var log in firstHabitLogs) {
               orderedDays.add(log['day_of_week']);
             }
+
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Column(
@@ -147,6 +149,7 @@ class _HabitTableState extends State<HabitTable> {
                               (l) => l['day_of_week'] == day,
                               orElse: () => null,
                             );
+
                             Color? boxColor;
                             if (log == null || log['status'] == null) {
                               boxColor = Colors.transparent;

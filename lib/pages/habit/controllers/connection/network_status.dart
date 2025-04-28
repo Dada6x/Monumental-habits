@@ -8,7 +8,6 @@ import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart
 import 'package:monumental_habits/util/helper.dart';
 
 class NetworkStatus extends StatefulWidget {
-  //! this is the class the determine that the scaffold going to show damn man or error message
   const NetworkStatus({super.key});
 
   @override
@@ -16,13 +15,11 @@ class NetworkStatus extends StatefulWidget {
 }
 
 class _NetworkStatusState extends State<NetworkStatus> {
-  bool isConnectedToInternet = false;
+  bool isConnectedToInternet = true;
 
   StreamSubscription? _internetConnectionStreamSubscription;
 
-  @override
-  void initState() {
-    super.initState();
+  void _checkInternetConnection() {
     _internetConnectionStreamSubscription =
         InternetConnection().onStatusChange.listen((event) {
       switch (event) {
@@ -38,6 +35,12 @@ class _NetworkStatusState extends State<NetworkStatus> {
           break;
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkInternetConnection();
   }
 
   @override

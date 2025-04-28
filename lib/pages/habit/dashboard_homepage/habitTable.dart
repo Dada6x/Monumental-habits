@@ -138,9 +138,12 @@ class _HabitTableState extends State<HabitTable> {
                       return DataRow(
                         cells: [
                           DataCell(
-                            onLongPress: () {
+                            onTap: () {
                               Get.to(HabitInfoPage(id: habit['id']));
                             },
+                            // onLongPress: () {
+                            //   Get.to(HabitInfoPage(id: habit['id']));
+                            // },
                             Text(habit['name'], style: klasikFun(context)),
                           ),
                           ...orderedDays.mapIndexed((index, day) {

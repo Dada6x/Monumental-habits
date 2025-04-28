@@ -11,12 +11,12 @@ class NavigationController extends GetxController {
   // List of pages
   final List<Widget> pages = [
     const Dashboard(), //0
-    SoonWidget(
+    const SoonWidget(
       widgetName: "Road Maps",
       image1path: "assets/images/Screenshot_1745589378.png",
       image2path: "assets/images/Screenshot_1745589597.png",
     ), //1
-    SoonWidget(
+    const SoonWidget(
       widgetName: "Community",
       image1path: "assets/images/Screenshot_1745589378.png",
       image2path: "assets/images/Screenshot_1745589597.png",

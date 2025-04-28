@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/main.dart';
-import 'package:monumental_habits/pages/habit/controllers/connection/network_status.dart';
 import 'package:monumental_habits/services/notifications/notifications_service.dart';
 import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
 import 'package:monumental_habits/pages/habit/model/habit_model.dart';
@@ -106,6 +105,9 @@ class HabitController extends GetxController {
     //! REFRESH THE TABLE
     // NetworkStatus.checkInternetManually();
 
+    // _confettiController
+    //     .play(); // Trigger confetti if habit is added successfully
+
     habitTableKey.currentState?.refreshTable();
     reset();
   }
@@ -169,18 +171,5 @@ class HabitController extends GetxController {
   }
 
 //! edit Habits
-  // void editHabit({
-  //   required String name,
-  //   required String time,
-  //   required bool notifications,
-  //   required List<String> days,
-  // }) {
-  //   habits.assign(Habit(
-  //     name: habitName.value,
-  //     chosenTime: chosenTime.value,
-  //     notificationsEnabled: notificationsEnabled.value,
-  //     selectedDays: List<String>.from(selectedDays),
-  //   ));
-  //   reset();
-  // }
+
 }

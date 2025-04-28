@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monumental_habits/pages/habit/controllers/connection/network_status.dart';
+
 import 'package:monumental_habits/util/helper.dart';
 
 class Dashboard extends StatelessWidget {
@@ -119,8 +120,7 @@ class Dashboard extends StatelessWidget {
           //!  Habit Table
           const Padding(
             padding: EdgeInsets.all(10),
-            child: NetworkStatus()
-,
+            child: NetworkStatus(),
           ),
           const SizedBox(height: 10)
         ],
@@ -138,6 +138,7 @@ class Dashboard extends StatelessWidget {
       "Your future is created by what you do today, not tomorrow. - Robert Kiyosaki",
       "Don't watch the clock do what it does. Keep going!!. - Sam Levenson",
     ];
+
     return quotes[Random().nextInt(quotes.length)];
   }
 }

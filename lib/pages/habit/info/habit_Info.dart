@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/main.dart';
-import 'package:monumental_habits/pages/habit/controllers/connection/network_status.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/habit/edit/editHabit.dart';
-import 'package:monumental_habits/pages/habit/info/log.dart';
+import 'package:monumental_habits/pages/habit/info/calander.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/sizedconfig.dart';
 import 'package:monumental_habits/util/widgets/Buttons.dart';
@@ -45,6 +44,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
     "thursday": "thu",
     "friday": "fri",
     "saturday": "sat",
+    // "everyday": "sun,mon,tue,wed,thu,fri,sat"
   };
 
   @override

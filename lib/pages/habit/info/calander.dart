@@ -6,11 +6,14 @@ import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+// ignore: must_be_immutable
 class HabitCalendar extends StatefulWidget {
   final id;
-  const HabitCalendar({super.key, this.id});
+  HabitCalendar({super.key, this.id});
+  var currentMonth;
 
   @override
+  // ignore: library_private_types_in_public_api
   _HabitCalendarState createState() => _HabitCalendarState();
 }
 
@@ -28,7 +31,7 @@ class _HabitCalendarState extends State<HabitCalendar> {
   Future<void> _fetchHabitLogs() async {
     try {
       final response = await dio.get(
-        'http://10.0.2.2:8000/api/habits/${widget.id}',
+        'http://10.0.2.2:8000/api/habits/${widget.id}?year=${_selectedMonth.year}&month=${_selectedMonth.month}',
         options: Options(
           headers: {
             'Authorization': 'Bearer ${token!.getString("token")}',
@@ -53,10 +56,10 @@ class _HabitCalendarState extends State<HabitCalendar> {
           habitStatus = statusMap;
         });
       } else {
-        print('Error: Unexpected response status');
+        // print('Error: Unexpected response status');
       }
     } catch (e) {
-      print('Error fetching Calendar data: $e');
+      // print('Error fetching Calendar data: $e');
     }
   }
 
@@ -80,6 +83,8 @@ class _HabitCalendarState extends State<HabitCalendar> {
 
     setState(() {
       _selectedMonth = nextMonth;
+      widget.currentMonth =
+          DateFormat('yyyy-MM').format(_selectedMonth); // Update currentMonth
       _generateHabitData();
       _fetchHabitLogs();
     });

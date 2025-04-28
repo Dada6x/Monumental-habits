@@ -5,7 +5,7 @@ class SoonWidget extends StatelessWidget {
   final String widgetName;
   final String image1path;
   final String image2path;
-  SoonWidget(
+  const SoonWidget(
       {super.key,
       required this.widgetName,
       required this.image1path,
@@ -60,7 +60,7 @@ class SoonWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "$widgetName Comming Soon..",
                     style: klasikFun(context)

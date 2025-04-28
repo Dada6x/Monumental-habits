@@ -51,7 +51,7 @@ class _NetworkStatusState extends State<NetworkStatus> {
     return isConnectedToInternet
         ? HabitTable(key: habitTableKey)
         : Card(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.tertiary,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

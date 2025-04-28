@@ -60,9 +60,6 @@ class HabitController extends GetxController {
         );
 
         if (response.data["status"]) {
-          // print("Habit added successfully ");
-          // print("###################################|||||||||");
-          // print(chosenTime);
           Get.showSnackbar(
             const GetSnackBar(
               icon: Icon(Icons.celebration),
@@ -85,14 +82,13 @@ class HabitController extends GetxController {
           );
         }
       } catch (e) {
-        print("Unexpected error: $e");
         Get.showSnackbar(
-          GetSnackBar(
-            icon: const Icon(Icons.error),
+          const GetSnackBar(
+            icon: Icon(Icons.error),
             title: "Exception",
-            message: e.toString(),
+            message: 'Something Went Wrong please Try Again Later',
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
+            duration: Duration(seconds: 3),
           ),
         );
       }
@@ -148,7 +144,7 @@ class HabitController extends GetxController {
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Error: Unable to delete habit. Please check your connection. ❌',
+        'Something Went Wrong please Try Again Later',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.orange,
         colorText: Colors.white,
@@ -170,18 +166,18 @@ class HabitController extends GetxController {
   }
 
 //! edit Habits
-  void editHabit({
-    required String name,
-    required String time,
-    required bool notifications,
-    required List<String> days,
-  }) {
-    habits.assign(Habit(
-      name: habitName.value,
-      chosenTime: chosenTime.value,
-      notificationsEnabled: notificationsEnabled.value,
-      selectedDays: List<String>.from(selectedDays),
-    ));
-    reset();
-  }
+  // void editHabit({
+  //   required String name,
+  //   required String time,
+  //   required bool notifications,
+  //   required List<String> days,
+  // }) {
+  //   habits.assign(Habit(
+  //     name: habitName.value,
+  //     chosenTime: chosenTime.value,
+  //     notificationsEnabled: notificationsEnabled.value,
+  //     selectedDays: List<String>.from(selectedDays),
+  //   ));
+  //   reset();
+  // }
 }

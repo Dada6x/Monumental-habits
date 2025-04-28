@@ -17,6 +17,15 @@ class AboutPage extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(19),
+                child: Image.asset(
+                  "assets/images/tent.png",
+                  // width: MediaQuery.sizeOf(context).width * 0.5,
+                  // height: MediaQuery.sizeOf(context).height * 0.1,
+                  fit: BoxFit.cover,
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),

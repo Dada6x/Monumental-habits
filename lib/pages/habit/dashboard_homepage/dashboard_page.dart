@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:monumental_habits/pages/habit/dashboard_homepage/habitTable.dart';
+import 'package:monumental_habits/pages/habit/controllers/connection/network_status.dart';
 import 'package:monumental_habits/util/helper.dart';
 
 class Dashboard extends StatelessWidget {
@@ -26,8 +26,8 @@ class Dashboard extends StatelessWidget {
       }
     }
 
-    return SingleChildScrollView(
-      child: Column(
+    return ListView(children: [
+      Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -117,17 +117,15 @@ class Dashboard extends StatelessWidget {
             ),
           ),
           //!  Habit Table
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height * 0.54,
-              child: HabitTable(key: habitTableKey),
-            ),
+          const Padding(
+            padding: EdgeInsets.all(10),
+            child: NetworkStatus()
+,
           ),
+          const SizedBox(height: 10)
         ],
       ),
-    );
+    ]);
   }
 
 //! randomQuotes

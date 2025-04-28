@@ -1,9 +1,12 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:monumental_habits/main.dart';
+import 'package:monumental_habits/pages/habit/controllers/connection/network_status.dart';
 import 'package:monumental_habits/pages/habit/controllers/habitcontroller.dart';
 import 'package:monumental_habits/pages/habit/edit/editHabit.dart';
 import 'package:monumental_habits/pages/habit/info/log.dart';
@@ -75,12 +78,8 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         easiness = response.data['easiness'];
 
         return jsonEncode(response.data);
-      } else {
-        print('error');
-      }
-    } catch (e) {
-      print('exception $e');
-    }
+      } else {}
+    } catch (e) {}
     return "";
   }
 
@@ -96,11 +95,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        // title: Text(
-        //   name,
-        //   style: manropeFun(context),
-        //   overflow: TextOverflow.ellipsis,
-        // ),
         actions: [
           IconButton(
             onPressed: () {
@@ -147,7 +141,6 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //! Habit Info
-                        // Text("${habitID}"),
                         Container(
                           padding:
                               EdgeInsets.all(SizeConfig.screenWidth * 0.025),
@@ -254,20 +247,20 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               analyticsColumn([
-                                customWidget("${longestStreak} Days",
+                                customWidget("$longestStreak Days",
                                     "Longest Streak", "assets/images/Fire.svg"),
                                 customWidget(
-                                    "${currentStreak} %",
+                                    "$currentStreak %",
                                     "Completion Rate",
                                     "assets/images/EllipseDiagrams.svg"),
                               ]),
                               analyticsColumn([
                                 customWidget(
-                                    "${completionRate}",
+                                    "$completionRate",
                                     "Current Streak",
                                     "assets/images/LightningIcon.svg"),
                                 customWidget(
-                                    "${easiness}",
+                                    "$easiness",
                                     "Average Easiness Score",
                                     "assets/images/Leaf.svg"),
                               ]),
@@ -307,6 +300,7 @@ class _HabitInfoPageState extends State<HabitInfoPage> {
                             );
                             if (confirmDelete == true) {
                               HabitController().deleteHabit(widget.id);
+                              setState(() {});
                             } else {}
                           }),
                         ),

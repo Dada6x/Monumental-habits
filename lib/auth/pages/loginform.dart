@@ -11,7 +11,6 @@ import 'package:monumental_habits/util/widgets/text_fields.dart';
 // ignore: must_be_immutable
 class LoginForm extends StatelessWidget {
   Future<void> Login() async {
-    print("free ");
     var response = await Dio().post("http://10.0.2.2:8000/api/login", data: {
       'email': emailController.text,
       'password': passwordController.text,
@@ -81,6 +80,3 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
-
-
-

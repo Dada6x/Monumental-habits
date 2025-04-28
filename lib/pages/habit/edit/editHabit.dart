@@ -117,139 +117,161 @@ class _editHabitState extends State<editHabit> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit", style: manropeFun(context)),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              updateHabit(
-                nameController.text,
-                selectedDays.toList(),
-                widget.id,
-              );
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Edit", style: manropeFun(context)),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                updateHabit(
+                  nameController.text,
+                  selectedDays.toList(),
+                  widget.id,
+                );
 
-              print(nameController.text);
-              print(
-                selectedDays.toList(),
-              );
-              print(
-                widget.id,
-              );
-            },
-            icon: const Icon(Icons.save_alt),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            //! Habit Name
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                fillColor: Theme.of(context).colorScheme.tertiary,
-                filled: true,
-                labelText: "Habit Name",
-                labelStyle: klasikHint,
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.transparent),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Get.isDarkMode ? altPurple : const Color(orange),
+                print(
+                  selectedDays.toList(),
+                );
+                print(
+                  widget.id,
+                );
+              },
+              icon: const Icon(Icons.save_alt),
+            )
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              //! Habit Name
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  fillColor: Theme.of(context).colorScheme.tertiary,
+                  filled: true,
+                  labelText: "Habit Name",
+                  labelStyle: klasikHint,
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Get.isDarkMode ? altPurple : const Color(orange),
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
                 ),
               ),
-            ),
 
-            //! Habit Frequency
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                decoration: customContainer(context),
-                child: Column(
-                  children: [
-                    Padding(
+              //! Habit Frequency
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Container(
+                  decoration: customContainer(context),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text("Habit Frequency", style: manropeFun(context)),
+                            const Spacer(),
+                            Text("Tap to toggle",
+                                style: manropeOrangeAndPurple(context)),
+                          ],
+                        ),
+                      ),
+
+                      // Row with weekday labels
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: weekDays.map((day) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            child: Text(day, style: manropeLavander),
+                          );
+                        }).toList(),
+                      ),
+
+                      const SizedBox(height: 5),
+
+                      // Row with tappable boxes
+                      Obx(() => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: weekDays.map((dayLabel) {
+                              String day = dayLabel.toLowerCase();
+                              bool isSelected = selectedDays.contains(day);
+
+                              return GestureDetector(
+                                onTap: () {
+                                  if (isSelected) {
+                                    selectedDays.remove(day);
+                                  } else {
+                                    selectedDays.add(day);
+                                  }
+                                },
+                                child: Container(
+                                  width: 35,
+                                  height: 35,
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? (Get.isDarkMode
+                                            ? altPurple
+                                            : const Color(darkOrange))
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .tertiaryContainer,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              ),
+
+              //! Reminder
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: GestureDetector(
+                  onTap: () async {
+                    final time = await Get.bottomSheet(
+                      Reminder(initial: chosenTime.value),
+                      isScrollControlled: true,
+                    );
+                    if (time != null) chosenTime.value = time;
+                  },
+                  child: Container(
+                    height: 60,
+                    decoration: customContainer(context),
+                    child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Text("Habit Frequency", style: manropeFun(context)),
+                          Text("Reminder", style: manropeFun(context)),
                           const Spacer(),
-                          Text("Tap to toggle",
-                              style: manropeOrangeAndPurple(context)),
+                          Obx(() => Text(chosenTime.value,
+                              style: manropeOrangeAndPurple(context)))
                         ],
                       ),
                     ),
-
-                    // Row with weekday labels
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: weekDays.map((day) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3),
-                          child: Text(day, style: manropeLavander),
-                        );
-                      }).toList(),
-                    ),
-
-                    const SizedBox(height: 5),
-
-                    // Row with tappable boxes
-                    Obx(() => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: weekDays.map((dayLabel) {
-                            String day = dayLabel.toLowerCase();
-                            bool isSelected = selectedDays.contains(day);
-
-                            return GestureDetector(
-                              onTap: () {
-                                if (isSelected) {
-                                  selectedDays.remove(day);
-                                } else {
-                                  selectedDays.add(day);
-                                }
-                              },
-                              child: Container(
-                                width: 35,
-                                height: 35,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 3),
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? (Get.isDarkMode
-                                          ?  altPurple
-                                          : const Color(darkOrange))
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .tertiaryContainer,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        )),
-                    const SizedBox(height: 10),
-                  ],
+                  ),
                 ),
               ),
-            ),
 
-            //! Reminder
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTap: () async {
-                  final time = await Get.bottomSheet(
-                    Reminder(initial: chosenTime.value),
-                    isScrollControlled: true,
-                  );
-                  if (time != null) chosenTime.value = time;
-                },
+              //! Notifications
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Container(
                   height: 60,
                   decoration: customContainer(context),
@@ -257,44 +279,24 @@ class _editHabitState extends State<editHabit> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Text("Reminder", style: manropeFun(context)),
+                        Text("Notifications", style: manropeFun(context)),
                         const Spacer(),
-                        Obx(() => Text(chosenTime.value,
-                            style: manropeOrangeAndPurple(context)))
+                        Obx(() => Switch(
+                            activeColor: const Color(darkOrange),
+                            inactiveThumbColor: const Color(darkPurple),
+                            inactiveTrackColor: const Color(lavander),
+                            trackOutlineColor: const WidgetStatePropertyAll(
+                                Colors.transparent),
+                            value: notificationsEnabled.value,
+                            onChanged: (value) =>
+                                notificationsEnabled.value = value))
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
-
-            //! Notifications
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Container(
-                height: 60,
-                decoration: customContainer(context),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text("Notifications", style: manropeFun(context)),
-                      const Spacer(),
-                      Obx(() => Switch(
-                          activeColor: const Color(darkOrange),
-                          inactiveThumbColor: const Color(darkPurple),
-                          inactiveTrackColor: const Color(lavander),
-                          trackOutlineColor:
-                              const WidgetStatePropertyAll(Colors.transparent),
-                          value: notificationsEnabled.value,
-                          onChanged: (value) =>
-                              notificationsEnabled.value = value))
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

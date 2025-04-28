@@ -31,100 +31,105 @@ class SignupForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: Column(
-        children: [
-          SvgPicture.asset(signupImg),
-          const Text(
-            "Create your account",
-            style: klasikHeader,
-          ),
-          const SizedBox(height: 20),
-          //! Email Input
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Form(
-              key: formKey,
-              child: TextFormField(
-                controller: emailController,
-                validator: (value) {
-                  if (value!.isNotEmpty && value.length <= 10 ||
-                      value.isNotEmpty && !value.contains("@gmail.com")) {
-                    return 'Please enter a valid email address with "@gmail.com"';
-                  }
-                  return null;
-                },
-                onChanged: (val) {
-                  formKey.currentState!.validate();
-                },
-                decoration: customTextFieldDecoration(
-                    hint: "Email",
-                    prefixIcon: const Icon(Icons.mail),
-                    isWhite: true),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: [
+            SvgPicture.asset(signupImg),
+            const Text(
+              "Create your account",
+              style: klasikHeader,
+            ),
+            const SizedBox(height: 20),
+            //! Email Input
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Form(
+                key: formKey,
+                child: TextFormField(
+                  controller: emailController,
+                  validator: (value) {
+                    if (value!.isNotEmpty && value.length <= 10 ||
+                        value.isNotEmpty && !value.contains("@gmail.com")) {
+                      return 'Please enter a valid email address with "@gmail.com"';
+                    }
+                    return null;
+                  },
+                  onChanged: (val) {
+                    formKey.currentState!.validate();
+                  },
+                  decoration: customTextFieldDecoration(
+                      hint: "Email",
+                      prefixIcon: const Icon(Icons.mail),
+                      isWhite: true),
+                ),
               ),
             ),
-          ),
-          //! Checkbox
-          Padding(
-            padding: const EdgeInsets.all(1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Obx(() => Checkbox(
-                      value: isChecked.value,
-                      onChanged: (value) => isChecked.value = value!,
-                      activeColor: const Color(darkOrange),
-                    )),
-                Text(
-                  "Email me about special pricing and more",
-                  style: manropeFun(context),
-                ),
-              ],
+            //! Checkbox
+            Padding(
+              padding: const EdgeInsets.all(1),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Obx(() => Checkbox(
+                        value: isChecked.value,
+                        onChanged: (value) => isChecked.value = value!,
+                        activeColor: const Color(darkOrange),
+                      )),
+                  Text(
+                    "Email me about special pricing and more",
+                    style: manropeFun(context),
+                  ),
+                ],
+              ),
             ),
-          ),
-          //! Create Account Button
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Button(context, "Create Account", () async {
-              if (formKey.currentState!.validate()) {
-                // print("send request-----------------------");
-                await sendVerifyRegister();
-                if (status) {
-                  Get.to(const VerificationPage(),
-                      arguments: {"email": emailController.text, "op": "reg"});
+            //! Create Account Button
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Button(context, "Create Account", () async {
+                if (formKey.currentState!.validate()) {
+                  // print("send request-----------------------");
+                  await sendVerifyRegister();
+                  if (status) {
+                    Get.to(const VerificationPage(), arguments: {
+                      "email": emailController.text,
+                      "op": "reg"
+                    });
+                  }
                 }
-              }
-            }),
-          ),
-
-          //! Divider
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Divider(),
-                  ),
-                ),
-                Text('Or sign in with'),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Divider(),
-                  ),
-                ),
-              ],
+              }),
             ),
-          ),
-          //! Social Media Buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: googleButton(context),
-          ),
-          faceBookButton(context),
-        ],
+
+            //! Divider
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Divider(),
+                    ),
+                  ),
+                  Text('Or sign in with'),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Divider(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            //! Social Media Buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: googleButton(context),
+            ),
+            faceBookButton(context),
+          ],
+        ),
       ),
     );
   }

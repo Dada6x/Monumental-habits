@@ -4,6 +4,7 @@ import 'package:monumental_habits/auth/pages/personalInfo.dart';
 import 'package:monumental_habits/util/widgets/customappBar.dart';
 import 'package:monumental_habits/util/widgets/settingsFunctions.dart';
 
+// ignore: must_be_immutable
 class ProfileDetails extends StatelessWidget {
   var user_data = Get.arguments["data"];
 

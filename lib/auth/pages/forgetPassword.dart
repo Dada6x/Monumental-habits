@@ -27,84 +27,87 @@ class forgetPassword extends StatelessWidget {
 //! textfield controller
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(background),
-      body: SingleChildScrollView(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                children: [BackButton()],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: const Color(background),
+        body: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            const Text("Forgot your password ?", style: klasikHeader),
-            Center(child: SvgPicture.asset(forgotPassword)),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Colors.white,
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [BackButton()],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                            textAlign: TextAlign.center,
-                            "Enter your registered email below to receive password reset instruction"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
-                          controller: emailController,
-                          decoration: customTextFieldDecoration(
-                              hint: "",
-                              prefixIcon: const Icon(Icons.mail),
-                              isWhite: false),
+              ),
+              const Text("Forgot your password ?", style: klasikHeader),
+              Center(child: SvgPicture.asset(forgotPassword)),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                              textAlign: TextAlign.center,
+                              "Enter your registered email below to receive password reset instruction"),
                         ),
-                      ),
-                      Button(context, "Send link", () async {
-                        await sendVerifyForgot();
-                        print(status);
-                        if (status) {
-                          Get.to(const VerificationPage(), arguments: {
-                            "email": emailController.text,
-                            "op": "forgot",
-                          });
-                        }
-                      })
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: TextField(
+                            controller: emailController,
+                            decoration: customTextFieldDecoration(
+                                hint: "",
+                                prefixIcon: const Icon(Icons.mail),
+                                isWhite: false),
+                          ),
+                        ),
+                        Button(context, "Send link", () async {
+                          await sendVerifyForgot();
+                          print(status);
+                          if (status) {
+                            Get.to(const VerificationPage(), arguments: {
+                              "email": emailController.text,
+                              "op": "forgot",
+                            });
+                          }
+                        })
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Remember password?",
-                  style: manropeFun(context),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Get.off(const Auth());
-                    },
-                    child: const Text("Login",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(orange),
-                        )))
-              ],
-            )
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Remember password?",
+                    style: manropeFun(context),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.off(const Auth());
+                      },
+                      child: const Text("Login",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(orange),
+                          )))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

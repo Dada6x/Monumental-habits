@@ -11,6 +11,7 @@ import 'package:monumental_habits/pages/settings_profile/support/profile_details
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/util/widgets/customappBar.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   String returnedData = "";

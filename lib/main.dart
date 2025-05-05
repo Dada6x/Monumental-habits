@@ -12,11 +12,15 @@ import 'package:monumental_habits/pages/settings_profile/FAQ/f_a_q_controller.da
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:monumental_habits/notifications/notifications_service.dart';
 import 'firebase_options.dart';
-  // status bar color in the app dammmnscc
-  // SystemChrome.setSystemUIOverlayStyle(
-  //     const SystemUiOverlayStyle(statusBarColor: Color(orange)));
+
+// status bar color in the app dammmnscc
+// SystemChrome.setSystemUIOverlayStyle(
+//     const SystemUiOverlayStyle(statusBarColor: Color(orange)));
 SharedPreferences? introSP;
 SharedPreferences? token;
+SharedPreferences? darkmode;
+SharedPreferences? locale;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -24,6 +28,8 @@ void main() async {
   );
   introSP = await SharedPreferences.getInstance();
   token = await SharedPreferences.getInstance();
+  darkmode = await SharedPreferences.getInstance();
+
   Get.put(FAQController());
 //! init Notifications
   NotificationsService().initNotification();
@@ -35,6 +41,19 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 //Ward checking shit
 //LocaleController localeController = Get.find();
+  bool themeSelector() {
+    if (darkmode!.getBool("isDark") != null &&
+        darkmode!.getBool("isDark") == true) {
+      return true;
+    }
+    if (darkmode!.getBool("isDark") != null &&
+        darkmode!.getBool("isDark") == false) {
+      return false;
+    }
+
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.put(LocaleController());
@@ -52,7 +71,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/Home", page: () => HomePage()),
       ],
       debugShowCheckedModeBanner: false,
-      theme: Themes().lightMode,
+      theme: themeSelector() ? Themes().darkMode : Themes().lightMode,
       locale: Get.deviceLocale,
       translations: MyLocale(),
       initialRoute: introSP!.getString("intro") != null ? "Auth" : "/",

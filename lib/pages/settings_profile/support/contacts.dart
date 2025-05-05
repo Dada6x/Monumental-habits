@@ -6,10 +6,12 @@ import 'package:monumental_habits/widgets/Buttons.dart';
 
 import 'package:monumental_habits/widgets/customappBar.dart';
 import 'package:monumental_habits/widgets/settingsFunctions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactsPage extends StatelessWidget {
-  const ContactsPage({super.key});
-
+  ContactsPage({super.key});
+  String url = "";
+  Future<void> launchUrl(String url) async {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +66,12 @@ class ContactsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            url = "https://www.facebook.com/ward.ekhtiar.7";
+                            if (await canLaunchUrl(Uri.parse(url))) {
+                              await launchUrl(url);
+                            }
+                          },
                           icon: const Icon(
                             Icons.facebook,
                             color: Color.fromARGB(255, 22, 31, 167),

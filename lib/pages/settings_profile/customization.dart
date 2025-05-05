@@ -4,6 +4,7 @@ import 'package:monumental_habits/Theme/themes.dart';
 import 'package:monumental_habits/Theme/themes_contoller.dart';
 import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
 import 'package:monumental_habits/locale/locale_controller.dart';
+import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 import 'package:monumental_habits/widgets/customappBar.dart';
 import 'package:monumental_habits/widgets/settings_comps.dart';
@@ -45,14 +46,23 @@ class CustomizePage extends StatelessWidget {
                       Icons.sunny,
                       color: Color(darkOrange),
                     )),
-              value: _themesContoller.isDarkMode.value,
+              value: _themesContoller.isDarkMode!.value,
               onChanged: (value) {
-                _themesContoller.isDarkMode.value = value;
-                Get.changeTheme(_themesContoller.isDarkMode.value
+                if (darkmode?.getBool("isDark") == null) {
+                  darkmode?.setBool("isDark", false);
+                  print("chnaging this shit nigga");
+                }
+                bool isDark = darkmode!.getBool("isDark")!;
+                print("Current State $isDark");
+                darkmode!.setBool("isDark", !isDark);
+                print("new state is ${darkmode!.getBool("isDark")}");
+                print(value);
+                _themesContoller.isDarkMode!.value = value;
+                Get.changeTheme(_themesContoller.isDarkMode!.value
                     ? Themes().darkMode
                     : Themes().lightMode);
                 navController.darkTheme.value =
-                    _themesContoller.isDarkMode.value;
+                    _themesContoller.isDarkMode!.value;
               },
             ),
           ),

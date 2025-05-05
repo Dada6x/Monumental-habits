@@ -139,7 +139,7 @@ class Settings extends StatelessWidget {
           title: "Contact us".tr,
           subTitle: null,
           leadIcon: Icons.call,
-          targetPage: const ContactsPage(),
+          targetPage: ContactsPage(),
         ),
         SettingsTabs(
           title: "FAQ".tr,

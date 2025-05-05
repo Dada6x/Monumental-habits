@@ -33,6 +33,7 @@ class PersonalInfo extends StatelessWidget {
         Get.find<SignUpController>().returnedImage!.path,
       ),
     });
+    
     final request =
         await dio.Dio().post("http://10.0.2.2:8000/api/register", data: data);
     if (request.data["status"]) {

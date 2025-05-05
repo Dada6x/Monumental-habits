@@ -16,6 +16,8 @@ class Intropages extends StatefulWidget {
 }
 
 class _IntropagesState extends State<Intropages> {
+  
+
   final _pageController = PageController();
   bool onLastPage = false;
 

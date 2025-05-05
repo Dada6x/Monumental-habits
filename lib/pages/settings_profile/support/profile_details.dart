@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Models/Profile_models.dart';
 import 'package:monumental_habits/auth/pages/personalInfo.dart';
-import 'package:monumental_habits/widgets/Custom_snackBar.dart';
 import 'package:monumental_habits/widgets/customappBar.dart';
 import 'package:monumental_habits/widgets/profileDialog.dart';
 import 'package:monumental_habits/widgets/settingsFunctions.dart';

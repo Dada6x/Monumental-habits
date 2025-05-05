@@ -3,7 +3,7 @@ import 'package:monumental_habits/main.dart';
 
 class ProfileModels {
   static Future<bool> UpdateUserRequest(String? name, String? FilePath) async {
-    var data;
+    FormData data = FormData();
 
     if (name == null && FilePath != null) {
       data =

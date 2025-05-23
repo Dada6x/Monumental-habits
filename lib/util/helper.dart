@@ -75,7 +75,7 @@ TextStyle klasikFun(BuildContext context) {
   return TextStyle(
     fontFamily: "Klasik",
     fontSize: 17,
-    color: Theme.of(context).colorScheme.onSurface, // Uses context-based color
+    color: Theme.of(context).colorScheme.scrim,
   );
 }
 

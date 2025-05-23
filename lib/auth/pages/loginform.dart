@@ -5,13 +5,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monumental_habits/auth/pages/forgetPassword.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/text_fields.dart';
 
 // ignore: must_be_immutable
 class LoginForm extends StatelessWidget {
   Future<void> Login() async {
-    print("free ");
     var response = await Dio().post("http://10.0.2.2:8000/api/login", data: {
       'email': emailController.text,
       'password': passwordController.text,
@@ -21,7 +20,8 @@ class LoginForm extends StatelessWidget {
 
     if (response.data["status"]) {
       token!.setString("token", response.data["token"]);
-      print("give token is ${token!.getString("token")}");
+    } else {
+      //@Ward-ikhtiyar add cases exceptions you nigger and add snack bars
     }
   }
 
@@ -80,6 +80,3 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
-
-//! inputDecoration of the textFiles
-

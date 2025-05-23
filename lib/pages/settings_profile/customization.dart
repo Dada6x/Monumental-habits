@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Theme/themes.dart';
-import 'package:monumental_habits/Theme/themes_contoller.dart';
-import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
-import 'package:monumental_habits/locale/locale_controller.dart';
 import 'package:monumental_habits/main.dart';
+import 'package:monumental_habits/services/Theme/themes.dart';
+import 'package:monumental_habits/services/Theme/themes_contoller.dart';
+import 'package:monumental_habits/home/controllers/navigationcontroller.dart';
+import 'package:monumental_habits/services/locale/locale_controller.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
-import 'package:monumental_habits/widgets/settings_comps.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/settings_comps.dart';
 
 class CustomizePage extends StatelessWidget {
   CustomizePage({super.key});
@@ -46,7 +46,7 @@ class CustomizePage extends StatelessWidget {
                       Icons.sunny,
                       color: Color(darkOrange),
                     )),
-              value: _themesContoller.isDarkMode!.value,
+              value: darkmode?.getBool("isDark") ?? false,
               onChanged: (value) {
                 if (darkmode?.getBool("isDark") == null) {
                   darkmode?.setBool("isDark", false);
@@ -55,14 +55,10 @@ class CustomizePage extends StatelessWidget {
                 bool isDark = darkmode!.getBool("isDark")!;
                 print("Current State $isDark");
                 darkmode!.setBool("isDark", !isDark);
-                print("new state is ${darkmode!.getBool("isDark")}");
-                print(value);
-                _themesContoller.isDarkMode!.value = value;
-                Get.changeTheme(_themesContoller.isDarkMode!.value
-                    ? Themes().darkMode
-                    : Themes().lightMode);
-                navController.darkTheme.value =
-                    _themesContoller.isDarkMode!.value;
+
+                Get.changeTheme(
+                    isDark ? Themes().darkMode : Themes().lightMode);
+                navController.darkTheme.value = isDark;
               },
             ),
           ),
@@ -86,3 +82,16 @@ class CustomizePage extends StatelessWidget {
     );
   }
 }
+
+/*
+Show Case
+[Habit]
+add new Habit button. 
+    set name, set Days want the habit to be invoked , set Reminder , set notifications , click the add new habit 
+when habit Added.
+    select the day
+    ongtap for the Habit Info,
+    edit Habit
+    Delete Habit 
+[Profile ]
+*/

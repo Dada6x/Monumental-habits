@@ -5,8 +5,8 @@ import 'package:monumental_habits/auth/pages/loginform.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/util/helper.dart';
 
-import 'package:monumental_habits/widgets/animationbutton.dart';
-import 'package:monumental_habits/widgets/blureelement.dart';
+import 'package:monumental_habits/util/widgets/animationbutton.dart';
+import 'package:monumental_habits/util/widgets/blureelement.dart';
 
 class Auth extends StatefulWidget {
   const Auth({super.key});

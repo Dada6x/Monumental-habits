@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:monumental_habits/Middleware/auth_middleware.dart';
+import 'package:monumental_habits/auth/Middleware/auth_middleware.dart';
 import 'package:monumental_habits/main.dart';
 import 'package:monumental_habits/pages/settings_profile/customization.dart';
 import 'package:monumental_habits/pages/settings_profile/settings.dart';
 import 'package:monumental_habits/pages/settings_profile/support/profile_details.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/customappBar.dart';
+import 'package:monumental_habits/util/widgets/customappBar.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   String returnedData = "";

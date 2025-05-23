@@ -6,10 +6,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:monumental_habits/home/homePage.dart';
 import 'package:monumental_habits/util/helper.dart';
-import 'package:monumental_habits/widgets/Buttons.dart';
-import 'package:monumental_habits/widgets/text_fields.dart';
+import 'package:monumental_habits/util/widgets/Buttons.dart';
+import 'package:monumental_habits/util/widgets/text_fields.dart';
 import 'package:monumental_habits/main.dart';
 
+// ignore: must_be_immutable
 class PersonalInfo extends StatelessWidget {
   bool registerStatus = false;
   final String email;
@@ -52,84 +53,87 @@ class PersonalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SignUpController());
-    return Scaffold(
-      backgroundColor: const Color(background),
-      body: Stack(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: SvgPicture.asset(
-              backGround,
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: const Color(background),
+        body: Stack(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: SvgPicture.asset(
+                backGround,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  "Set Your personal Info ",
-                  style: klasikHeader,
-                ),
-                Stack(children: [
-                  //! need some work for updating the image
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundColor: const Color(0xFFFFD2AF),
-                    foregroundImage:
-                        Get.find<SignUpController>().returnedImage == null
-                            ? null
-                            : FileImage(
-                                Get.find<SignUpController>().returnedImage!),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text(
+                    "Set Your personal Info ",
+                    style: klasikHeader,
                   ),
-                  Positioned(
-                      bottom: 1,
-                      right: -10,
-                      height: 49,
-                      child: RawMaterialButton(
-                        onPressed: () {
-                          Get.dialog(const imagepickerdialog());
-                        },
-                        elevation: 2,
-                        fillColor: Colors.white,
-                        padding: const EdgeInsets.all(15.0),
-                        shape: const CircleBorder(),
-                        child: const Icon(Icons.camera_alt_outlined,
-                            color: Color(orange)),
-                      )),
-                ]),
-                //! name
-                TextField(
-                  controller: nameController,
-                  decoration: customTextFieldDecoration(
-                      hint: "Name",
-                      prefixIcon: const Icon(Icons.person),
-                      isWhite: true),
-                ),
-                //! password
-                PasswordTextField(
-                  controller: passwordController,
-                  hint: "Password",
-                  isWhite: true,
-                ),
-                //! confirm Password
-                PasswordTextField(
-                  controller: confirmPasswordController,
-                  hint: "Confirm Password",
-                  isWhite: true,
-                ),
-                Button(context, "next", () async {
-                  await register();
-                  if (registerStatus) {
-                    Get.off(HomePage());
-                  }
-                }),
-              ],
+                  Stack(children: [
+                    //! need some work for updating the image
+                    CircleAvatar(
+                      radius: 80,
+                      backgroundColor: const Color(0xFFFFD2AF),
+                      foregroundImage:
+                          Get.find<SignUpController>().returnedImage == null
+                              ? null
+                              : FileImage(
+                                  Get.find<SignUpController>().returnedImage!),
+                    ),
+                    Positioned(
+                        bottom: 1,
+                        right: -10,
+                        height: 49,
+                        child: RawMaterialButton(
+                          onPressed: () {
+                            Get.dialog(const imagepickerdialog());
+                          },
+                          elevation: 2,
+                          fillColor: Colors.white,
+                          padding: const EdgeInsets.all(15.0),
+                          shape: const CircleBorder(),
+                          child: const Icon(Icons.camera_alt_outlined,
+                              color: Color(orange)),
+                        )),
+                  ]),
+                  //! name
+                  TextField(
+                    controller: nameController,
+                    decoration: customTextFieldDecoration(
+                        hint: "Name",
+                        prefixIcon: const Icon(Icons.person),
+                        isWhite: true),
+                  ),
+                  //! password
+                  PasswordTextField(
+                    controller: passwordController,
+                    hint: "Password",
+                    isWhite: true,
+                  ),
+                  //! confirm Password
+                  PasswordTextField(
+                    controller: confirmPasswordController,
+                    hint: "Confirm Password",
+                    isWhite: true,
+                  ),
+                  Button(context, "next", () async {
+                    await register();
+                    if (registerStatus) {
+                      Get.off(HomePage());
+                    }
+                  }),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
